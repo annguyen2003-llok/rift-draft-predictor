@@ -2158,5 +2158,29 @@
   "week": "ROUND1",
   "patch": "16.17",
   "date": "2026-09-11"
+ },
+ {
+  "league": "LCK",
+  "tournament": "LCK 2026 Season Playoffs",
+  "seriesId": 82745,
+  "matchup": "HLE vs T1",
+  "teamRight": "Hanwha Life Esports",
+  "teamLeft": "T1",
+  "games": 4,
+  "week": "ROUND4",
+  "patch": "16.16",
+  "date": "2026-09-12"
+ },
+ {
+  "league": "LPL",
+  "tournament": "LPL 2026 Grand Finals",
+  "seriesId": 82836,
+  "matchup": "AL vs IG",
+  "teamRight": "Anyone s Legend",
+  "teamLeft": "Invictus Gaming",
+  "games": 5,
+  "week": "ROUND4",
+  "patch": "16.17",
+  "date": "2026-09-12"
  }
 ]
