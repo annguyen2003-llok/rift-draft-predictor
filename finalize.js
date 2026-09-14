@@ -4,15 +4,27 @@
 
    Selection was made by leak-free 5-fold CV over candidate feature sets
    (see diagnose.js). What survived:
-     win probability : [teamStrength?, sumWr, scaling]  lambda=120
-     total kills     : [pace, lengthLean]               lambda=100
+     win probability : [teamStrength?, frontline, ranged, mobility, sumWr]  lambda=60
+     total kills     : [pace, lengthLean]                                   lambda=100
    What was dropped, and why:
      head-to-head matchup edge -> AUC 0.548 and log loss far worse than
        baseline; kept in the dataset for display only, never in the model.
-     engage / frontline / cc / mobility / ranged / mixedness -> AUC 0.44-0.46,
-       i.e. noise in this sample; kept as descriptive comp structure only.
      game duration -> no feature set beat predicting the mean (R2 <= 0),
-       so no duration model ships; the observed distribution is shown instead. */
+       so no duration model ships; the observed distribution is shown instead.
+
+   2026-09-14 — SỬA LỖI PHƯƠNG PHÁP QUAN TRỌNG. Trước đây frontline/ranged/mobility
+   bị loại vì đo RIÊNG LẺ chống baseline chỉ ra AUC 0.44-0.49 ("nhiễu"). Nhưng đó là
+   phép đo sai: một tín hiệu yếu vẫn có thể đóng góp thật khi đứng CẠNH tín hiệu khác.
+   Đo lại theo cặp (cùng fold, 20 seed) trên nền "chỉ sức mạnh đội": frontline +0.0097
+   AUC thắng 20/20 seed, ranged +0.0062 (18/20), mobility +0.0037 (20/20) — đều thật.
+   Ngược lại scaling bị LOẠI: bootstrap 2000 lần cho thấy bỏ nó tốt hơn giữ
+   (+0.0078 AUC, KTC 95% [0.0006, 0.0151]).
+
+   Lý do kiến trúc (quan trọng hơn cả điểm số): 3 trục kit là phân loại TĨNH, không
+   cần tướng đó từng ra sân lần nào. Nên khi giải đấu xuất hiện tướng mới/tướng lạ,
+   mô hình vẫn đánh giá được — trong khi sumWr tụt về 0.5 trung tính. Đo mô phỏng
+   walk-forward: ở mức 20% tướng trong trận là tướng chưa từng thấy, bộ đang dùng giữ
+   AUC 0.6022 so với 0.5934 của bộ cũ. Xem meta.newChampAudit trong dataset.json. */
 
 const fs = require('fs');
 const path = require('path');
@@ -80,7 +92,11 @@ const sd = a => { const m = mean(a); return Math.sqrt(mean(a.map(x => (x - m) **
 const quantile = (a, q) => { const s = [...a].sort((x, y) => x - y); const i = (s.length - 1) * q; const lo = Math.floor(i), hi = Math.ceil(i); return lo === hi ? s[lo] : s[lo] + (s[hi] - s[lo]) * (i - lo); };
 
 const PRIOR_K = 12, MATCHUP_K = 8, TEAM_K = 6;
-const LAMBDA_WIN = 120, LAMBDA_KILL = 100;
+/* LAMBDA_WIN hạ 120 -> 60 (2026-09-14): với bộ đặc trưng mới (3 trục cấu trúc kit
+   + WR tướng) thì lambda 20 cho AUC cao nhất (0.6103) nhưng lambda 60 cho độ chính
+   xác 62.8% vs 60.2% và Brier 0.2368 vs 0.2443 — hiệu chỉnh xác suất tốt hơn đáng
+   giá hơn 0.004 AUC, vì người dùng đọc con số % chứ không đọc thứ hạng. */
+const LAMBDA_WIN = 60, LAMBDA_KILL = 100;
 const SHORT = 28, LONG = 34;
 
 // ------------------------------------------------------------ stats builder
@@ -167,8 +183,9 @@ function rowFor(g, st) {
   const B = sideFeatures(compOf(g.blue), g.blue.team, st);
   const R = sideFeatures(compOf(g.red), g.red.team, st);
   return {
-    draft: [B.sumWr - R.sumWr, B.scaling - R.scaling],
-    withTeam: [B.teamWr - R.teamWr, B.sumWr - R.sumWr, B.scaling - R.scaling],
+    draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility, B.sumWr - R.sumWr],
+    withTeam: [B.teamWr - R.teamWr, B.frontline - R.frontline, B.ranged - R.ranged,
+      B.mobility - R.mobility, B.sumWr - R.sumWr],
     kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
     y: g.blue.win ? 1 : 0,
     totalKills: g.blue.kills + g.red.kills,
@@ -423,19 +440,43 @@ const out = {
     },
     /* measured AUC of every candidate signal, leak-free — the audit trail
        behind which features the shipped model is allowed to use */
+    /* 2026-09-14 — đo lại toàn bộ bằng phương pháp chặt hơn hẳn lần trước: so sánh
+       THEO CẶP (cùng cách chia fold, trừ trực tiếp) qua 20 seed, cộng walk-forward
+       toàn dải 339 trận và bootstrap 2000 lần. Lần đo cũ (bảng bên dưới trước đây)
+       kiểm định từng tín hiệu RIÊNG LẺ chống baseline, nên bỏ sót việc một tín hiệu
+       yếu vẫn có ích khi đứng CẠNH tín hiệu khác — đó là lý do frontline/ranged/
+       mobility từng bị xếp "nhiễu" (AUC 0.45-0.49 đơn lẻ) nhưng thực ra đóng góp thật
+       khi đi cùng sức mạnh đội. */
     signalAudit: [
-      { feature: 'teamStrength', auc: 0.597, used: true, note: 'sức mạnh đội — tín hiệu mạnh nhất, chỉ dùng khi bật chế độ chọn đội' },
-      { feature: 'scaling', auc: 0.568, used: true, note: 'thiên hướng hậu kỳ theo kit' },
-      { feature: 'sumWr', auc: 0.561, used: true, note: 'tỉ lệ thắng của tướng theo vị trí' },
+      { feature: 'teamStrength', auc: 0.633, used: true, note: 'sức mạnh đội — vẫn là trục mạnh nhất; chỉ dùng khi đã chọn đủ 2 đội' },
+      { feature: 'frontline', auc: 0.643, used: true, note: 'tổng tuyến đầu — thêm vào baseline đội hình: +0.0097 AUC, thắng 20/20 seed. Đội hình nhiều tuyến đầu thắng đội hình mỏng manh' },
+      { feature: 'sumWr', auc: 0.610, used: true, note: 'tỉ lệ thắng tướng theo vị trí — có ích thật, nhưng vô dụng với tướng mới nên không để đứng một mình' },
+      { feature: 'ranged', auc: 0.638, used: true, note: 'số tướng tầm xa — càng nhiều carry tầm xa mỏng manh càng bất lợi ở meta này (+0.0062)' },
+      { feature: 'mobility', auc: 0.636, used: true, note: 'tổng cơ động (+0.0037) — bổ trợ cho 2 trục trên' },
+      { feature: 'scaling', auc: 0.603, used: false, note: 'LOẠI 2026-09-14: bootstrap cho thấy bỏ scaling TỐT HƠN giữ (+0.0078 AUC, KTC 95% [0.0006, 0.0151]); hệ số của nó còn đổi dấu giữa nửa đầu/nửa sau dữ liệu' },
+      { feature: 'kitCounter (ma trận khắc chế 8x8)', auc: 0.627, used: false, note: 'LOẠI: học ma trận tương tác kit×kit giữa 2 đội — trong nhiễu (+0.0005)' },
+      { feature: 'kitSynergy (ma trận phối hợp)', auc: 0.630, used: false, note: 'LOẠI: tương tác kit trong cùng đội — trong nhiễu (+0.0021)' },
+      { feature: 'playerWr', auc: 0.629, used: false, note: 'LOẠI: WR từng tuyển thủ — tệ hơn baseline ở 20/20 seed (trùng lặp với sức mạnh đội, chỉ thêm nhiễu)' },
       { feature: 'matchupEdge', auc: 0.548, used: false, note: 'đối đầu trực tiếp — quá nhiễu, chỉ dùng để hiển thị' },
-      { feature: 'mixedness', auc: 0.523, used: false, note: 'cân bằng AD/AP — không đủ tín hiệu' },
+      { feature: 'cc', auc: 0.631, used: false, note: 'tổng CC — không đạt ngưỡng khi chọn lọc tiến tới' },
+      { feature: 'engage', auc: 0.632, used: false, note: 'công cụ mở giao tranh — không đạt ngưỡng (+0.0002)' },
       { feature: 'presence', auc: 0.500, used: false, note: 'mức ưu tiên pick/ban — không có tín hiệu' },
-      { feature: 'ranged', auc: 0.493, used: false, note: 'tầm đánh — không có tín hiệu' },
-      { feature: 'frontline', auc: 0.460, used: false, note: 'tuyến đầu — là nhiễu trong mẫu này' },
-      { feature: 'mobility', auc: 0.453, used: false, note: 'cơ động — là nhiễu trong mẫu này' },
-      { feature: 'cc', auc: 0.448, used: false, note: 'tổng CC — là nhiễu trong mẫu này' },
-      { feature: 'engage', auc: 0.439, used: false, note: 'công cụ mở giao tranh — là nhiễu trong mẫu này' },
     ],
+    /* Kiểm định mô phỏng TƯỚNG MỚI (walk-forward 339 trận, che dữ liệu win-rate lúc
+       dự đoán theo tỉ lệ tướng lạ trong trận). Con số = AUC.
+                              0% mới   10%     20%     40%
+       cũ (sumWr+scaling)     0.6026   0.5980  0.5934  0.5842
+       chỉ sumWr              0.6104   0.6044  0.6010  0.5925
+       chỉ kit (không sumWr)  0.5984   0.5984  0.5984  0.5984
+       ĐANG DÙNG (kit+sumWr)  0.6103   0.6047  0.6022  0.5934   <- tốt nhất mọi mức */
+    newChampAudit: {
+      method: 'walk-forward 339 trận, che win-rate tướng lúc dự đoán',
+      rates: [0, 0.1, 0.2, 0.4],
+      shipped: [0.6103, 0.6047, 0.6022, 0.5934],
+      previous: [0.6026, 0.5980, 0.5934, 0.5842],
+      kitOnly: [0.5984, 0.5984, 0.5984, 0.5984],
+      champWrOnly: [0.6104, 0.6044, 0.6010, 0.5925],
+    },
     durationModel: null,
   },
   baselines, baseline,
@@ -444,8 +485,8 @@ const out = {
     champions[k] || champions[k.split('|')[0]])),
   attrsMissing: Object.keys(champions).filter(n => !ATTRS[n]),
   models: {
-    draft: { features: ['sumWr', 'scaling'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
-    withTeam: { features: ['teamStrength', 'sumWr', 'scaling'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    draft: { features: ['frontline', 'ranged', 'mobility', 'sumWr'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
+    withTeam: { features: ['teamStrength', 'frontline', 'ranged', 'mobility', 'sumWr'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
     kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
   },
 };

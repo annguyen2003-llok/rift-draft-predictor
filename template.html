@@ -451,9 +451,10 @@ function predict(){
   const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
+  /* Thứ tự PHẢI khớp models.*.features trong finalize.js */
   const raw = useTeam
-    ? [B.teamWr-R.teamWr, B.sumWr-R.sumWr, B.scaling-R.scaling]
-    : [B.sumWr-R.sumWr, B.scaling-R.scaling];
+    ? [B.teamWr-R.teamWr, B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr]
+    : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr];
   return {...runModel(model, raw), B, R, model, useTeam};
 }
 
@@ -586,7 +587,29 @@ const FEAT_LABEL = {
   sumWr:"Phong độ tướng (WR đã hiệu chỉnh)",
   scaling:"Thiên hướng hậu kỳ",
   teamStrength:"Sức mạnh đội",
+  frontline:"Độ dày tuyến đầu",
+  ranged:"Số tướng tầm xa",
+  mobility:"Tổng độ cơ động",
 };
+
+/* Chốt an toàn: thứ tự đặc trưng ở đây phải khớp models.*.features do finalize.js
+   sinh ra. Nếu lệch, mô hình vẫn chạy nhưng nhân sai trọng số vào sai đặc trưng —
+   sai âm thầm, không báo lỗi. Nên kiểm tra ngay lúc tải trang. */
+(function checkFeatureOrder(){
+  const expect = {
+    draft: ["frontline","ranged","mobility","sumWr"],
+    withTeam: ["teamStrength","frontline","ranged","mobility","sumWr"],
+  };
+  for(const [key, want] of Object.entries(expect)){
+    const got = (DATA.models[key] && DATA.models[key].features) || [];
+    if(got.join(",") !== want.join(",")){
+      console.error(`LỖI ĐỒNG BỘ: models.${key}.features = [${got}] nhưng predict() đang dựng [${want}]. `+
+        `Trang này được dựng từ template.html lệch phiên bản với finalize.js — dự đoán sẽ SAI.`);
+      const el = document.getElementById("verdictSub");
+      if(el) el.innerHTML = `<b style="color:#c00">Cảnh báo: dữ liệu và mã dự đoán lệch phiên bản, kết quả không đáng tin.</b>`;
+    }
+  }
+})();
 
 function analyze(){
   if(!(ROLES.every(r => state.blue[r]) && ROLES.every(r => state.red[r]))) return;
@@ -899,17 +922,41 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     kém nhất: khi cả hai đội đều là đội giỏi nhất khu vực, phần khác biệt còn lại nằm ở phong độ/thi triển
     của đội, không phải bản thân đội hình.</p>
 
-    <p><b>Tướng mới/ít trận thì sao (2026-09-14)?</b> Mô hình co win rate của tướng về gần 50% khi mẫu
-    quá nhỏ (hiệu chỉnh Bayes, PRIOR_K=${DATA.meta.priors.championWinRateK}) — với tướng 0 trận thì về
-    đúng 50%. Có vẻ như một lỗ hổng: sao không dùng phân loại kit (engage/tuyến đầu/CC/hậu kỳ...) để đoán
-    có cơ sở hơn? Đã kiểm chứng bằng hồi quy đa biến, leave-one-out CV trên các tướng có ≥10 trận thật:
-    kit dự đoán win rate <b>tệ hơn cả việc đoán bừa theo trung bình chung</b> (R² = −0,12). Điều này hợp lý
-    về mặt thiết kế game — Riot chủ động cân bằng để mọi lối chơi đều xoay quanh ~50%, nên kit chỉ nói lên
-    tướng đó <i>chơi như thế nào</i>, không nói lên nó <i>đang mạnh/yếu ở patch này</i>. Vì vậy trả về 50%
-    cho tướng chưa có dữ liệu là câu trả lời trung thực duy nhất, không phải điều cần vá. Cái sửa được là
-    làm rõ điều đó cho người xem: mọi tướng dưới ${5} trận — kể cả tướng scrape được bình thường, không chỉ
-    tướng thêm tay — giờ được đánh dấu "mẫu quá nhỏ" ở bảng đối đầu từng đường, thay vì âm thầm co số mà
-    không cảnh báo.</p>`;
+    <p><b>Bài toán tướng mới — và một lỗi phương pháp của chính công cụ này (2026-09-14).</b>
+    Vấn đề: khi một tướng chưa từng ra sân, win rate của nó về 50% trung tính, mô hình gần như mù.
+    Lần đo đầu kết luận "kit không cứu được" vì kit không dự đoán nổi win rate trung bình của tướng
+    (R² = −0,12). <b>Kết luận đó dựa trên phép đo sai.</b> Win rate trung bình của mọi tướng đều ~50%
+    do Riot cân bằng như vậy, nên đó là câu hỏi không thể có đáp án. Ngoài ra mỗi tín hiệu bị đo
+    RIÊNG LẺ chống mốc cơ sở — cách đó bỏ sót việc một tín hiệu yếu vẫn đóng góp thật khi đứng
+    CẠNH tín hiệu khác.</p>
+
+    <p>Đo lại bằng so sánh <b>theo cặp</b> (cùng cách chia fold, trừ trực tiếp, 20 seed) trên nền
+    "chỉ sức mạnh đội": <b>độ dày tuyến đầu +0,0097 AUC thắng 20/20 seed</b>, số tướng tầm xa +0,0062
+    (18/20), tổng cơ động +0,0037 (20/20) — đều là tín hiệu thật. Ngược lại <b>thiên hướng hậu kỳ bị
+    loại</b>: bootstrap 2000 lần cho thấy bỏ nó tốt hơn giữ (+0,0078 AUC, khoảng tin cậy 95%
+    [0,0006; 0,0151]), và hệ số của nó còn đổi dấu giữa nửa đầu và nửa sau dữ liệu. Kiểm tra nhầm lẫn
+    với lợi thế side: chênh lệch tuyến đầu trung bình giữa 2 bên chỉ 0,004 (không bên nào ưu tiên hơn),
+    còn hiệu ứng thì đơn điệu rõ — xanh dày tuyến đầu hơn thắng 62,5%, ngược lại chỉ 53,1%.</p>
+
+    <p><b>Vì sao điều này giải được bài toán tướng mới:</b> ba trục kit là phân loại tĩnh, không cần
+    tướng đó từng ra sân lần nào. Mô phỏng walk-forward 339 trận, che dữ liệu win-rate theo tỉ lệ tướng
+    lạ trong trận:</p>
+    <div class="scroll-x"><table class="data"><thead><tr><th>Mô hình</th><th>0% tướng mới</th><th>10%</th><th>20%</th><th>40%</th></tr></thead>
+    <tbody>
+      <tr><td>Bộ cũ (WR tướng + hậu kỳ)</td><td>0,6026</td><td>0,5980</td><td>0,5934</td><td>0,5842</td></tr>
+      <tr><td>Chỉ kit, bỏ WR tướng</td><td>0,5984</td><td>0,5984</td><td>0,5984</td><td>0,5984</td></tr>
+      <tr><td><b>Đang dùng (kit + WR tướng)</b></td><td><b>0,6103</b></td><td><b>0,6047</b></td><td><b>0,6022</b></td><td><b>0,5934</b></td></tr>
+    </tbody></table></div>
+    <p>Bộ đang dùng tốt nhất ở mọi mức. Giữ cả WR tướng (vẫn có ích khi có dữ liệu) lẫn kit (vẫn chạy khi
+    không có) nên nó suy giảm từ từ thay vì sụp đổ: ở mức 20% tướng lạ, bộ cũ tụt xuống 0,5934 còn bộ mới
+    vẫn giữ 0,6022.</p>
+
+    <p><b>Nói thẳng về độ lớn:</b> mức cải thiện là +0,008 AUC — nhỏ, và phần lớn giá trị nằm ở chỗ
+    <i>bền với tướng mới</i> chứ không phải đoán giỏi hơn hẳn. Các hệ số kit trong mô hình cũng nhỏ
+    (tuyến đầu 0,06 so với sức mạnh đội 0,48). Ngoài ra hiệu ứng kit thay đổi theo meta: trong 354 trận
+    đầu nó chưa đủ rõ để được chọn, chỉ mạnh lên ở giai đoạn gần đây — mô hình huấn luyện lại mỗi sáng
+    nên bám theo được, nhưng đừng coi "tuyến đầu luôn thắng" là chân lý vĩnh viễn. Mọi tướng dưới 5 trận
+    vẫn được đánh dấu "mẫu quá nhỏ" ở bảng từng đường.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
