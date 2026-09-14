@@ -639,15 +639,27 @@ function analyze(){
     const rec = h2h(role, a, b);
     const K = DATA.meta.priors.matchupK;
     const shrunk = (rec.wins + K*0.5)/(rec.games + K), edge = shrunk-0.5;
-    const newA = DATA.champions[a].addedManually && !ra.games;
-    const newB = DATA.champions[b].addedManually && !rb.games;
+    /* Cảnh báo mẫu nhỏ: áp dụng cho MỌI tướng ít trận, không chỉ tướng thêm tay —
+       một tướng vừa scrape được 1-2 trận thật cũng đáng ngờ như tướng thêm thủ công,
+       chỉ là wrShrunk đã âm thầm co về ~50% mà không nói cho người xem biết. */
+    const LOW_SAMPLE = 5;
+    const noDataA = !ra.games, noDataB = !rb.games;
+    const lowA = !noDataA && ra.games < LOW_SAMPLE, lowB = !noDataB && rb.games < LOW_SAMPLE;
     let chip, reason;
-    if(newA || newB){
-      const who = newA && newB ? `${disp(a)} và ${disp(b)}` : disp(newA ? a : b);
+    if(noDataA || noDataB){
+      const who = noDataA && noDataB ? `${disp(a)} và ${disp(b)}` : disp(noDataA ? a : b);
+      const why = DATA.champions[noDataA ? a : b].addedManually ? "được thêm thủ công" : "chưa từng xuất hiện trong dữ liệu đã quét";
       chip = `<span class="lane-h2h e">chưa có dữ liệu</span>`;
-      reason = `${who} được thêm thủ công và chưa có trận nào trong dữ liệu đã quét, nên không thể đánh giá ` +
-        `đối đầu này bằng số liệu thật. Mô hình đang coi ${newA && newB ? "cả hai" : "tướng đó"} ở mức trung tính 50% — ` +
-        `phần dự đoán cho đường này chỉ dựa vào phân loại kit, hãy đọc như một phỏng đoán.`;
+      reason = `${who} ${why} và chưa có trận nào để tính win rate thật. ` +
+        `Mô hình đang coi ${noDataA && noDataB ? "cả hai" : "tướng đó"} ở mức trung tính 50% trên trục win-rate — ` +
+        `kit không thay thế được (kiểm chứng: phân loại kit không dự đoán được win rate thật của các tướng đã có nhiều trận, R²<0). ` +
+        `Dự đoán vẫn còn chạy nhờ sức mạnh đội, nhưng hãy đọc phần đường này như một phỏng đoán.`;
+    } else if(lowA || lowB){
+      const who = lowA && lowB ? `${disp(a)} (${ra.games} trận) và ${disp(b)} (${rb.games} trận)`
+        : lowA ? `${disp(a)} (${ra.games} trận)` : `${disp(b)} (${rb.games} trận)`;
+      chip = `<span class="lane-h2h e">mẫu quá nhỏ</span>`;
+      reason = `${who} có quá ít trận để tin win rate thật — hệ thống đã tự co số về gần 50% (hiệu chỉnh Bayes, ` +
+        `PRIOR_K=${DATA.meta.priors.championWinRateK}), nhưng vẫn nên đọc phần đường này như một phỏng đoán còn thiếu bằng chứng.`;
     } else if(rec.games === 0){
       chip = `<span class="lane-h2h e">chưa từng gặp nhau</span>`;
       const d = ra.wrShrunk - rb.wrShrunk;
@@ -885,7 +897,19 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     luôn là tín hiệu mạnh nhất đo được (AUC 0.597 khi kiểm định lần đầu) — nhưng trước đó người dùng phải
     tự bấm bật mới thấy chế độ tốt hơn này. Trận chung kết giữa 2 đội mạnh ngang nhau là nơi draft-only
     kém nhất: khi cả hai đội đều là đội giỏi nhất khu vực, phần khác biệt còn lại nằm ở phong độ/thi triển
-    của đội, không phải bản thân đội hình.</p>`;
+    của đội, không phải bản thân đội hình.</p>
+
+    <p><b>Tướng mới/ít trận thì sao (2026-09-14)?</b> Mô hình co win rate của tướng về gần 50% khi mẫu
+    quá nhỏ (hiệu chỉnh Bayes, PRIOR_K=${DATA.meta.priors.championWinRateK}) — với tướng 0 trận thì về
+    đúng 50%. Có vẻ như một lỗ hổng: sao không dùng phân loại kit (engage/tuyến đầu/CC/hậu kỳ...) để đoán
+    có cơ sở hơn? Đã kiểm chứng bằng hồi quy đa biến, leave-one-out CV trên các tướng có ≥10 trận thật:
+    kit dự đoán win rate <b>tệ hơn cả việc đoán bừa theo trung bình chung</b> (R² = −0,12). Điều này hợp lý
+    về mặt thiết kế game — Riot chủ động cân bằng để mọi lối chơi đều xoay quanh ~50%, nên kit chỉ nói lên
+    tướng đó <i>chơi như thế nào</i>, không nói lên nó <i>đang mạnh/yếu ở patch này</i>. Vì vậy trả về 50%
+    cho tướng chưa có dữ liệu là câu trả lời trung thực duy nhất, không phải điều cần vá. Cái sửa được là
+    làm rõ điều đó cho người xem: mọi tướng dưới ${5} trận — kể cả tướng scrape được bình thường, không chỉ
+    tướng thêm tay — giờ được đánh dấu "mẫu quá nhỏ" ở bảng đối đầu từng đường, thay vì âm thầm co số mà
+    không cảnh báo.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
