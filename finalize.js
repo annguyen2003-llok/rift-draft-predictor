@@ -318,6 +318,28 @@ for (const c of Object.values(stats.champ)) {
     longGameWR: c.longG >= 4 ? c.longW / c.longG : null, longG: c.longG,
   };
 }
+/* Thêm tay: tướng/đường thấy trên sóng nhưng gol.gg chưa quét được (sập server,
+   trận quá mới, v.v.) — chỉ thêm vào picker để chọn được, KHÔNG có số liệu thắng/thua
+   giả, đánh dấu addedManually để UI hiển thị "chưa có dữ liệu" và loại khỏi mọi
+   phép tính win-rate/matchup. File data/manual_champs.json không tồn tại thì bỏ qua. */
+const manualChampsPath = path.join(DATA_DIR, 'manual_champs.json');
+const manualChamps = fs.existsSync(manualChampsPath) ? JSON.parse(fs.readFileSync(manualChampsPath, 'utf8')) : [];
+for (const { name, role } of manualChamps) {
+  if (!ROLES.includes(role)) { console.log(`Bỏ qua manual_champs.json: đường "${role}" không hợp lệ (${name})`); continue; }
+  if (!champions[name]) {
+    champions[name] = {
+      name, picks: 0, wins: 0, bans: 0, wr: null, wrShrunk: 0.5, presence: 0, banRate: 0,
+      roles: {}, kda: 0, avgGameKills: null, avgGameDur: null,
+      shortGameWR: null, shortG: 0, longGameWR: null, longG: 0,
+      addedManually: true,
+    };
+  }
+  if (!champions[name].roles[role]) {
+    champions[name].roles[role] = { games: 0, wins: 0, wr: null, wrShrunk: 0.5, kda: 0 };
+    console.log(`Thêm thủ công: ${name} @ ${role} (chưa có số liệu thật)`);
+  }
+}
+
 const rolePools = {};
 for (const role of ROLES) {
   rolePools[role] = Object.values(champions).filter(c => c.roles[role])

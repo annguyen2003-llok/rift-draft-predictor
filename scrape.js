@@ -96,11 +96,22 @@ function parseMatchlist(html, tour) {
 }
 
 async function main() {
+  // Nếu 1 giải fetch thất bại HOÀN TOÀN (không còn cache nào dùng tạm được), giữ lại
+  // các series cũ của đúng giải đó từ series.json thay vì để trống — tránh lặp lại sự
+  // cố 2026-09-14: gol.gg sập toàn bộ khiến file bị ghi đè bằng danh sách rỗng.
+  const oldSeriesPath = path.join(DATA_DIR, 'series.json');
+  const oldSeries = fs.existsSync(oldSeriesPath) ? JSON.parse(fs.readFileSync(oldSeriesPath, 'utf8')) : [];
   const allSeries = [];
+  let anyHardFail = false;
   for (const t of TOURNAMENTS) {
     const url = 'https://gol.gg/tournament/tournament-matchlist/' + encodeURIComponent(t.name) + '/';
     const html = await fetchUrl(url, 'ml_' + t.name.replace(/[^A-Za-z0-9]/g, '_') + '.html', true);
-    if (!html) { console.error('FAILED matchlist', t.name); continue; }
+    if (!html) {
+      console.error('FAILED matchlist', t.name, '— giữ nguyên series cũ của giải này (nếu có)');
+      anyHardFail = true;
+      allSeries.push(...oldSeries.filter(s => s.tournament === t.name && s.date >= CUTOFF));
+      continue;
+    }
     const series = parseMatchlist(html, t);
     const recent = series.filter(s => s.date >= CUTOFF);
     console.error(`${t.name}: ${series.length} series total, ${recent.length} since ${CUTOFF}`);
@@ -110,8 +121,9 @@ async function main() {
 
   allSeries.sort((a, b) => a.date.localeCompare(b.date) || a.seriesId - b.seriesId);
   const totalGames = allSeries.reduce((s, x) => s + x.games, 0);
-  console.error(`\n=> ${allSeries.length} series / ~${totalGames} games trong cửa sổ thời gian\n`);
-  fs.writeFileSync(path.join(DATA_DIR, 'series.json'), JSON.stringify(allSeries, null, 1));
+  console.error(`\n=> ${allSeries.length} series / ~${totalGames} games trong cửa sổ thời gian` +
+    (anyHardFail ? ' (MỘT SỐ GIẢI DÙNG DỮ LIỆU CŨ vì fetch thất bại hoàn toàn)' : '') + '\n');
+  fs.writeFileSync(oldSeriesPath, JSON.stringify(allSeries, null, 1));
   if (process.env.DRY) {
     const byT = allSeries.reduce((a, s) => (a[s.tournament] = (a[s.tournament] || 0) + s.games, a), {});
     console.error('games per tournament:', JSON.stringify(byT, null, 1));

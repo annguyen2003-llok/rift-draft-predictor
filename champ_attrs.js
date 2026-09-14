@@ -52,6 +52,7 @@ module.exports = {
   'Renekton':      A(0, 1, 1, 'AD',   -0.6, 1, 0),
   'Olaf':          A(0, 1, 1, 'AD',   -0.4, 1, 0),
   'Jax':           A(0, 1, 1, 'AD',    0.7, 2, 0),
+  'Fiora':         A(0, 0, 0, 'AD',    0.5, 2, 0),   // đấu sĩ 1v1/tách lính thuần, không có công cụ mở giao tranh hay CC, ult refresh khi hạ mục tiêu -> mạnh dần về cuối trận
   'Camille':       A(1, 1, 2, 'AD',    0.2, 3, 0),   // fallback nếu xuất hiện ở đường khác top/support
   'Camille|top':   A(1, 1, 2, 'AD',    0.35, 3, 0),  // patch 26.16: mất burst/an toàn sớm, đổi lại sustain đường + scale tank — dịch nhẹ về hậu kỳ so với trước
   'Camille|support': A(0, 1, 1, 'AD',  0.0, 3, 0),    // build support: ít chủ động mở giao tranh hơn, thiên về bảo kê/peel cho carry, ít áp lực sát thương hơn bản top
