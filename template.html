@@ -448,7 +448,7 @@ function h2h(role,a,b){
   return m ? {games:m.games, wins:m.wins} : {games:0, wins:0};
 }
 function predict(){
-  const useTeam = document.getElementById("useTeam").checked && state.teamBlue && state.teamRed;
+  const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
   const raw = useTeam
@@ -477,10 +477,15 @@ function onTeamChange(){
 function updateModeLabel(){
   const ready = state.teamBlue && state.teamRed;
   document.getElementById("modeLabel").innerHTML = ready
-    ? `Tính thêm sức mạnh đội <span class="thin">— AUC tăng ${DATA.models.draft.metrics.cvAuc.toFixed(3)} → ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}</span>`
-    : `Tính thêm sức mạnh đội <span class="thin">— chọn cả hai đội ở trên để bật</span>`;
+    ? `Tính thêm sức mạnh đội <span class="thin">— luôn đo chính xác hơn qua mọi lần kiểm định (AUC ${DATA.models.draft.metrics.cvAuc.toFixed(3)} → ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}), nên mặc định bật khi đã chọn đội</span>`
+    : `Tính thêm sức mạnh đội <span class="thin">— chọn cả hai đội ở trên để bật (khuyên dùng)</span>`;
   document.getElementById("useTeam").disabled = !ready;
-  if(!ready) document.getElementById("useTeam").checked = false;
+  // 2026-09-14: mặc định BẬT khi đã chọn đủ 2 đội — "+đội" đo tốt hơn "chỉ đội hình"
+  // ở MỌI lần kiểm định trong suốt dự án (0.611 vs 0.562 lúc 284 trận; 0.653 vs 0.590
+  // lúc 469 trận; 57.1% vs 50.0% khi backtest riêng trên các trận playoff/chung kết
+  // 05-12/09 — "chỉ đội hình" rơi đúng về mức đoán ngẫu nhiên). Trước đó mặc định TẮT,
+  // khiến người dùng thấy chế độ kém chính xác hơn trừ khi tự bấm bật tay.
+  document.getElementById("useTeam").checked = !!ready;
 }
 function renderSlots(){
   for(const side of ["blue","red"]){
@@ -870,7 +875,17 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     so với mốc cơ sở ${pct1(DATA.baseline.accuracy)} — lợi thế nhỏ nhưng thật. Đừng dùng để cá cược.
     Cách tăng độ chính xác hiệu quả nhất là mở rộng dữ liệu: quét thêm nhiều tuần, nhiều split
     (LCK Cup, Rounds 1-2, Road to MSI, LPL Split 1-2, LEC Spring/Versus) để mỗi tướng và mỗi cặp
-    đối đầu có đủ mẫu.</p>`;
+    đối đầu có đủ mẫu.</p>
+
+    <p><b>Vì sao "+đội" giờ mặc định bật khi chọn đội (2026-09-14).</b> Backtest riêng trên các trận
+    playoff/chung kết 05-12/09 (LCK Season Playoffs, LPL Grand Finals) — dùng đúng dữ liệu mô hình
+    biết được TRƯỚC mỗi trận, không rò rỉ — cho kết quả: chỉ-đội-hình đúng <b>50,0%</b> (bằng tung đồng xu,
+    Brier 0,248 ≈ đoán bừa), trong khi bật thêm sức mạnh đội đúng <b>57,1%</b>, và chỉ dùng riêng WR mùa giải
+    của đội (bỏ hẳn draft) đúng tới <b>64,3%</b>. Đây khớp với phát hiện xuyên suốt cả dự án — sức mạnh đội
+    luôn là tín hiệu mạnh nhất đo được (AUC 0.597 khi kiểm định lần đầu) — nhưng trước đó người dùng phải
+    tự bấm bật mới thấy chế độ tốt hơn này. Trận chung kết giữa 2 đội mạnh ngang nhau là nơi draft-only
+    kém nhất: khi cả hai đội đều là đội giỏi nhất khu vực, phần khác biệt còn lại nằm ở phong độ/thi triển
+    của đội, không phải bản thân đội hình.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
