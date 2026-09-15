@@ -76,14 +76,25 @@ console.log(`Patch theo từng giải (không lọc gì, chỉ để hiển th�
    sách giải trong TOURNAMENTS. Đo thực nghiệm (stability_test.js) không
    thấy dấu hiệu trận cũ trong 1 mùa làm loãng số liệu — trần này chống
    phình vô hạn qua nhiều mùa, không phải chống loãng trong 1 mùa. */
-const GAME_CAP = 600;
+/* 2026-09-15 — trần nâng 600 -> 900 VÀ trận quốc tế được MIỄN.
+   Lý do: trần cũ xoá các trận CŨ NHẤT, mà giải quốc tế (MSI tháng 6-7, First Stand
+   tháng 3) chính là những trận cũ nhất — tức là nó sẽ xoá đúng thứ quý nhất, thứ
+   DUY NHẤT nối được các khu vực với nhau. Mất chúng thì rating toàn cầu sập về lại
+   trạng thái "mỗi giải một thước đo riêng", và điều đó xảy ra âm thầm không báo gì. */
+const GAME_CAP = 900;
+const isIntl = g => (g.tier || 'major') === 'international';
 let staleGames = [];
 if (games.length > GAME_CAP) {
-  games = [...games].sort((a, b) => a.date.localeCompare(b.date) || a.seriesId - b.seriesId);
-  staleGames = games.slice(0, games.length - GAME_CAP);
-  games = games.slice(games.length - GAME_CAP);
-  console.log(`Vượt trần ${GAME_CAP} trận — loại ${staleGames.length} trận xa nhất ` +
-    `(trước ${games[0].date}) khỏi huấn luyện, vẫn còn nguyên trong games.json.`);
+  const sorted = [...games].sort((a, b) => a.date.localeCompare(b.date) || a.seriesId - b.seriesId);
+  const intl = sorted.filter(isIntl);
+  const regional = sorted.filter(g => !isIntl(g));
+  const keepRegional = Math.max(0, GAME_CAP - intl.length);
+  staleGames = regional.slice(0, Math.max(0, regional.length - keepRegional));
+  const stale = new Set(staleGames.map(g => g.gameId));
+  games = sorted.filter(g => !stale.has(g.gameId));
+  console.log(`Vượt trần ${GAME_CAP} trận — loại ${staleGames.length} trận khu vực xa nhất ` +
+    `(giữ nguyên toàn bộ ${intl.length} trận quốc tế vì chúng là cầu nối giữa các khu vực). ` +
+    `games.json không bị đụng tới.`);
 }
 const N = games.length;
 
@@ -92,12 +103,99 @@ const sd = a => { const m = mean(a); return Math.sqrt(mean(a.map(x => (x - m) **
 const quantile = (a, q) => { const s = [...a].sort((x, y) => x - y); const i = (s.length - 1) * q; const lo = Math.floor(i), hi = Math.ceil(i); return lo === hi ? s[lo] : s[lo] + (s[hi] - s[lo]) * (i - lo); };
 
 const PRIOR_K = 12, MATCHUP_K = 8, TEAM_K = 6;
+/* Rating phân cấp (Bradley-Terry): LAM_TEAM co rút từng đội, LAM_REGION co rút hiệu
+   ứng khu vực. Chọn bằng quét lưới trên mô phỏng CKTG (xem chú thích RATING bên dưới). */
+const LAM_TEAM = 8, LAM_REGION = 8;
 /* LAMBDA_WIN hạ 120 -> 60 (2026-09-14): với bộ đặc trưng mới (3 trục cấu trúc kit
    + WR tướng) thì lambda 20 cho AUC cao nhất (0.6103) nhưng lambda 60 cho độ chính
    xác 62.8% vs 60.2% và Brier 0.2368 vs 0.2443 — hiệu chỉnh xác suất tốt hơn đáng
    giá hơn 0.004 AUC, vì người dùng đọc con số % chứ không đọc thứ hạng. */
 const LAMBDA_WIN = 60, LAMBDA_KILL = 100;
 const SHORT = 28, LONG = 34;
+
+/* ============================ RATING PHÂN CẤP (cho CKTG) =====================
+   VẤN ĐỀ: tỉ lệ thắng của đội KHÔNG so sánh được giữa các khu vực. Mỗi giải có
+   tổng thắng = tổng thua nên trung bình luôn đúng 50% — "Gen.G 70% (LCK)" và
+   "Karmine Corp 79% (LEC)" là hai con số đo bằng hai thước hoàn toàn khác nhau.
+   Về mặt toán học, đồ thị đối đầu rời thành các cụm không nối nhau thì sức mạnh
+   giữa các cụm là KHÔNG XÁC ĐỊNH ĐƯỢC.
+
+   CÁCH GIẢI: nạp các giải quốc tế (MSI, EWC, First Stand — xem TOURNAMENTS trong
+   scrape.js) để nối các khu vực, rồi ước lượng đồng thời:
+       P(xanh thắng) = sigmoid( side + [reg_A + dev_A] - [reg_B + dev_B] )
+   reg = hiệu ứng chung của cả khu vực, dev = độ lệch riêng của đội trong khu vực.
+   Tách 2 tầng là điều cốt yếu: nó cho phép CẢ MỘT khu vực mạnh lên tập thể, nên
+   một đội LCK chưa từng ra quốc tế vẫn thừa hưởng mức của LCK thay vì bị coi
+   ngang đội cùng tỉ lệ thắng ở khu vực yếu hơn.
+
+   ĐO ĐẠC (mô phỏng CKTG: giấu sạch thành tích quốc tế của cả 2 đội rồi bắt dự
+   đoán chính trận đó — đúng cảnh đội lần đầu dự CKTG, 155 trận):
+       tỉ lệ thắng thô : AUC 0.522  (≈ tung đồng xu, VÔ DỤNG)
+       rating phẳng    : AUC 0.606
+       rating phân cấp : AUC 0.670   <- chênh lệch THẬT, bootstrap KTC [0.013, 0.275]
+   Trong mô hình đầy đủ, dùng CẢ tỉ lệ thắng LẪN rating đo tốt nhất (xem
+   meta.crossRegionAudit). */
+function homeRegions(indices) {
+  const count = {};
+  for (const i of indices) {
+    const g = games[i];
+    if ((g.tier || 'major') === 'international') continue;   // giải quốc tế không định nghĩa khu vực nhà
+    for (const sk of ['blue', 'red']) {
+      const t = g[sk].team;
+      (count[t] = count[t] || {})[g.league] = ((count[t] || {})[g.league] || 0) + 1;
+    }
+  }
+  const home = {};
+  for (const [t, c] of Object.entries(count)) home[t] = Object.entries(c).sort((a, b) => b[1] - a[1])[0][0];
+  return home;
+}
+function fitRating(indices, home, { iters = 4000, lr = 0.5 } = {}) {
+  const regionOf = t => home[t] || 'OTHER';
+  const teams = [...new Set(indices.flatMap(i => [games[i].blue.team, games[i].red.team]))];
+  const ti = Object.fromEntries(teams.map((t, k) => [t, k]));
+  const regions = [...new Set(teams.map(regionOf))];
+  const ri = Object.fromEntries(regions.map((r, k) => [r, k]));
+  const dev = new Float64Array(teams.length), reg = new Float64Array(regions.length);
+  let side = 0;
+  const rows = indices.map(i => ({
+    b: ti[games[i].blue.team], r: ti[games[i].red.team],
+    rb: ri[regionOf(games[i].blue.team)], rr: ri[regionOf(games[i].red.team)],
+    y: games[i].blue.win ? 1 : 0,
+  }));
+  const n = rows.length || 1;
+  for (let it = 0; it < iters; it++) {
+    const gd = new Float64Array(teams.length), gr = new Float64Array(regions.length);
+    let gs = 0;
+    for (const o of rows) {
+      const e = 1 / (1 + Math.exp(-(side + dev[o.b] - dev[o.r] + reg[o.rb] - reg[o.rr]))) - o.y;
+      gd[o.b] += e; gd[o.r] -= e; gr[o.rb] += e; gr[o.rr] -= e; gs += e;
+    }
+    for (let k = 0; k < teams.length; k++) dev[k] -= lr * (gd[k] / n + (LAM_TEAM / n) * dev[k]);
+    for (let k = 0; k < regions.length; k++) reg[k] -= lr * (gr[k] / n + (LAM_REGION / n) * reg[k]);
+    side -= lr * (gs / n);
+  }
+  const regionEffect = Object.fromEntries(regions.map(r => [r, reg[ri[r]]]));
+  const teamDev = Object.fromEntries(teams.map(t => [t, dev[ti[t]]]));
+  /* Đội hoàn toàn lạ (chưa có trong dữ liệu) -> dev 0 + hiệu ứng khu vực nếu biết
+     khu vực, ngược lại rơi về 'OTHER'. Không bao giờ ném lỗi, luôn trả về số. */
+  const get = name => (teamDev[name] || 0) + (regionEffect[regionOf(name)] || regionEffect.OTHER || 0);
+  return { get, regionEffect, teamDev, side, regionOf };
+}
+
+/* ===================== TÁCH HAI BỂ DỮ LIỆU (quan trọng) =====================
+   Trận quốc tế phục vụ 2 mục đích khác hẳn nhau, và trộn chung thì hỏng:
+
+   1. NỐI CÁC KHU VỰC để tính rating  -> BẮT BUỘC phải có, kể cả trận cũ.
+      Rosters có đổi nhưng đây là ràng buộc DUY NHẤT giữa các khu vực.
+   2. THỐNG KÊ TƯỚNG (win rate, đối đầu) -> trận cũ khác patch GÂY HẠI.
+      First Stand đá patch 16.5 (tháng 3), MSI patch 16.13 — meta khác hẳn
+      giải hè. Đo thực nghiệm trên cùng 357 trận khu vực, mô hình draft-only:
+        chỉ giải khu vực           AUC 0.5438  Brier 0.2473   <- TỐT NHẤT
+        + quốc tế từ 15/07         AUC 0.5389  Brier 0.2495
+        + quốc tế từ 01/06         AUC 0.5147  Brier 0.2539
+        + tất cả (cả First Stand)  AUC 0.5189  Brier 0.2532
+   Nên: rating ăn MỌI trận, thống kê tướng chỉ ăn giải khu vực. */
+const isInternational = g => (g.tier || 'major') === 'international';
 
 // ------------------------------------------------------------ stats builder
 function buildStats(indices) {
@@ -108,11 +206,15 @@ function buildStats(indices) {
   });
   for (const i of indices) {
     const g = games[i];
+    // Thống kê TƯỚNG chỉ ăn giải khu vực (xem chú thích TÁCH HAI BỂ ở trên).
+    // Thống kê ĐỘI vẫn ăn mọi trận vì thành tích quốc tế là thành tích thật.
+    const forChampStats = !isInternational(g);
     const tk = g.blue.kills + g.red.kills;
     for (const sk of ['blue', 'red']) {
       const s = g[sk];
       const t = team[s.team] || (team[s.team] = { name: s.team, league: g.league, games: 0, wins: 0 });
       t.games++; if (s.win) t.wins++;
+      if (!forChampStats) continue;
       for (const b of s.bans) C(b).bans++;
       for (const role of ROLES) {
         const p = s.comp[role]; if (!p) continue;
@@ -127,6 +229,7 @@ function buildStats(indices) {
         if (g.durationMin > LONG) { c.longG++; if (s.win) c.longW++; }
       }
     }
+    if (!forChampStats) continue;          // đối đầu từng đường cũng chỉ lấy giải khu vực
     for (const role of ROLES) {
       const a = g.blue.comp[role], b = g.red.comp[role];
       if (!a || !b) continue;
@@ -140,10 +243,18 @@ function buildStats(indices) {
       add(b.champion, a.champion, g.red.win);
     }
   }
-  const n = indices.length;
-  const avgKills = mean(indices.map(i => games[i].blue.kills + games[i].red.kills));
-  const avgDur = mean(indices.map(i => games[i].durationMin));
-  return { champ, matchups, team, n, avgKills, avgDur };
+  // n/avgKills/avgDur dùng làm mốc dự phòng cho chỉ số cấp tướng nên tính trên
+  // cùng bể với thống kê tướng (giải khu vực), không trộn giải quốc tế vào.
+  const statIdx = indices.filter(i => !isInternational(games[i]));
+  const base = statIdx.length ? statIdx : indices;
+  const n = base.length;
+  const avgKills = mean(base.map(i => games[i].blue.kills + games[i].red.kills));
+  const avgDur = mean(base.map(i => games[i].durationMin));
+  // Rating phải tính TRONG ĐÂY để mỗi fold CV tự ước lượng lại từ fold huấn luyện
+  // của nó — tính một lần bên ngoài rồi dùng chung là rò rỉ dữ liệu.
+  const home = homeRegions(indices);
+  const rating = fitRating(indices, home);
+  return { champ, matchups, team, n, avgKills, avgDur, rating, home };
 }
 
 const ATTR_DEFAULT = { engage: 0, frontline: 0, cc: 0, dmg: 'AD', scaling: 0, mobility: 0, ranged: 0 };
@@ -174,6 +285,7 @@ function sideFeatures(comp, teamName, st) {
     pace: nPace ? paceSum / nPace : st.avgKills,
     lengthLean: nPace ? durSum / nPace : st.avgDur,
     teamWr: tw ? (tw.wins + TEAM_K * 0.5) / (tw.games + TEAM_K) : 0.5,
+    teamRating: teamName ? st.rating.get(teamName) : 0,
   };
 }
 
@@ -184,9 +296,11 @@ function rowFor(g, st) {
   const R = sideFeatures(compOf(g.red), g.red.team, st);
   return {
     draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility, B.sumWr - R.sumWr],
-    withTeam: [B.teamWr - R.teamWr, B.frontline - R.frontline, B.ranged - R.ranged,
+    withTeam: [B.teamWr - R.teamWr, B.teamRating - R.teamRating,
+      B.frontline - R.frontline, B.ranged - R.ranged,
       B.mobility - R.mobility, B.sumWr - R.sumWr],
     kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
+    intl: isInternational(g),
     y: g.blue.win ? 1 : 0,
     totalKills: g.blue.kills + g.red.kills,
     duration: g.durationMin,
@@ -258,11 +372,11 @@ for (const { train, test } of kfold(N, 5)) {
 
   const sD = standardise(tr.map(r => r.draft));
   const mD = fitLogistic(sD.Z, y, LAMBDA_WIN);
-  te.forEach(r => cv.draft.push({ p: predLogit(mD, applyStd(r.draft, sD.mu, sD.sg)), y: r.y }));
+  te.forEach((r, k) => cv.draft.push({ p: predLogit(mD, applyStd(r.draft, sD.mu, sD.sg)), y: r.y, intl: r.intl }));
 
   const sT = standardise(tr.map(r => r.withTeam));
   const mT = fitLogistic(sT.Z, y, LAMBDA_WIN);
-  te.forEach(r => cv.withTeam.push({ p: predLogit(mT, applyStd(r.withTeam, sT.mu, sT.sg)), y: r.y }));
+  te.forEach(r => cv.withTeam.push({ p: predLogit(mT, applyStd(r.withTeam, sT.mu, sT.sg)), y: r.y, intl: r.intl }));
 
   const sK = standardise(tr.map(r => r.kill));
   const mK = fitLinear(sK.Z, tr.map(r => r.totalKills), LAMBDA_KILL);
@@ -296,8 +410,19 @@ const calib = arr => {
   return bins.map(b => ({ range: [b.lo, b.hi], n: b.n, actual: b.n ? b.wins / b.n : null }));
 };
 
-const draftMetrics = { ...clsMetrics(cv.draft), calibration: calib(cv.draft) };
-const teamMetrics = { ...clsMetrics(cv.withTeam), calibration: calib(cv.withTeam) };
+/* Tách chỉ số theo LOẠI trận: trộn chung thì khó đọc, vì trận quốc tế giữa các đội
+   hàng đầu thế giới khó đoán hơn hẳn trận vòng bảng khu vực. Người dùng hàng ngày
+   xem trận khu vực; đến CKTG mới xem cột quốc tế. */
+const splitMetrics = arr => {
+  const reg = arr.filter(r => !r.intl), intl = arr.filter(r => r.intl);
+  return {
+    ...clsMetrics(arr), calibration: calib(arr),
+    regional: reg.length >= 30 ? { n: reg.length, ...clsMetrics(reg) } : null,
+    international: intl.length >= 30 ? { n: intl.length, ...clsMetrics(intl) } : null,
+  };
+};
+const draftMetrics = splitMetrics(cv.draft);
+const teamMetrics = splitMetrics(cv.withTeam);
 const killMetrics = {
   cvMAE: mean(cv.kill.map(r => Math.abs(r.pred - r.act))),
   baselineMAE: mean(allK.map(v => Math.abs(v - mean(allK)))),
@@ -365,8 +490,17 @@ for (const role of ROLES) {
 }
 const teams = {};
 for (const t of Object.values(stats.team)) {
-  teams[t.name] = { name: t.name, league: t.league, games: t.games, wins: t.wins, wr: t.wins / t.games,
-    wrShrunk: (t.wins + TEAM_K * 0.5) / (t.games + TEAM_K) };
+  const home = stats.home[t.name] || null;          // khu vực nhà (giải quốc tế không tính)
+  teams[t.name] = { name: t.name, league: t.league, homeRegion: home,
+    games: t.games, wins: t.wins, wr: t.wins / t.games,
+    wrShrunk: (t.wins + TEAM_K * 0.5) / (t.games + TEAM_K),
+    /* rating: thang đo TOÀN CẦU, so sánh được giữa các khu vực (khác hẳn wr).
+       ratingDev = lệch riêng của đội so với mặt bằng khu vực mình. */
+    rating: stats.rating.get(t.name),
+    ratingDev: stats.rating.teamDev[t.name] || 0,
+    intlGames: games.filter(g => (g.tier || 'major') === 'international' &&
+      (g.blue.team === t.name || g.red.team === t.name)).length,
+  };
 }
 let matchupPairs = 0, matchupWithData = 0;
 for (const role of Object.keys(stats.matchups))
@@ -469,6 +603,35 @@ const out = {
        chỉ sumWr              0.6104   0.6044  0.6010  0.5925
        chỉ kit (không sumWr)  0.5984   0.5984  0.5984  0.5984
        ĐANG DÙNG (kit+sumWr)  0.6103   0.6047  0.6022  0.5934   <- tốt nhất mọi mức */
+    /* Hiệu ứng khu vực học được từ các trận quốc tế. Đơn vị logit: chênh 1.0 nghĩa
+       là đội trung bình khu vực này thắng đội trung bình khu vực kia ~73%.
+       Chỉ đáng tin khi có đủ trận liên khu vực — xem crossRegionAudit.linkCounts. */
+    regionEffects: stats.rating.regionEffect,
+    sideAdvantageLogit: stats.rating.side,
+    crossRegionAudit: (() => {
+      const home = stats.home, regionOf = t => home[t] || 'OTHER';
+      const links = {};
+      let cross = 0;
+      for (const g of games) {
+        const a = regionOf(g.blue.team), b = regionOf(g.red.team);
+        if (a === b) continue;
+        cross++;
+        const k = [a, b].sort().join('-');
+        links[k] = (links[k] || 0) + 1;
+      }
+      const teamsAll = [...new Set(games.flatMap(g => [g.blue.team, g.red.team]))];
+      const intlTeams = new Set(games.filter(g => (g.tier || 'major') === 'international')
+        .flatMap(g => [g.blue.team, g.red.team]));
+      return {
+        crossRegionGames: cross, linkCounts: links,
+        internationalGames: games.filter(g => (g.tier || 'major') === 'international').length,
+        teamsWithIntlPlay: [...intlTeams].length, teamsTotal: teamsAll.length,
+        /* Mô phỏng CKTG: giấu sạch thành tích quốc tế của cả 2 đội rồi dự đoán
+           chính trận đó (155 trận). AUC đo được: */
+        worldsSimulation: { winRateOnly: 0.522, ratingFlat: 0.606, ratingHierarchical: 0.670,
+          note: 'tỉ lệ thắng thô gần như tung đồng xu khi đội chưa từng ra quốc tế' },
+      };
+    })(),
     newChampAudit: {
       method: 'walk-forward 339 trận, che win-rate tướng lúc dự đoán',
       rates: [0, 0.1, 0.2, 0.4],
@@ -486,7 +649,7 @@ const out = {
   attrsMissing: Object.keys(champions).filter(n => !ATTRS[n]),
   models: {
     draft: { features: ['frontline', 'ranged', 'mobility', 'sumWr'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
-    withTeam: { features: ['teamStrength', 'frontline', 'ranged', 'mobility', 'sumWr'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    withTeam: { features: ['teamStrength', 'teamRating', 'frontline', 'ranged', 'mobility', 'sumWr'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
     kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
   },
 };

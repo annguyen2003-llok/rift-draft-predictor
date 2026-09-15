@@ -154,6 +154,16 @@ module.exports = {
   'Smolder':       A(0, 0, 1, 'Mixed', 0.9, 1, 1),
 
   // ---------- remaining champions seen in the scanned games ----------
+  /* 2026-09-15: 8 tướng dưới đây xuất hiện khi nạp thêm các giải QUỐC TẾ (MSI,
+     EWC, First Stand). First Stand đá patch 16.5 nên meta khác hẳn giải hè. */
+  'Gangplank':     A(0, 1, 1, 'AD',    0.8, 1, 0),   // thùng dầu là CC gián tiếp; crit scale rất mạnh cuối trận
+  'Morgana':       A(0, 0, 2, 'AP',    0.2, 0, 1),   // trói + ult khoá, nhưng không tự mở giao tranh
+  'Veigar':        A(0, 0, 2, 'AP',    1.0, 0, 1),   // lồng CC; cộng dồn sức mạnh vô hạn -> hypercarry
+  'Garen':         A(0, 1, 1, 'AD',   -0.2, 1, 0),   // không có công cụ bắt; mạnh sớm, đuối cuối
+  'Senna':         A(0, 0, 1, 'AD',    0.6, 0, 1),   // cộng dồn hồn, tầm đánh tăng dần -> mạnh dần
+  'Viego':         A(0, 1, 1, 'AD',    0.5, 2, 0),   // chiếm xác giúp giao tranh kéo dài có lợi
+  'RekSai':        A(1, 1, 1, 'AD',   -0.4, 2, 0),   // ult bắt tầm xa = engage; rừng mạnh sớm
+  'Sett':          A(1, 2, 2, 'AD',    0.1, 1, 0),   // W/E kéo + tuyến đầu dày
   'Udyr':          A(0, 1, 2, 'Mixed', 0.2, 1, 0),
   'Belveth':       A(1, 1, 2, 'AD',    0.6, 3, 0),
   'Diana':         A(1, 1, 2, 'AP',    0.2, 2, 0),

@@ -14,14 +14,29 @@ const CACHE = path.join(__dirname, 'cache');
 fs.mkdirSync(CACHE, { recursive: true });
 
 const CUTOFF = process.env.CUTOFF || "2026-08-06";   // đổi bằng config.js hoặc biến môi trường
+
+/* tier:
+     'major'         — giải khu vực lớn, nguồn chính cho thống kê tướng
+     'international' — giải LIÊN KHU VỰC. Đây là loại trận DUY NHẤT cho phép so sánh
+                       sức mạnh giữa các khu vực với nhau. Không có chúng, đồ thị đối
+                       đầu rời thành các cụm không nối nhau và "Gen.G 70% (LCK)" với
+                       "Karmine Corp 79% (LEC)" là hai con số đo bằng hai thước khác
+                       nhau, về nguyên tắc không so sánh được.
+     'minor'         — giải khu vực nhỏ; thêm khi cần đội đó cho CKTG.
+   from: mốc ngày riêng, ghi đè CUTOFF. Giải quốc tế diễn ra tháng 3-7/2026, nằm
+   NGOÀI cửa sổ 8 tuần gần đây, nên nếu dùng CUTOFF chung thì bị loại sạch. */
 const TOURNAMENTS = [
-  { league: 'LCK', name: 'LCK 2026 Rounds 3-4' },
-  { league: 'LCK', name: 'LCK 2026 Season Play-In' },
-  { league: 'LCK', name: 'LCK 2026 Season Playoffs' },
-  { league: 'LPL', name: 'LPL 2026 Split 3' },
-  { league: 'LPL', name: 'LPL 2026 Grand Finals' },
-  { league: 'LEC', name: 'LEC 2026 Summer Season' },
-  { league: 'LEC', name: 'LEC 2026 Summer Playoffs' },
+  { league: 'LCK', name: 'LCK 2026 Rounds 3-4', tier: 'major' },
+  { league: 'LCK', name: 'LCK 2026 Season Play-In', tier: 'major' },
+  { league: 'LCK', name: 'LCK 2026 Season Playoffs', tier: 'major' },
+  { league: 'LPL', name: 'LPL 2026 Split 3', tier: 'major' },
+  { league: 'LPL', name: 'LPL 2026 Grand Finals', tier: 'major' },
+  { league: 'LEC', name: 'LEC 2026 Summer Season', tier: 'major' },
+  { league: 'LEC', name: 'LEC 2026 Summer Playoffs', tier: 'major' },
+
+  { league: 'INT', name: 'MSI 2026', tier: 'international', from: '2026-01-01' },
+  { league: 'INT', name: 'Esports World Cup 2026', tier: 'international', from: '2026-01-01' },
+  { league: 'INT', name: '2026 First Stand', tier: 'international', from: '2026-01-01' },
 ];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -81,6 +96,7 @@ function parseMatchlist(html, tour) {
     if (!score || !date) continue;
     out.push({
       league: tour.league,
+      tier: tour.tier || 'major',
       tournament: tour.name,
       seriesId: +link[1],
       matchup: decode(link[2]),
@@ -109,12 +125,13 @@ async function main() {
     if (!html) {
       console.error('FAILED matchlist', t.name, '— giữ nguyên series cũ của giải này (nếu có)');
       anyHardFail = true;
-      allSeries.push(...oldSeries.filter(s => s.tournament === t.name && s.date >= CUTOFF));
+      allSeries.push(...oldSeries.filter(s => s.tournament === t.name && s.date >= (t.from || CUTOFF)));
       continue;
     }
     const series = parseMatchlist(html, t);
-    const recent = series.filter(s => s.date >= CUTOFF);
-    console.error(`${t.name}: ${series.length} series total, ${recent.length} since ${CUTOFF}`);
+    const floor = t.from || CUTOFF;          // giải quốc tế có mốc riêng, xem chú thích TOURNAMENTS
+    const recent = series.filter(s => s.date >= floor);
+    console.error(`${t.name}: ${series.length} series total, ${recent.length} since ${floor}`);
     allSeries.push(...recent);
     await sleep(300);   // lịch sự với gol.gg, tránh dồn dập request
   }
@@ -163,7 +180,7 @@ async function main() {
     const teams = [g.blue.team, g.red.team].join('|');
     newGames.push({
       ...g,
-      league: s.league, tournament: s.tournament, date: s.date,
+      league: s.league, tier: s.tier || 'major', tournament: s.tournament, date: s.date,
       week: s.week, seriesId: s.seriesId, gameInSeries: i + 1,
       integrity: {
         picksMatchScoreboard: g.warnings.length === 0,

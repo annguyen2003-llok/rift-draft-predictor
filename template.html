@@ -432,7 +432,11 @@ function sideFeatures(comp, teamName){
     mixedness: 1 - Math.abs(ad-ap)/(ad+ap||1),
     pace: nPace ? paceSum/nPace : DATA.baselines.avgKills,
     lengthLean: nPace ? durSum/nPace : DATA.baselines.avgDuration,
-    teamWr: t ? t.wrShrunk : 0.5, teamName};
+    teamWr: t ? t.wrShrunk : 0.5,
+    /* rating: thang đo TOÀN CẦU (so sánh được giữa các khu vực). Đội không rõ ->
+       0 = mức trung bình toàn cầu, không phải 0.5 như tỉ lệ thắng. */
+    teamRating: t && typeof t.rating === "number" ? t.rating : 0,
+    teamName};
 }
 function runModel(model, raw){
   let z = model.b;
@@ -453,19 +457,29 @@ function predict(){
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
   /* Thứ tự PHẢI khớp models.*.features trong finalize.js */
   const raw = useTeam
-    ? [B.teamWr-R.teamWr, B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr]
+    ? [B.teamWr-R.teamWr, B.teamRating-R.teamRating, B.frontline-R.frontline,
+       B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr]
     : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr];
   return {...runModel(model, raw), B, R, model, useTeam};
 }
 
 /* ---------- rendering ---------- */
 function renderTeamPickers(){
+  /* Sắp theo RATING TOÀN CẦU, không theo tỉ lệ thắng: tỉ lệ thắng chỉ so sánh được
+     trong cùng một giải (mỗi giải luôn trung bình đúng 50%), nên xếp hạng theo nó
+     sẽ đặt đội đầu bảng giải yếu lên trên đội giữa bảng giải mạnh. */
+  const hasRating = Object.values(DATA.teams).some(t => typeof t.rating === "number");
   const list = Object.values(DATA.teams).sort((a,b) =>
-    a.league.localeCompare(b.league) || b.games-a.games);
+    hasRating ? (b.rating||0)-(a.rating||0) : (a.homeRegion||a.league||"").localeCompare(b.homeRegion||b.league||"") || b.games-a.games);
   for(const side of ["blue","red"]){
     const sel = document.getElementById("team-"+side);
     sel.innerHTML = `<option value="">— chưa chọn đội (chỉ dùng đội hình) —</option>` +
-      list.map(t => `<option value="${t.name}">${t.league} · ${t.name} — ${pct(t.wr)} (${t.wins}/${t.games})</option>`).join("");
+      list.map(t => {
+        const rg = t.homeRegion || t.league;
+        const rt = typeof t.rating === "number" ? ` · đẳng cấp ${t.rating>=0?"+":""}${t.rating.toFixed(2)}` : "";
+        const intl = t.intlGames ? ` · ${t.intlGames} trận quốc tế` : "";
+        return `<option value="${t.name}">${rg} · ${t.name} — ${pct(t.wr)} trong giải${rt}${intl}</option>`;
+      }).join("");
     sel.value = state[side === "blue" ? "teamBlue" : "teamRed"];
   }
 }
@@ -590,6 +604,7 @@ const FEAT_LABEL = {
   frontline:"Độ dày tuyến đầu",
   ranged:"Số tướng tầm xa",
   mobility:"Tổng độ cơ động",
+  teamRating:"Đẳng cấp đội (thang toàn cầu)",
 };
 
 /* Chốt an toàn: thứ tự đặc trưng ở đây phải khớp models.*.features do finalize.js
@@ -598,7 +613,7 @@ const FEAT_LABEL = {
 (function checkFeatureOrder(){
   const expect = {
     draft: ["frontline","ranged","mobility","sumWr"],
-    withTeam: ["teamStrength","frontline","ranged","mobility","sumWr"],
+    withTeam: ["teamStrength","teamRating","frontline","ranged","mobility","sumWr"],
   };
   for(const [key, want] of Object.entries(expect)){
     const got = (DATA.models[key] && DATA.models[key].features) || [];
@@ -956,7 +971,44 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     (tuyến đầu 0,06 so với sức mạnh đội 0,48). Ngoài ra hiệu ứng kit thay đổi theo meta: trong 354 trận
     đầu nó chưa đủ rõ để được chọn, chỉ mạnh lên ở giai đoạn gần đây — mô hình huấn luyện lại mỗi sáng
     nên bám theo được, nhưng đừng coi "tuyến đầu luôn thắng" là chân lý vĩnh viễn. Mọi tướng dưới 5 trận
-    vẫn được đánh dấu "mẫu quá nhỏ" ở bảng từng đường.</p>`;
+    vẫn được đánh dấu "mẫu quá nhỏ" ở bảng từng đường.</p>
+
+    <p><b>Chuẩn bị cho CKTG: so sánh sức mạnh GIỮA các khu vực (2026-09-15).</b>
+    Tỉ lệ thắng của đội <b>không</b> so sánh được giữa hai giải khác nhau. Mỗi giải có tổng thắng
+    bằng tổng thua nên trung bình luôn đúng 50% — "Gen.G 70% (LCK)" và "Karmine Corp 79% (LEC)"
+    là hai con số đo bằng hai thước hoàn toàn khác nhau. Về mặt toán học, khi các khu vực không
+    gặp nhau thì đồ thị đối đầu rời thành những cụm tách biệt và sức mạnh giữa các cụm là
+    <i>không xác định được</i>, không phải "khó đo".</p>
+
+    <p>Đã nạp thêm <b>${DATA.meta.crossRegionAudit ? DATA.meta.crossRegionAudit.internationalGames : 0} trận giải quốc tế</b>
+    (MSI 2026, Esports World Cup 2026, First Stand 2026) để nối các khu vực, rồi thay cách đo sức mạnh
+    đội bằng mô hình <b>Bradley-Terry phân cấp</b>: sức mạnh = hiệu ứng chung của khu vực + độ lệch
+    riêng của đội. Tách hai tầng là điều cốt yếu — nó cho phép cả một khu vực mạnh lên tập thể, nên
+    một đội LCK chưa từng ra quốc tế vẫn thừa hưởng mặt bằng LCK thay vì bị coi ngang đội cùng tỉ lệ
+    thắng ở khu vực yếu hơn.</p>
+
+    <p><b>Kiểm định (mô phỏng đúng cảnh CKTG):</b> giấu sạch thành tích quốc tế của cả hai đội rồi bắt
+    mô hình dự đoán chính trận đó — đúng tình huống một đội lần đầu dự CKTG (155 trận):</p>
+    <div class="scroll-x"><table class="data"><thead><tr><th>Cách đo sức mạnh đội</th><th>AUC</th><th>Kết luận</th></tr></thead>
+    <tbody>
+      <tr><td>Tỉ lệ thắng thô (cách cũ)</td><td>0,522</td><td>≈ tung đồng xu — <b>vô dụng</b></td></tr>
+      <tr><td>Rating phẳng</td><td>0,606</td><td>khá hơn rõ</td></tr>
+      <tr><td><b>Rating phân cấp (đang dùng)</b></td><td><b>0,670</b></td><td>bootstrap KTC 95% [0,013; 0,275] — khác biệt thật</td></tr>
+    </tbody></table></div>
+    <p>Hiệu ứng khu vực học được từ dữ liệu (đơn vị logit, chênh 1,0 ≈ đội trung bình khu vực này thắng
+    đội trung bình khu vực kia 73%):
+    ${DATA.meta.regionEffects ? Object.entries(DATA.meta.regionEffects).sort((a,b)=>b[1]-a[1])
+      .map(([k,v])=>`<b>${k}</b> ${v>=0?"+":""}${v.toFixed(2)}`).join(" · ") : "—"}.
+    Hệ quả đáng chú ý: một đội LCK có tỉ lệ thắng dưới 50% trong nước vẫn có thể được xếp trên đội đầu
+    bảng LEC — và đó là điều tỉ lệ thắng thô <i>không bao giờ</i> nói ra được.</p>
+
+    <p><b>Giới hạn phải nói rõ.</b> Chỉ ${DATA.meta.crossRegionAudit ? DATA.meta.crossRegionAudit.crossRegionGames : 0}
+    trận liên khu vực là cơ sở cho toàn bộ phần hiệu chỉnh này, và các đội dự giải quốc tế là đội
+    <i>mạnh nhất</i> khu vực — mô hình đang giả định hiệu ứng khu vực áp dụng đều cho cả khu vực, điều
+    này có thể sai nếu độ sâu các khu vực khác nhau. Ngoài ra thống kê tướng <b>không</b> lấy từ giải
+    quốc tế (đo thấy trận cũ khác patch làm hại: AUC 0,544 xuống 0,519), chỉ rating mới dùng.
+    Và ở trận quốc tế, chế độ "chỉ đội hình" đo được AUC 0,454 — <b>tệ hơn đoán bừa</b>, nên ở CKTG
+    bắt buộc phải chọn đội thì con số mới có nghĩa.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 

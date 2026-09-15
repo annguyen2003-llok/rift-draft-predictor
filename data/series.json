@@ -1,6 +1,644 @@
 [
  {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75432,
+  "matchup": "BLG vs BNK FearX",
+  "teamRight": "BNK FearX",
+  "teamLeft": "Bilibili Gaming",
+  "games": 5,
+  "week": "GROUPS.DAY1",
+  "patch": "16.5",
+  "date": "2026-03-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75437,
+  "matchup": "G2 Esports vs TSW",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "G2 Esports",
+  "games": 3,
+  "week": "GROUPS.DAY1",
+  "patch": "16.5",
+  "date": "2026-03-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75545,
+  "matchup": "Gen.G vs JD Gaming",
+  "teamRight": "JD Gaming",
+  "teamLeft": "Gen.G",
+  "games": 3,
+  "week": "GROUPS.DAY2",
+  "patch": "16.5",
+  "date": "2026-03-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75550,
+  "matchup": "LYON vs LOUD",
+  "teamRight": "LYON",
+  "teamLeft": "LOUD",
+  "games": 5,
+  "week": "GROUPS.DAY2",
+  "patch": "16.5",
+  "date": "2026-03-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75555,
+  "matchup": "BLG vs G2 Esports",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "G2 Esports",
+  "games": 3,
+  "week": "GROUPS.DAY3",
+  "patch": "16.5",
+  "date": "2026-03-18"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75560,
+  "matchup": "BNK FearX vs TSW",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "BNK FearX",
+  "games": 3,
+  "week": "GROUPS.DAY3",
+  "patch": "16.5",
+  "date": "2026-03-18"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75563,
+  "matchup": "Gen.G vs LYON",
+  "teamRight": "LYON",
+  "teamLeft": "Gen.G",
+  "games": 3,
+  "week": "GROUPS.DAY4",
+  "patch": "16.5",
+  "date": "2026-03-19"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75568,
+  "matchup": "JD Gaming vs LOUD",
+  "teamRight": "JD Gaming",
+  "teamLeft": "LOUD",
+  "games": 3,
+  "week": "GROUPS.DAY4",
+  "patch": "16.5",
+  "date": "2026-03-19"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75571,
+  "matchup": "G2 Esports vs BNK FearX",
+  "teamRight": "BNK FearX",
+  "teamLeft": "G2 Esports",
+  "games": 3,
+  "week": "GROUPS.DAY5",
+  "patch": "16.5",
+  "date": "2026-03-20"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75576,
+  "matchup": "LYON vs JD Gaming",
+  "teamRight": "JD Gaming",
+  "teamLeft": "LYON",
+  "games": 4,
+  "week": "GROUPS.DAY5",
+  "patch": "16.5",
+  "date": "2026-03-20"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75580,
+  "matchup": "Gen.G vs G2 Esports",
+  "teamRight": "G2 Esports",
+  "teamLeft": "Gen.G",
+  "games": 3,
+  "week": "SEMIFINALS",
+  "patch": "16.5",
+  "date": "2026-03-21"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75585,
+  "matchup": "BLG vs JD Gaming",
+  "teamRight": "JD Gaming",
+  "teamLeft": "Bilibili Gaming",
+  "games": 3,
+  "week": "SEMIFINALS",
+  "patch": "16.5",
+  "date": "2026-03-21"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "2026 First Stand",
+  "seriesId": 75588,
+  "matchup": "G2 Esports vs BLG",
+  "teamRight": "G2 Esports",
+  "teamLeft": "Bilibili Gaming",
+  "games": 4,
+  "week": "FINALS",
+  "patch": "16.5",
+  "date": "2026-03-22"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79526,
+  "matchup": "T1 vs Team Liquid",
+  "teamRight": "T1",
+  "teamLeft": "Team Liquid",
+  "games": 3,
+  "week": "PLAY-IN.DAY1",
+  "patch": "16.13",
+  "date": "2026-06-28"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79531,
+  "matchup": "KC vs DCG",
+  "teamRight": "Deep Cross Gaming",
+  "teamLeft": "Karmine Corp",
+  "games": 3,
+  "week": "PLAY-IN.DAY1",
+  "patch": "16.13",
+  "date": "2026-06-28"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79534,
+  "matchup": "KC vs T1",
+  "teamRight": "T1",
+  "teamLeft": "Karmine Corp",
+  "games": 3,
+  "week": "PLAY-IN.DAY2",
+  "patch": "16.13",
+  "date": "2026-06-29"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79539,
+  "matchup": "DCG vs Team Liquid",
+  "teamRight": "Team Liquid",
+  "teamLeft": "Deep Cross Gaming",
+  "games": 3,
+  "week": "PLAY-IN.DAY2",
+  "patch": "16.13",
+  "date": "2026-06-29"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79542,
+  "matchup": "KC vs Team Liquid",
+  "teamRight": "Team Liquid",
+  "teamLeft": "Karmine Corp",
+  "games": 3,
+  "week": "PLAY-IN.DAY3",
+  "patch": "16.13",
+  "date": "2026-06-30"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79574,
+  "matchup": "T1 vs Team Liquid",
+  "teamRight": "T1",
+  "teamLeft": "Team Liquid",
+  "games": 3,
+  "week": "PLAY-IN.DAY4",
+  "patch": "16.13",
+  "date": "2026-07-01"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79603,
+  "matchup": "HLE vs TSW",
+  "teamRight": "Hanwha Life Esports",
+  "teamLeft": "Team Secret Whales",
+  "games": 3,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-03"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79608,
+  "matchup": "G2 Esports vs Top Esports",
+  "teamRight": "Top Esports",
+  "teamLeft": "G2 Esports",
+  "games": 5,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-03"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79613,
+  "matchup": "LYON vs FURIA",
+  "teamRight": "FURIA",
+  "teamLeft": "LYON",
+  "games": 3,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-04"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79618,
+  "matchup": "BLG vs T1",
+  "teamRight": "T1",
+  "teamLeft": "Bilibili Gaming",
+  "games": 5,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-04"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79686,
+  "matchup": "TSW vs Top Esports",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "Top Esports",
+  "games": 4,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-05"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79696,
+  "matchup": "HLE vs G2 Esports",
+  "teamRight": "Hanwha Life Esports",
+  "teamLeft": "G2 Esports",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.13",
+  "date": "2026-07-05"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79691,
+  "matchup": "T1 vs FURIA",
+  "teamRight": "T1",
+  "teamLeft": "FURIA",
+  "games": 3,
+  "week": "ROUND1",
+  "patch": "16.13",
+  "date": "2026-07-06"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79701,
+  "matchup": "BLG vs LYON",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "LYON",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.13",
+  "date": "2026-07-06"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79741,
+  "matchup": "LYON vs TSW",
+  "teamRight": "LYON",
+  "teamLeft": "Team Secret Whales",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.13",
+  "date": "2026-07-08"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79746,
+  "matchup": "G2 Esports vs T1",
+  "teamRight": "G2 Esports",
+  "teamLeft": "T1",
+  "games": 4,
+  "week": "ROUND2",
+  "patch": "16.13",
+  "date": "2026-07-08"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79751,
+  "matchup": "BLG vs HLE",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 4,
+  "week": "ROUND4",
+  "patch": "16.13",
+  "date": "2026-07-09"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79776,
+  "matchup": "G2 Esports vs LYON",
+  "teamRight": "G2 Esports",
+  "teamLeft": "LYON",
+  "games": 3,
+  "week": "ROUND3",
+  "patch": "16.13",
+  "date": "2026-07-10"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79792,
+  "matchup": "HLE vs LYON",
+  "teamRight": "LYON",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 5,
+  "week": "ROUND4",
+  "patch": "16.13",
+  "date": "2026-07-11"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "MSI 2026",
+  "seriesId": 79840,
+  "matchup": "BLG vs HLE",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 5,
+  "week": "FINALS",
+  "patch": "16.13",
+  "date": "2026-07-12"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79913,
+  "matchup": "TS vs KC",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "Team Secret Whales",
+  "games": 3,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-15"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79916,
+  "matchup": "MKOI vs GAM Esports",
+  "teamRight": "GAM Esports",
+  "teamLeft": "Movistar KOI",
+  "games": 3,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-15"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79919,
+  "matchup": "FURIA vs Dplus KIA",
+  "teamRight": "FURIA",
+  "teamLeft": "Dplus KIA",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-15"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79922,
+  "matchup": "Los Grandes vs LYON",
+  "teamRight": "LYON",
+  "teamLeft": "Los Grandes",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-15"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79929,
+  "matchup": "G2 Esports vs Dplus KIA",
+  "teamRight": "Dplus KIA",
+  "teamLeft": "G2 Esports",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79932,
+  "matchup": "JD Gaming vs Los Grandes",
+  "teamRight": "JD Gaming",
+  "teamLeft": "Los Grandes",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79935,
+  "matchup": "Sentinels vs KC",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "Sentinels",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79938,
+  "matchup": "T1 vs GAM Esports",
+  "teamRight": "GAM Esports",
+  "teamLeft": "T1",
+  "games": 2,
+  "week": "GROUPSTAGE",
+  "patch": "16.13",
+  "date": "2026-07-16"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79953,
+  "matchup": "HLE vs T1",
+  "teamRight": "T1",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 2,
+  "week": "QUARTERFINALS",
+  "patch": "16.13",
+  "date": "2026-07-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79956,
+  "matchup": "AGAL vs KC",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "Anyone s Legend",
+  "games": 2,
+  "week": "QUARTERFINALS",
+  "patch": "16.13",
+  "date": "2026-07-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79959,
+  "matchup": "Gen.G vs JD Gaming",
+  "teamRight": "Gen.G",
+  "teamLeft": "JD Gaming",
+  "games": 2,
+  "week": "QUARTERFINALS",
+  "patch": "16.13",
+  "date": "2026-07-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79962,
+  "matchup": "BLG vs Dplus KIA",
+  "teamRight": "Dplus KIA",
+  "teamLeft": "Bilibili Gaming",
+  "games": 3,
+  "week": "QUARTERFINALS",
+  "patch": "16.13",
+  "date": "2026-07-17"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79965,
+  "matchup": "T1 vs KC",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "T1",
+  "games": 3,
+  "week": "SEMIFINALS",
+  "patch": "16.13",
+  "date": "2026-07-18"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 79968,
+  "matchup": "Gen.G vs Dplus KIA",
+  "teamRight": "Gen.G",
+  "teamLeft": "Dplus KIA",
+  "games": 3,
+  "week": "SEMIFINALS",
+  "patch": "16.13",
+  "date": "2026-07-18"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 80047,
+  "matchup": "T1 vs Gen.G",
+  "teamRight": "Gen.G",
+  "teamLeft": "T1",
+  "games": 3,
+  "week": "3RD.PALCE",
+  "patch": "16.13",
+  "date": "2026-07-19"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "seriesId": 80050,
+  "matchup": "KC vs Dplus KIA",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "Dplus KIA",
+  "games": 3,
+  "week": "FINALS",
+  "patch": "16.13",
+  "date": "2026-07-19"
+ },
+ {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80183,
   "matchup": "LGD Gaming vs EDG",
@@ -13,6 +651,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80186,
   "matchup": "Top Esports vs Team WE",
@@ -25,6 +664,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80189,
   "matchup": "JD Gaming vs AGAL",
@@ -37,6 +677,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80192,
   "matchup": "BLG vs TT",
@@ -49,6 +690,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80195,
   "matchup": "AGAL vs LGD Gaming",
@@ -61,6 +703,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80198,
   "matchup": "Team WE vs JD Gaming",
@@ -73,6 +716,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80201,
   "matchup": "EDG vs BLG",
@@ -85,6 +729,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80337,
   "matchup": "G2 Esports vs MKOI",
@@ -97,6 +742,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80340,
   "matchup": "VIT vs KC",
@@ -109,6 +755,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80204,
   "matchup": "LGD Gaming vs Team WE",
@@ -121,6 +768,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80207,
   "matchup": "IG vs WBG",
@@ -133,6 +781,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80210,
   "matchup": "Top Esports vs TT",
@@ -145,6 +794,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80343,
   "matchup": "VIT vs G2 Esports",
@@ -157,6 +807,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80346,
   "matchup": "KC vs MKOI",
@@ -169,6 +820,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80213,
   "matchup": "LNG Esports vs NIP",
@@ -181,6 +833,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80216,
   "matchup": "TT vs EDG",
@@ -193,6 +846,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80219,
   "matchup": "AL vs BLG",
@@ -205,6 +859,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80349,
   "matchup": "MKOI vs VIT",
@@ -217,6 +872,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80352,
   "matchup": "G2 Esports vs KC",
@@ -229,6 +885,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80591,
   "matchup": "Top Esports vs AL",
@@ -241,6 +898,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80594,
   "matchup": "BLG vs LGD Gaming",
@@ -253,6 +911,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80654,
   "matchup": "Kiwoom DRX vs NS",
@@ -265,6 +924,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80657,
   "matchup": "T1 vs KT Rolster",
@@ -277,6 +937,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80597,
   "matchup": "NIP vs WBG",
@@ -289,6 +950,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80600,
   "matchup": "EDG vs Team WE",
@@ -301,6 +963,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80603,
   "matchup": "TT vs JD Gaming",
@@ -313,6 +976,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80660,
   "matchup": "DN SOOPers vs BNK FearX",
@@ -325,6 +989,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80743,
   "matchup": "HLE vs Dplus KIA",
@@ -337,6 +1002,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80514,
   "matchup": "VIT vs TH",
@@ -349,6 +1015,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80517,
   "matchup": "MKOI vs Shifters",
@@ -361,6 +1028,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80606,
   "matchup": "AL vs EDG",
@@ -373,6 +1041,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80609,
   "matchup": "Team WE vs BLG",
@@ -385,6 +1054,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80666,
   "matchup": "Gen.G vs T1",
@@ -397,6 +1067,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80669,
   "matchup": "BRO vs Kiwoom DRX",
@@ -409,6 +1080,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80520,
   "matchup": "GIANTX vs SK Gaming",
@@ -421,6 +1093,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80523,
   "matchup": "KC vs NAVI",
@@ -433,6 +1106,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80612,
   "matchup": "AL vs TT",
@@ -445,6 +1119,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80615,
   "matchup": "LGD Gaming vs Top Esports",
@@ -457,6 +1132,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80618,
   "matchup": "JD Gaming vs BLG",
@@ -469,6 +1145,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80672,
   "matchup": "NS vs BNK FearX",
@@ -481,6 +1158,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80675,
   "matchup": "Gen.G vs Dplus KIA",
@@ -493,6 +1171,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80526,
   "matchup": "SK Gaming vs G2 Esports",
@@ -505,6 +1184,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80621,
   "matchup": "TT vs Team WE",
@@ -517,6 +1197,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80624,
   "matchup": "LNG Esports vs IG",
@@ -529,6 +1210,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80627,
   "matchup": "Top Esports vs JD Gaming",
@@ -541,6 +1223,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80678,
   "matchup": "DN SOOPers vs BRO",
@@ -553,6 +1236,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 80681,
   "matchup": "KT Rolster vs HLE",
@@ -565,6 +1249,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81023,
   "matchup": "Fnatic vs MKOI",
@@ -577,6 +1262,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80532,
   "matchup": "NAVI vs Shifters",
@@ -589,6 +1275,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 80535,
   "matchup": "KC vs TH",
@@ -601,6 +1288,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80981,
   "matchup": "JD Gaming vs LGD Gaming",
@@ -613,6 +1301,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80984,
   "matchup": "EDG vs Top Esports",
@@ -625,6 +1314,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81026,
   "matchup": "BRO vs NS",
@@ -637,6 +1327,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81029,
   "matchup": "HLE vs Gen.G",
@@ -649,6 +1340,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80987,
   "matchup": "LGD Gaming vs TT",
@@ -661,6 +1353,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80990,
   "matchup": "IG vs NIP",
@@ -673,6 +1366,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80993,
   "matchup": "Team WE vs AL",
@@ -685,6 +1379,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81032,
   "matchup": "Kiwoom DRX vs DN SOOPers",
@@ -697,6 +1392,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81035,
   "matchup": "Dplus KIA vs T1",
@@ -709,6 +1405,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80996,
   "matchup": "JD Gaming vs EDG",
@@ -721,6 +1418,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 80999,
   "matchup": "Team WE vs TT",
@@ -733,6 +1431,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81002,
   "matchup": "BLG vs Top Esports",
@@ -745,6 +1444,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81038,
   "matchup": "KT Rolster vs Gen.G",
@@ -757,6 +1457,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81041,
   "matchup": "BNK FearX vs BRO",
@@ -769,6 +1470,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81096,
   "matchup": "Shifters vs GIANTX",
@@ -781,6 +1483,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81099,
   "matchup": "TH vs Fnatic",
@@ -793,6 +1496,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81005,
   "matchup": "WBG vs LNG Esports",
@@ -805,6 +1509,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81008,
   "matchup": "LGD Gaming vs AL",
@@ -817,6 +1522,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81011,
   "matchup": "BLG vs EDG",
@@ -829,6 +1535,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81044,
   "matchup": "T1 vs HLE",
@@ -841,6 +1548,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81047,
   "matchup": "NS vs DN SOOPers",
@@ -853,6 +1561,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81102,
   "matchup": "SK Gaming vs NAVI",
@@ -865,6 +1574,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81105,
   "matchup": "MKOI vs GIANTX",
@@ -877,6 +1587,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81014,
   "matchup": "IG vs LNG Esports",
@@ -889,6 +1600,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81017,
   "matchup": "TT vs Top Esports",
@@ -901,6 +1613,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81020,
   "matchup": "JD Gaming vs Team WE",
@@ -913,6 +1626,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81050,
   "matchup": "Dplus KIA vs KT Rolster",
@@ -925,6 +1639,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81053,
   "matchup": "BNK FearX vs Kiwoom DRX",
@@ -937,6 +1652,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81108,
   "matchup": "TH vs G2 Esports",
@@ -949,6 +1665,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81111,
   "matchup": "Fnatic vs KC",
@@ -961,6 +1678,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81114,
   "matchup": "SK Gaming vs VIT",
@@ -973,6 +1691,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81117,
   "matchup": "NAVI vs G2 Esports",
@@ -985,6 +1704,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81335,
   "matchup": "DN SOOPers vs NS",
@@ -997,6 +1717,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81338,
   "matchup": "KT Rolster vs Dplus KIA",
@@ -1009,6 +1730,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81370,
   "matchup": "EDG vs AL",
@@ -1021,6 +1743,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81373,
   "matchup": "BLG vs JD Gaming",
@@ -1033,6 +1756,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81341,
   "matchup": "Kiwoom DRX vs BNK FearX",
@@ -1045,6 +1769,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81344,
   "matchup": "Gen.G vs HLE",
@@ -1057,6 +1782,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81376,
   "matchup": "WBG vs NIP",
@@ -1069,6 +1795,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81379,
   "matchup": "Top Esports vs LGD Gaming",
@@ -1081,6 +1808,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81382,
   "matchup": "TT vs BLG",
@@ -1093,6 +1821,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81347,
   "matchup": "T1 vs Dplus KIA",
@@ -1105,6 +1834,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81350,
   "matchup": "NS vs BRO",
@@ -1117,6 +1847,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81385,
   "matchup": "EDG vs LGD Gaming",
@@ -1129,6 +1860,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81388,
   "matchup": "Team WE vs Top Esports",
@@ -1141,6 +1873,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81391,
   "matchup": "AL vs JD Gaming",
@@ -1153,6 +1886,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81478,
   "matchup": "Shifters vs SK Gaming",
@@ -1165,6 +1899,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81481,
   "matchup": "GIANTX vs VIT",
@@ -1177,6 +1912,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81353,
   "matchup": "HLE vs KT Rolster",
@@ -1189,6 +1925,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81356,
   "matchup": "BNK FearX vs DN SOOPers",
@@ -1201,6 +1938,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81394,
   "matchup": "NIP vs LNG Esports",
@@ -1213,6 +1951,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81397,
   "matchup": "TT vs AL",
@@ -1225,6 +1964,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81400,
   "matchup": "BLG vs Team WE",
@@ -1237,6 +1977,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81484,
   "matchup": "SK Gaming vs Fnatic",
@@ -1249,6 +1990,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81487,
   "matchup": "G2 Esports vs Shifters",
@@ -1261,6 +2003,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81359,
   "matchup": "T1 vs Gen.G",
@@ -1273,6 +2016,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81362,
   "matchup": "Kiwoom DRX vs BRO",
@@ -1285,6 +2029,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81403,
   "matchup": "LGD Gaming vs JD Gaming",
@@ -1297,6 +2042,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81406,
   "matchup": "WBG vs IG",
@@ -1309,6 +2055,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81409,
   "matchup": "Top Esports vs EDG",
@@ -1321,6 +2068,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81490,
   "matchup": "MKOI vs NAVI",
@@ -1333,6 +2081,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81493,
   "matchup": "G2 Esports vs Fnatic",
@@ -1345,6 +2094,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81496,
   "matchup": "NAVI vs TH",
@@ -1357,6 +2107,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81499,
   "matchup": "GIANTX vs KC",
@@ -1369,6 +2120,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81674,
   "matchup": "Gen.G vs KT Rolster",
@@ -1381,6 +2133,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81677,
   "matchup": "BRO vs DN SOOPers",
@@ -1393,6 +2146,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81706,
   "matchup": "Team WE vs EDG",
@@ -1405,6 +2159,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81907,
   "matchup": "LNG Esports vs WBG",
@@ -1417,6 +2172,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81910,
   "matchup": "AL vs Top Esports",
@@ -1429,6 +2185,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81844,
   "matchup": "Dplus KIA vs HLE",
@@ -1441,6 +2198,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81847,
   "matchup": "NS vs Kiwoom DRX",
@@ -1453,6 +2211,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81913,
   "matchup": "JD Gaming vs TT",
@@ -1465,6 +2224,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81916,
   "matchup": "LGD Gaming vs BLG",
@@ -1477,6 +2237,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81783,
   "matchup": "TH vs SK Gaming",
@@ -1489,6 +2250,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81786,
   "matchup": "VIT vs NAVI",
@@ -1501,6 +2263,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81850,
   "matchup": "BRO vs BNK FearX",
@@ -1513,6 +2276,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81853,
   "matchup": "KT Rolster vs T1",
@@ -1525,6 +2289,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81880,
   "matchup": "EDG vs TT",
@@ -1537,6 +2302,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81883,
   "matchup": "AL vs Team WE",
@@ -1549,6 +2315,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81886,
   "matchup": "Top Esports vs BLG",
@@ -1561,6 +2328,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81789,
   "matchup": "Fnatic vs Shifters",
@@ -1573,6 +2341,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81792,
   "matchup": "SK Gaming vs MKOI",
@@ -1585,6 +2354,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81856,
   "matchup": "Dplus KIA vs Gen.G",
@@ -1597,6 +2367,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81859,
   "matchup": "DN SOOPers vs Kiwoom DRX",
@@ -1609,6 +2380,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81889,
   "matchup": "Team WE vs LGD Gaming",
@@ -1621,6 +2393,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81892,
   "matchup": "NIP vs IG",
@@ -1633,6 +2406,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81895,
   "matchup": "JD Gaming vs Top Esports",
@@ -1645,6 +2419,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81795,
   "matchup": "TH vs GIANTX",
@@ -1657,6 +2432,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81798,
   "matchup": "Shifters vs KC",
@@ -1669,6 +2445,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81862,
   "matchup": "HLE vs T1",
@@ -1681,6 +2458,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
   "seriesId": 81865,
   "matchup": "BNK FearX vs NS",
@@ -1693,6 +2471,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81898,
   "matchup": "TT vs LGD Gaming",
@@ -1705,6 +2484,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81901,
   "matchup": "EDG vs JD Gaming",
@@ -1717,6 +2497,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Split 3",
   "seriesId": 81904,
   "matchup": "BLG vs AL",
@@ -1729,6 +2510,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81801,
   "matchup": "NAVI vs Fnatic",
@@ -1741,6 +2523,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 81804,
   "matchup": "GIANTX vs G2 Esports",
@@ -1753,6 +2536,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Play-In",
   "seriesId": 82129,
   "matchup": "KT Rolster vs BRO",
@@ -1765,6 +2549,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Play-In",
   "seriesId": 82134,
   "matchup": "NS vs BNK FearX",
@@ -1777,6 +2562,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82168,
   "matchup": "EDG vs NIP",
@@ -1789,6 +2575,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82173,
   "matchup": "TT vs IG",
@@ -1801,6 +2588,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82202,
   "matchup": "Shifters vs TH",
@@ -1813,6 +2601,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82205,
   "matchup": "VIT vs Fnatic",
@@ -1825,6 +2614,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Play-In",
   "seriesId": 82306,
   "matchup": "BRO vs BNK FearX",
@@ -1837,6 +2627,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82178,
   "matchup": "Top Esports vs LGD Gaming",
@@ -1849,6 +2640,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82208,
   "matchup": "KC vs SK Gaming",
@@ -1861,6 +2653,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82211,
   "matchup": "NAVI vs GIANTX",
@@ -1873,6 +2666,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82396,
   "matchup": "T1 vs BNK FearX",
@@ -1885,6 +2679,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82183,
   "matchup": "JD Gaming vs Team WE",
@@ -1897,6 +2692,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82214,
   "matchup": "Shifters vs VIT",
@@ -1909,6 +2705,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82217,
   "matchup": "MKOI vs TH",
@@ -1921,6 +2718,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Season",
   "seriesId": 82220,
   "matchup": "Fnatic vs GIANTX",
@@ -1933,6 +2731,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82383,
   "matchup": "Dplus KIA vs KT Rolster",
@@ -1945,6 +2744,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82414,
   "matchup": "Gen.G vs KT Rolster",
@@ -1957,6 +2757,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82419,
   "matchup": "HLE vs T1",
@@ -1969,6 +2770,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82409,
   "matchup": "BNK FearX vs Dplus KIA",
@@ -1981,6 +2783,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82434,
   "matchup": "BLG vs Team WE",
@@ -1993,6 +2796,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82439,
   "matchup": "AL vs LGD Gaming",
@@ -2005,6 +2809,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82620,
   "matchup": "KT Rolster vs Dplus KIA",
@@ -2017,6 +2822,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82424,
   "matchup": "IG vs Top Esports",
@@ -2029,6 +2835,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82429,
   "matchup": "NIP vs JD Gaming",
@@ -2041,6 +2848,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
   "seriesId": 82466,
   "matchup": "VIT vs G2 Esports",
@@ -2053,6 +2861,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
   "seriesId": 82471,
   "matchup": "KC vs GIANTX",
@@ -2065,6 +2874,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82625,
   "matchup": "Gen.G vs HLE",
@@ -2077,6 +2887,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82692,
   "matchup": "T1 vs Dplus KIA",
@@ -2089,6 +2900,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82715,
   "matchup": "IG vs Team WE",
@@ -2101,6 +2913,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82720,
   "matchup": "NIP vs LGD Gaming",
@@ -2113,6 +2926,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
   "seriesId": 82730,
   "matchup": "KC vs G2 Esports",
@@ -2125,6 +2939,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82725,
   "matchup": "AL vs BLG",
@@ -2137,6 +2952,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82793,
   "matchup": "IG vs LGD Gaming",
@@ -2149,6 +2965,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
   "seriesId": 82735,
   "matchup": "GIANTX vs NAVI",
@@ -2161,6 +2978,7 @@
  },
  {
   "league": "LEC",
+  "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
   "seriesId": 82740,
   "matchup": "VIT vs MKOI",
@@ -2173,6 +2991,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82745,
   "matchup": "HLE vs T1",
@@ -2185,6 +3004,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82836,
   "matchup": "AL vs IG",
@@ -2197,6 +3017,7 @@
  },
  {
   "league": "LCK",
+  "tier": "major",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82962,
   "matchup": "Gen.G vs HLE",
@@ -2209,6 +3030,7 @@
  },
  {
   "league": "LPL",
+  "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82967,
   "matchup": "BLG vs AL",
