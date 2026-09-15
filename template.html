@@ -469,8 +469,14 @@ function renderTeamPickers(){
      trong cùng một giải (mỗi giải luôn trung bình đúng 50%), nên xếp hạng theo nó
      sẽ đặt đội đầu bảng giải yếu lên trên đội giữa bảng giải mạnh. */
   const hasRating = Object.values(DATA.teams).some(t => typeof t.rating === "number");
-  let list = Object.values(DATA.teams).sort((a,b) =>
-    hasRating ? (b.rating||0)-(a.rating||0) : (a.homeRegion||a.league||"").localeCompare(b.homeRegion||b.league||"") || b.games-a.games);
+  let list = Object.values(DATA.teams)
+    /* Bỏ đội chưa rõ khu vực nhà (chỉ thấy ở giải quốc tế, chưa quét giải khu vực
+       của họ) — hiện "INT · Tên — 45% trong giải" trong dropdown vừa vô nghĩa vừa
+       gây hiểu lầm (không phải tỉ lệ thắng ở 1 giải thật). Dữ liệu của họ vẫn giữ
+       nguyên, vẫn đóng góp vào rating qua bucket "OTHER" — chỉ ẩn khỏi lựa chọn. */
+    .filter(t => t.homeRegion)
+    .sort((a,b) =>
+      hasRating ? (b.rating||0)-(a.rating||0) : (a.homeRegion||a.league||"").localeCompare(b.homeRegion||b.league||"") || b.games-a.games);
   /* Lọc theo danh sách CKTG đã chốt (data/worlds_teams.json), CHỈ ảnh hưởng
      dropdown — không đụng dữ liệu huấn luyện. Giải nào chưa chốt danh sách thì
      vẫn hiện đủ đội của giải đó như cũ. */
