@@ -2160,6 +2160,18 @@
   "date": "2026-09-11"
  },
  {
+  "league": "LEC",
+  "tournament": "LEC 2026 Summer Playoffs",
+  "seriesId": 82740,
+  "matchup": "VIT vs MKOI",
+  "teamRight": "Team Vitality",
+  "teamLeft": "Movistar KOI",
+  "games": 5,
+  "week": "ROUND1",
+  "patch": "16.17",
+  "date": "2026-09-12"
+ },
+ {
   "league": "LCK",
   "tournament": "LCK 2026 Season Playoffs",
   "seriesId": 82745,
@@ -2182,5 +2194,29 @@
   "week": "ROUND4",
   "patch": "16.17",
   "date": "2026-09-12"
+ },
+ {
+  "league": "LCK",
+  "tournament": "LCK 2026 Season Playoffs",
+  "seriesId": 82962,
+  "matchup": "Gen.G vs HLE",
+  "teamRight": "Gen.G",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 4,
+  "week": "FINALS",
+  "patch": "16.16",
+  "date": "2026-09-13"
+ },
+ {
+  "league": "LPL",
+  "tournament": "LPL 2026 Grand Finals",
+  "seriesId": 82967,
+  "matchup": "BLG vs AL",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "Anyone s Legend",
+  "games": 4,
+  "week": "FINALS",
+  "patch": "16.17",
+  "date": "2026-09-13"
  }
 ]
