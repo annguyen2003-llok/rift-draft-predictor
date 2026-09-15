@@ -131,6 +131,7 @@ module.exports = {
   'Nami':          A(1, 0, 2, 'AP',    0.2, 0, 1),
 
   // ---------- marksmen ----------
+  'Samira':        A(0, 0, 0, 'AD',    0.3, 2, 0),   // xạ thủ CẬN CHIẾN, cần đồng đội khống chế trước mới combo được, dash + ult AoE xử tốp
   'Jhin':          A(0, 0, 2, 'AD',    0.5, 0, 1),
   'Corki':         A(0, 0, 0, 'Mixed', 0.4, 1, 1),
   'Ezreal':        A(0, 0, 1, 'Mixed', 0.5, 2, 1),

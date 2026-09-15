@@ -793,6 +793,32 @@
   "date": "2026-07-25"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80313,
+  "matchup": "GZ vs MVK Esports",
+  "teamRight": "MVK Esports",
+  "teamLeft": "Ground Zero Gaming",
+  "games": 2,
+  "week": "ROUND1",
+  "patch": "16.14",
+  "date": "2026-07-25"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80316,
+  "matchup": "SHG vs TSW",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "Fukuoka SoftBank HAWKS gaming",
+  "games": 2,
+  "week": "ROUND1",
+  "patch": "16.14",
+  "date": "2026-07-25"
+ },
+ {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Season",
@@ -854,6 +880,32 @@
   "teamLeft": "Anyone s Legend",
   "games": 3,
   "week": "WEEK1",
+  "patch": "16.14",
+  "date": "2026-07-26"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80319,
+  "matchup": "DFM vs GAM Esports",
+  "teamRight": "DetonatioN FocusMe",
+  "teamLeft": "GAM Esports",
+  "games": 2,
+  "week": "ROUND1",
+  "patch": "16.14",
+  "date": "2026-07-26"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80322,
+  "matchup": "CFO vs DCG",
+  "teamRight": "Deep Cross Gaming",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 2,
+  "week": "ROUND1",
   "patch": "16.14",
   "date": "2026-07-26"
  },
@@ -936,6 +988,32 @@
   "date": "2026-07-29"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80475,
+  "matchup": "SHG vs DFM",
+  "teamRight": "DetonatioN FocusMe",
+  "teamLeft": "Fukuoka SoftBank HAWKS gaming",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.14",
+  "date": "2026-07-30"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80478,
+  "matchup": "DCG vs GZ",
+  "teamRight": "Ground Zero Gaming",
+  "teamLeft": "Deep Cross Gaming",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.14",
+  "date": "2026-07-30"
+ },
+ {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Split 3",
@@ -999,6 +1077,32 @@
   "week": "WEEK10",
   "patch": "16.14",
   "date": "2026-07-30"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80481,
+  "matchup": "TSW vs MVK Esports",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "MVK Esports",
+  "games": 2,
+  "week": "ROUND2",
+  "patch": "16.14",
+  "date": "2026-07-31"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80484,
+  "matchup": "CFO vs GAM Esports",
+  "teamRight": "CTBC Flying Oyster",
+  "teamLeft": "GAM Esports",
+  "games": 3,
+  "week": "ROUND2",
+  "patch": "16.14",
+  "date": "2026-07-31"
  },
  {
   "league": "LEC",
@@ -1170,6 +1274,32 @@
   "date": "2026-08-01"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80854,
+  "matchup": "DCG vs DFM",
+  "teamRight": "DetonatioN FocusMe",
+  "teamLeft": "Deep Cross Gaming",
+  "games": 2,
+  "week": "ROUND3",
+  "patch": "16.14",
+  "date": "2026-08-01"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80857,
+  "matchup": "MVK Esports vs GAM Esports",
+  "teamRight": "MVK Esports",
+  "teamLeft": "GAM Esports",
+  "games": 2,
+  "week": "ROUND3",
+  "patch": "16.14",
+  "date": "2026-08-01"
+ },
+ {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Season",
@@ -1244,6 +1374,19 @@
   "teamLeft": "KT Rolster",
   "games": 3,
   "week": "WEEK10",
+  "patch": "16.14",
+  "date": "2026-08-02"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80860,
+  "matchup": "TSW vs CFO",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 3,
+  "week": "ROUND3",
   "patch": "16.14",
   "date": "2026-08-02"
  },
@@ -1337,6 +1480,19 @@
   "week": "WEEK11",
   "patch": "16.15",
   "date": "2026-08-05"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 80863,
+  "matchup": "SHG vs GZ",
+  "teamRight": "Ground Zero Gaming",
+  "teamLeft": "Fukuoka SoftBank HAWKS gaming",
+  "games": 3,
+  "week": "ROUND3",
+  "patch": "16.15",
+  "date": "2026-08-06"
  },
  {
   "league": "LPL",
@@ -1495,6 +1651,19 @@
   "date": "2026-08-07"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81200,
+  "matchup": "DFM vs GAM Esports",
+  "teamRight": "DetonatioN FocusMe",
+  "teamLeft": "GAM Esports",
+  "games": 3,
+  "week": "ROUND4",
+  "patch": "16.15",
+  "date": "2026-08-07"
+ },
+ {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Split 3",
@@ -1586,6 +1755,19 @@
   "date": "2026-08-08"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81205,
+  "matchup": "DCG vs MVK Esports",
+  "teamRight": "Deep Cross Gaming",
+  "teamLeft": "MVK Esports",
+  "games": 5,
+  "week": "ROUND4",
+  "patch": "16.15",
+  "date": "2026-08-08"
+ },
+ {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Split 3",
@@ -1673,6 +1855,19 @@
   "teamLeft": "Fnatic",
   "games": 2,
   "week": "WEEK3",
+  "patch": "16.15",
+  "date": "2026-08-09"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81210,
+  "matchup": "CFO vs GZ",
+  "teamRight": "Ground Zero Gaming",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 4,
+  "week": "ROUND4",
   "patch": "16.15",
   "date": "2026-08-09"
  },
@@ -1777,6 +1972,19 @@
   "teamLeft": "Gen.G",
   "games": 2,
   "week": "WEEK12",
+  "patch": "16.15",
+  "date": "2026-08-13"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81365,
+  "matchup": "DCG vs GAM Esports",
+  "teamRight": "Deep Cross Gaming",
+  "teamLeft": "GAM Esports",
+  "games": 4,
+  "week": "ROUND5",
   "patch": "16.15",
   "date": "2026-08-13"
  },
@@ -1911,6 +2119,19 @@
   "date": "2026-08-14"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81619,
+  "matchup": "CFO vs MVK Esports",
+  "teamRight": "CTBC Flying Oyster",
+  "teamLeft": "MVK Esports",
+  "games": 5,
+  "week": "SEEDING",
+  "patch": "16.15",
+  "date": "2026-08-14"
+ },
+ {
   "league": "LCK",
   "tier": "major",
   "tournament": "LCK 2026 Rounds 3-4",
@@ -1999,6 +2220,19 @@
   "games": 2,
   "week": "WEEK4",
   "patch": "16.16",
+  "date": "2026-08-15"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81624,
+  "matchup": "GZ vs DFM",
+  "teamRight": "DetonatioN FocusMe",
+  "teamLeft": "Ground Zero Gaming",
+  "games": 3,
+  "week": "SEEDING",
+  "patch": "16.15",
   "date": "2026-08-15"
  },
  {
@@ -2093,6 +2327,19 @@
   "date": "2026-08-16"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81657,
+  "matchup": "TSW vs CFO",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 5,
+  "week": "SEEDING",
+  "patch": "16.15",
+  "date": "2026-08-16"
+ },
+ {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Season",
@@ -2182,6 +2429,19 @@
   "week": "WEEK5",
   "patch": "16.16",
   "date": "2026-08-19"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 81698,
+  "matchup": "CFO vs MVK Esports",
+  "teamRight": "MVK Esports",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 3,
+  "week": "QUARTERFINALS",
+  "patch": "16.16",
+  "date": "2026-08-20"
  },
  {
   "league": "LCK",
@@ -2327,6 +2587,19 @@
   "date": "2026-08-21"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 82022,
+  "matchup": "TSW vs GAM Esports",
+  "teamRight": "GAM Esports",
+  "teamLeft": "Team Secret Whales",
+  "games": 4,
+  "week": "QUARTERFINALS",
+  "patch": "16.16",
+  "date": "2026-08-21"
+ },
+ {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Season",
@@ -2418,6 +2691,19 @@
   "date": "2026-08-22"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 82073,
+  "matchup": "MVK Esports vs GAM Esports",
+  "teamRight": "GAM Esports",
+  "teamLeft": "MVK Esports",
+  "games": 5,
+  "week": "QUARTERFINALS",
+  "patch": "16.16",
+  "date": "2026-08-22"
+ },
+ {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Season",
@@ -2505,6 +2791,19 @@
   "teamLeft": "Bilibili Gaming",
   "games": 3,
   "week": "WEEK5",
+  "patch": "16.16",
+  "date": "2026-08-23"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 82104,
+  "matchup": "CFO vs TSW",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 3,
+  "week": "SEMIFINALS",
   "patch": "16.16",
   "date": "2026-08-23"
  },
@@ -2626,6 +2925,19 @@
   "date": "2026-08-28"
  },
  {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 82139,
+  "matchup": "CFO vs MVK Esports",
+  "teamRight": "MVK Esports",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 4,
+  "week": "SEMIFINALS",
+  "patch": "16.16",
+  "date": "2026-08-29"
+ },
+ {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
@@ -2739,6 +3051,19 @@
   "teamLeft": "Dplus KIA",
   "games": 3,
   "week": "ROUND1",
+  "patch": "16.16",
+  "date": "2026-08-30"
+ },
+ {
+  "league": "LCP",
+  "tier": "minor",
+  "tournament": "LCP 2026 Split 3",
+  "seriesId": 82401,
+  "matchup": "TSW vs CFO",
+  "teamRight": "Team Secret Whales",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 3,
+  "week": "FINALS",
   "patch": "16.16",
   "date": "2026-08-30"
  },

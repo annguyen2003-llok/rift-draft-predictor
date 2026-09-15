@@ -34,6 +34,9 @@ const TOURNAMENTS = [
   { league: 'LEC', name: 'LEC 2026 Summer Season', tier: 'major' },
   { league: 'LEC', name: 'LEC 2026 Summer Playoffs', tier: 'major' },
 
+  // 'minor': thêm để có dữ liệu khu vực nhà cho đội dự CKTG (xem data/worlds_teams.json)
+  { league: 'LCP', name: 'LCP 2026 Split 3', tier: 'minor' },
+
   { league: 'INT', name: 'MSI 2026', tier: 'international', from: '2026-01-01' },
   { league: 'INT', name: 'Esports World Cup 2026', tier: 'international', from: '2026-01-01' },
   { league: 'INT', name: '2026 First Stand', tier: 'international', from: '2026-01-01' },
