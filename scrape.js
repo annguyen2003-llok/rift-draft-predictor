@@ -42,6 +42,26 @@ const TOURNAMENTS = [
   { league: 'INT', name: '2026 First Stand', tier: 'international', from: '2026-01-01' },
 ];
 
+/* ============================================================================
+   QUÉT NHẸ THEO ĐỘI — thay thế cho quét cả giải (TOURNAMENTS ở trên) khi chỉ
+   cần vài đội cụ thể của 1 khu vực (VD: 3-4 đội dự CKTG) mà không cần cả 60-100
+   trận của toàn giải. Lấy game ID trực tiếp từ trang riêng của đội trên gol.gg
+   (team-matchlist) rồi tải từng trận như bình thường — parse.js tự đọc ngày,
+   patch, tên giải NGAY TRÊN trang trận, không cần matchlist cung cấp.
+
+   ĐÁNH ĐỔI: chỉ thấy các trận CÓ đội trong watchlist tham gia, nên hiệu ứng khu
+   vực (rating phân cấp) được ước lượng từ mẫu hẹp hơn — chỉ những đối thủ mà
+   đội watchlist từng gặp, không phải toàn bộ vòng tròn của giải. Dùng
+   TOURNAMENTS nếu cần độ chính xác cao nhất cho 1 khu vực; dùng cách này khi
+   chỉ cần đủ dữ liệu tối thiểu để đội đó có mặt trong rating.
+
+   Cách lấy teamId: mở https://gol.gg/teams/list/season-S16/split-Summer/tournament-ALL/
+   rồi tìm link "team-stats/<ID>/..." cạnh tên đội (tên trong link phải khớp
+   CHÍNH XÁC tên trên gol.gg, không phải tên viết tắt — xem teamName bên dưới). */
+const TEAM_WATCHLIST = [
+  // { teamId: 1234, teamName: 'Tên đúng như gol.gg hiển thị', league: 'LCS', tier: 'minor' },
+];
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /* Dùng fetch() gốc của Node thay vì shell ra curl.exe. Lý do (2026-09-07):
@@ -114,6 +134,30 @@ function parseMatchlist(html, tour) {
   return out;
 }
 
+/* Trả về danh sách {gameId, seriesId, gameInSeries} lấy từ trang riêng của 1 đội.
+   Không có ngày/giải kèm theo — parse.js sẽ tự đọc từ trang trận lúc tải. */
+async function fetchTeamGameRefs(entry) {
+  const url = `https://gol.gg/teams/team-matchlist/${entry.teamId}/split-Summer/tournament-ALL/`;
+  const html = await fetchUrl(url, `tm_${entry.teamId}.html`, true);
+  if (!html) { console.error('FAILED team-matchlist', entry.teamName); return []; }
+  const capIdx = html.indexOf(`${entry.teamName} results</caption>`);
+  if (capIdx < 0) {
+    console.error(`  !! CẢNH BÁO: không thấy "${entry.teamName} results</caption>" trên trang team-matchlist/${entry.teamId} — ` +
+      `tên đội có thể không khớp gol.gg, hoặc split "Summer" trống cho đội này. Bỏ qua.`);
+    return [];
+  }
+  const rows = [...html.slice(capIdx).matchAll(/<tr>([\s\S]*?)<\/tr>/gi)].map(m => m[1]);
+  const out = [];
+  for (const r of rows) {
+    const link = r.match(/href='\.\.\/game\/stats\/(\d+)\/page-game\/'[^>]*>[^<]*\((\d+)\)<\/a>/);
+    if (!link) continue;
+    const gameId = +link[1], gameInSeries = +link[2];
+    out.push({ gameId, seriesId: gameId - (gameInSeries - 1), gameInSeries });
+  }
+  console.error(`${entry.teamName} (${entry.league}): ${out.length} trận tìm thấy trên trang riêng của đội`);
+  return out;
+}
+
 async function main() {
   // Nếu 1 giải fetch thất bại HOÀN TOÀN (không còn cache nào dùng tạm được), giữ lại
   // các series cũ của đúng giải đó từ series.json thay vì để trống — tránh lặp lại sự
@@ -168,6 +212,18 @@ async function main() {
   const pending = toFetch.filter(x => !knownIds.has(x.id));
   console.error(`${toFetch.length} game ID trong cửa sổ, ${pending.length} ID chưa có sẵn cần tải.\n`);
 
+  // Quét nhẹ theo đội (TEAM_WATCHLIST) — mỗi trận đóng gói kèm entry để biết
+  // gán league/tier nào; ngày/giải/tuần lấy từ chính trang trận lúc tải.
+  const teamPending = [];
+  for (const entry of TEAM_WATCHLIST) {
+    const refs = await fetchTeamGameRefs(entry);
+    for (const ref of refs) if (!knownIds.has(ref.gameId) && !pending.some(p => p.id === ref.gameId)) {
+      teamPending.push({ ...ref, entry });
+    }
+    await sleep(300);
+  }
+  if (teamPending.length) console.error(`\n${teamPending.length} trận từ TEAM_WATCHLIST chưa có sẵn cần tải.\n`);
+
   let done = 0;
   for (const { s, i, id } of pending) {
     const url = `https://gol.gg/game/stats/${id}/page-game/`;
@@ -193,6 +249,31 @@ async function main() {
     });
     if (done % 20 === 0) console.error(`  ...${done}/${pending.length} tải xong (${newGames.length} ok)`);
   }
+
+  let teamDone = 0, teamSkippedOld = 0;
+  for (const { gameId, seriesId, gameInSeries, entry } of teamPending) {
+    const url = `https://gol.gg/game/stats/${gameId}/page-game/`;
+    const html = await fetchUrl(url, `g_${gameId}.html`);
+    teamDone++;
+    if (!html) { failures.push({ id: gameId, series: entry.teamName, reason: 'fetch failed' }); continue; }
+    const g = parseGame(html, gameId);
+    if (!g.ok) { failures.push({ id: gameId, series: entry.teamName, reason: g.error }); continue; }
+    if (!g.dateFromPage) { failures.push({ id: gameId, series: entry.teamName, reason: 'không đọc được ngày trên trang trận' }); continue; }
+    const floor = entry.from || CUTOFF;
+    if (g.dateFromPage < floor) { teamSkippedOld++; continue; }   // ngoài cửa sổ thời gian, bỏ qua
+    const ksum = side => Object.values(side.comp).reduce((a, p) => a + (p.k || 0), 0);
+    const killsMatch = ksum(g.blue) === g.blue.kills && ksum(g.red) === g.red.kills;
+    newGames.push({
+      ...g,
+      league: entry.league, tier: entry.tier || 'minor',
+      tournament: g.tournamentFromPage || entry.league, date: g.dateFromPage,
+      week: g.weekFromPage, seriesId, gameInSeries,
+      integrity: { picksMatchScoreboard: g.warnings.length === 0, killTotalsMatch: killsMatch,
+        teams: [g.blue.team, g.red.team].join('|') },
+    });
+    if (teamDone % 20 === 0) console.error(`  ...${teamDone}/${teamPending.length} (team-watchlist) tải xong`);
+  }
+  if (teamPending.length) console.error(`TEAM_WATCHLIST: +${teamPending.length - teamSkippedOld - failures.filter(f=>teamPending.some(t=>t.gameId===f.id)).length} trận mới, ${teamSkippedOld} bỏ qua vì ngoài cửa sổ thời gian.\n`);
 
   // Games ngoài cửa sổ CUTOFF (đã cũ) trong games.json cũ vẫn giữ nguyên — chỉ nối
   // thêm trận mới, không xoá lịch sử đã có (trần 600 trận xử lý ở finalize.js).

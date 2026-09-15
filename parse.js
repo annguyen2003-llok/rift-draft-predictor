@@ -19,6 +19,11 @@ function parseGame(html, gameId) {
   // ---- Game time & patch ----
   const timeM = h.match(/Game Time<br\/>\s*<h1>([0-9]+:[0-9]{2})<\/h1>/i);
   const patchM = h.match(/<div class="col-3 text-right">\s*v([0-9.]+)<\/div>/i);
+  /* Trang từng trận cũng tự mang ngày + giải + tuần (không chỉ matchlist mới có) —
+     dùng làm phương án dự phòng cho lối quét theo ĐỘI (team-matchlist), nơi không
+     đi qua trang matchlist của giải nên không có sẵn các trường này. */
+  const dateM = h.match(/<div class="col-12 col-sm-5 text-right">\s*(\d{4}-\d{2}-\d{2})\s*\(([^)]*)\)/i);
+  const tourM = h.match(/<a href='\.\.\/tournament\/tournament-stats\/[^']*'>([^<]*)<\/a>/i);
 
   // ---- Team header blocks (side + name + result) ----
   const blueHdr = h.match(/<div class="col-12 blue-line-header">\s*<a[^>]*title='([^']*?) stats'[^>]*>([^<]*)<\/a>\s*-\s*(WIN|LOSS)/i);
@@ -123,6 +128,9 @@ function parseGame(html, gameId) {
     duration: durStr,
     durationMin: durMin ? Math.round(durMin * 100) / 100 : null,
     patch: patchM ? patchM[1] : null,
+    dateFromPage: dateM ? dateM[1] : null,
+    weekFromPage: dateM ? dateM[2] : null,
+    tournamentFromPage: tourM ? decode(tourM[1]) : null,
     blue: mkSide(blueHdr, 'blue', bluePlayers, blueBans, bluePicks),
     red: mkSide(redHdr, 'red', redPlayers, redBans, redPicks),
     warnings: err,
