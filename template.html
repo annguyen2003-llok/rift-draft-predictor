@@ -469,8 +469,16 @@ function renderTeamPickers(){
      trong cùng một giải (mỗi giải luôn trung bình đúng 50%), nên xếp hạng theo nó
      sẽ đặt đội đầu bảng giải yếu lên trên đội giữa bảng giải mạnh. */
   const hasRating = Object.values(DATA.teams).some(t => typeof t.rating === "number");
-  const list = Object.values(DATA.teams).sort((a,b) =>
+  let list = Object.values(DATA.teams).sort((a,b) =>
     hasRating ? (b.rating||0)-(a.rating||0) : (a.homeRegion||a.league||"").localeCompare(b.homeRegion||b.league||"") || b.games-a.games);
+  /* Lọc theo danh sách CKTG đã chốt (data/worlds_teams.json), CHỈ ảnh hưởng
+     dropdown — không đụng dữ liệu huấn luyện. Giải nào chưa chốt danh sách thì
+     vẫn hiện đủ đội của giải đó như cũ. */
+  const wq = DATA.meta.worldsQualified || {};
+  const lockedLeagues = new Set(Object.keys(wq).filter(k => !k.startsWith("_") && wq[k] && wq[k].length));
+  if(lockedLeagues.size){
+    list = list.filter(t => !lockedLeagues.has(t.homeRegion) || t.worldsQualified);
+  }
   for(const side of ["blue","red"]){
     const sel = document.getElementById("team-"+side);
     sel.innerHTML = `<option value="">— chưa chọn đội (chỉ dùng đội hình) —</option>` +

@@ -1,0 +1,6 @@
+{
+  "_note": "Danh sách đội dự CKTG đã CHỐT theo từng giải. Chỉ dùng để lọc dropdown chọn đội cho gọn — KHÔNG ảnh hưởng đến dữ liệu huấn luyện (win-rate tướng, rating khu vực vẫn dùng toàn bộ đội đã quét, xem finalize.js). Giải chưa có danh sách ở đây (mảng rỗng hoặc thiếu key) thì dropdown vẫn hiện đủ tất cả đội như cũ.",
+  "LCK": ["Gen.G", "Hanwha Life Esports", "T1", "Dplus KIA"],
+  "LPL": [],
+  "LEC": []
+}

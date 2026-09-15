@@ -488,6 +488,18 @@ for (const role of ROLES) {
     .map(c => ({ name: c.name, games: c.roles[role].games, wr: c.roles[role].wr, wrShrunk: c.roles[role].wrShrunk }))
     .sort((a, b) => b.games - a.games);
 }
+/* Danh sách đội CHỐT dự CKTG theo giải — CHỈ để lọc dropdown chọn đội cho gọn,
+   KHÔNG đụng đến dữ liệu huấn luyện: đội không dự CKTG vẫn đóng góp thật vào
+   win-rate tướng và hiệu ứng khu vực (loại chúng ra sẽ làm mẫu số nhỏ đi, giảm
+   độ chính xác chứ không tăng). Giải chưa có danh sách -> không lọc gì cả. */
+const worldsTeamsPath = path.join(DATA_DIR, 'worlds_teams.json');
+const worldsTeamsRaw = fs.existsSync(worldsTeamsPath) ? JSON.parse(fs.readFileSync(worldsTeamsPath, 'utf8')) : {};
+const worldsQualified = {};
+for (const [league, list] of Object.entries(worldsTeamsRaw)) {
+  if (league.startsWith('_') || !Array.isArray(list) || !list.length) continue;
+  for (const name of list) worldsQualified[name] = true;
+}
+
 const teams = {};
 for (const t of Object.values(stats.team)) {
   const home = stats.home[t.name] || null;          // khu vực nhà (giải quốc tế không tính)
@@ -500,6 +512,7 @@ for (const t of Object.values(stats.team)) {
     ratingDev: stats.rating.teamDev[t.name] || 0,
     intlGames: games.filter(g => (g.tier || 'major') === 'international' &&
       (g.blue.team === t.name || g.red.team === t.name)).length,
+    worldsQualified: !!worldsQualified[t.name],
   };
 }
 let matchupPairs = 0, matchupWithData = 0;
@@ -608,6 +621,7 @@ const out = {
        Chỉ đáng tin khi có đủ trận liên khu vực — xem crossRegionAudit.linkCounts. */
     regionEffects: stats.rating.regionEffect,
     sideAdvantageLogit: stats.rating.side,
+    worldsQualified: worldsTeamsRaw,
     crossRegionAudit: (() => {
       const home = stats.home, regionOf = t => home[t] || 'OTHER';
       const links = {};
