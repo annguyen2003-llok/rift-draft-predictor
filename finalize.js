@@ -4,8 +4,8 @@
 
    Selection was made by leak-free 5-fold CV over candidate feature sets
    (see diagnose.js). What survived:
-     win probability : [teamStrength?, frontline, ranged, mobility, sumWr]  lambda=60
-     total kills     : [pace, lengthLean]                                   lambda=100
+     win probability : [teamStrength?, teamRating?, frontline, ranged, mobility]  lambda=60
+     total kills     : [pace, lengthLean]                                        lambda=100
    What was dropped, and why:
      head-to-head matchup edge -> AUC 0.548 and log loss far worse than
        baseline; kept in the dataset for display only, never in the model.
@@ -20,11 +20,17 @@
    Ngược lại scaling bị LOẠI: bootstrap 2000 lần cho thấy bỏ nó tốt hơn giữ
    (+0.0078 AUC, KTC 95% [0.0006, 0.0151]).
 
-   Lý do kiến trúc (quan trọng hơn cả điểm số): 3 trục kit là phân loại TĨNH, không
-   cần tướng đó từng ra sân lần nào. Nên khi giải đấu xuất hiện tướng mới/tướng lạ,
-   mô hình vẫn đánh giá được — trong khi sumWr tụt về 0.5 trung tính. Đo mô phỏng
-   walk-forward: ở mức 20% tướng trong trận là tướng chưa từng thấy, bộ đang dùng giữ
-   AUC 0.6022 so với 0.5934 của bộ cũ. Xem meta.newChampAudit trong dataset.json. */
+   2026-09-17 — BỎ sumWr (win rate tướng) KHỎI MÔ HÌNH theo yêu cầu tường minh của
+   người dùng, sau khi đã báo trước đầy đủ đánh đổi đo được: giữ sumWr tốt hơn bỏ ở
+   mọi mức tướng mới thực tế trong walk-forward (0%: 0.6103 vs 0.5984; 10%: 0.6047
+   vs 0.5984; 20%: 0.6022 vs 0.5984), chỉ thua kit thuần ở mức cực đoan 40% tướng lạ
+   (0.5934 vs 0.5984 — hiếm khi xảy ra thực tế). Người dùng chọn ưu tiên đánh giá
+   theo KIT/CẤU TRÚC ĐỘI HÌNH hơn theo lịch sử thắng-thua của từng tướng, chấp nhận
+   đổi lấy độ chính xác thấp hơn ở mức đo được. Xem meta.newChampAudit trong
+   dataset.json để đối chiếu — số liệu cũ VẪN giữ nguyên ở đó, không xoá, để không
+   ai (kể cả tôi ở tương lai) tưởng nhầm đây là phát hiện mới thay vì lựa chọn có
+   chủ đích. wrShrunk của tướng vẫn hiển thị trong UI (giống matchupEdge) — chỉ
+   không còn nạp vào mô hình dự đoán. */
 
 const fs = require('fs');
 const path = require('path');
@@ -295,10 +301,16 @@ function rowFor(g, st) {
   const B = sideFeatures(compOf(g.blue), g.blue.team, st);
   const R = sideFeatures(compOf(g.red), g.red.team, st);
   return {
-    draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility, B.sumWr - R.sumWr],
+    /* 2026-09-17 — BỎ sumWr khỏi mô hình theo yêu cầu tường minh của người dùng,
+       dù đã đo và báo trước: giữ sumWr tốt hơn bỏ ở mọi mức tướng mới thực tế
+       (0-20%), chỉ thua kit thuần ở mức cực đoan 40% tướng lạ (hiếm khi xảy ra).
+       Xem chú thích đầu file + meta.newChampAudit trong dataset.json để đối
+       chiếu con số cũ. wrShrunk của tướng vẫn tính và hiển thị cho người dùng
+       tham khảo (giống matchupEdge) — chỉ không còn NẠP vào mô hình dự đoán. */
+    draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility],
     withTeam: [B.teamWr - R.teamWr, B.teamRating - R.teamRating,
       B.frontline - R.frontline, B.ranged - R.ranged,
-      B.mobility - R.mobility, B.sumWr - R.sumWr],
+      B.mobility - R.mobility],
     kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
     intl: isInternational(g),
     y: g.blue.win ? 1 : 0,
@@ -597,7 +609,7 @@ const out = {
     signalAudit: [
       { feature: 'teamStrength', auc: 0.633, used: true, note: 'sức mạnh đội — vẫn là trục mạnh nhất; chỉ dùng khi đã chọn đủ 2 đội' },
       { feature: 'frontline', auc: 0.643, used: true, note: 'tổng tuyến đầu — thêm vào baseline đội hình: +0.0097 AUC, thắng 20/20 seed. Đội hình nhiều tuyến đầu thắng đội hình mỏng manh' },
-      { feature: 'sumWr', auc: 0.610, used: true, note: 'tỉ lệ thắng tướng theo vị trí — có ích thật, nhưng vô dụng với tướng mới nên không để đứng một mình' },
+      { feature: 'sumWr', auc: 0.610, used: false, note: 'LOẠI 2026-09-17 theo yêu cầu người dùng: tỉ lệ thắng tướng đo được là có ích thật (tốt hơn bỏ ở mọi mức tướng mới 0-20%), nhưng người dùng chọn ưu tiên đánh giá theo kit/cấu trúc đội hình hơn lịch sử thắng-thua từng tướng — chấp nhận đổi lấy độ chính xác thấp hơn ở mức đo được (xem newChampAudit). Vẫn hiển thị wrShrunk trong UI để tham khảo.' },
       { feature: 'ranged', auc: 0.638, used: true, note: 'số tướng tầm xa — càng nhiều carry tầm xa mỏng manh càng bất lợi ở meta này (+0.0062)' },
       { feature: 'mobility', auc: 0.636, used: true, note: 'tổng cơ động (+0.0037) — bổ trợ cho 2 trục trên' },
       { feature: 'scaling', auc: 0.603, used: false, note: 'LOẠI 2026-09-14: bootstrap cho thấy bỏ scaling TỐT HƠN giữ (+0.0078 AUC, KTC 95% [0.0006, 0.0151]); hệ số của nó còn đổi dấu giữa nửa đầu/nửa sau dữ liệu' },
@@ -662,8 +674,8 @@ const out = {
     champions[k] || champions[k.split('|')[0]])),
   attrsMissing: Object.keys(champions).filter(n => !ATTRS[n]),
   models: {
-    draft: { features: ['frontline', 'ranged', 'mobility', 'sumWr'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
-    withTeam: { features: ['teamStrength', 'teamRating', 'frontline', 'ranged', 'mobility', 'sumWr'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    draft: { features: ['frontline', 'ranged', 'mobility'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
+    withTeam: { features: ['teamStrength', 'teamRating', 'frontline', 'ranged', 'mobility'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
     kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
   },
 };

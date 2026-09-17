@@ -455,11 +455,13 @@ function predict(){
   const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
-  /* Thứ tự PHẢI khớp models.*.features trong finalize.js */
+  /* Thứ tự PHẢI khớp models.*.features trong finalize.js.
+     2026-09-17: sumWr (WR tướng) bỏ khỏi mô hình theo yêu cầu người dùng — xem
+     chú thích đầu finalize.js. wrShrunk của tướng vẫn hiển thị riêng để tham khảo. */
   const raw = useTeam
     ? [B.teamWr-R.teamWr, B.teamRating-R.teamRating, B.frontline-R.frontline,
-       B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr]
-    : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.sumWr-R.sumWr];
+       B.ranged-R.ranged, B.mobility-R.mobility]
+    : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility];
   return {...runModel(model, raw), B, R, model, useTeam};
 }
 
@@ -515,15 +517,18 @@ function onTeamChange(){
 }
 function updateModeLabel(){
   const ready = state.teamBlue && state.teamRed;
+  const draftAuc = DATA.models.draft.metrics.cvAuc;
   document.getElementById("modeLabel").innerHTML = ready
-    ? `Tính thêm sức mạnh đội <span class="thin">— luôn đo chính xác hơn qua mọi lần kiểm định (AUC ${DATA.models.draft.metrics.cvAuc.toFixed(3)} → ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}), nên mặc định bật khi đã chọn đội</span>`
-    : `Tính thêm sức mạnh đội <span class="thin">— chọn cả hai đội ở trên để bật (khuyên dùng)</span>`;
+    ? `Tính thêm sức mạnh đội <span class="thin">— luôn đo chính xác hơn qua mọi lần kiểm định (AUC ${draftAuc.toFixed(3)} → ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}), nên mặc định bật khi đã chọn đội</span>`
+    : `Tính thêm sức mạnh đội <span class="thin">— <b>bắt buộc nên bật</b>: chế độ chỉ đội hình hiện đo AUC ${draftAuc.toFixed(3)}${draftAuc < 0.5 ? " (dưới ngẫu nhiên)" : ""}, chọn cả hai đội ở trên để bật</span>`;
   document.getElementById("useTeam").disabled = !ready;
   // 2026-09-14: mặc định BẬT khi đã chọn đủ 2 đội — "+đội" đo tốt hơn "chỉ đội hình"
-  // ở MỌI lần kiểm định trong suốt dự án (0.611 vs 0.562 lúc 284 trận; 0.653 vs 0.590
-  // lúc 469 trận; 57.1% vs 50.0% khi backtest riêng trên các trận playoff/chung kết
-  // 05-12/09 — "chỉ đội hình" rơi đúng về mức đoán ngẫu nhiên). Trước đó mặc định TẮT,
-  // khiến người dùng thấy chế độ kém chính xác hơn trừ khi tự bấm bật tay.
+  // ở MỌI lần kiểm định trong suốt dự án.
+  // 2026-09-17: sau khi bỏ sumWr (win-rate tướng) khỏi mô hình theo yêu cầu người
+  // dùng, chế độ "chỉ đội hình" sụp hẳn xuống AUC ~0.47 (dưới ngẫu nhiên) — 3 trục
+  // kit (tuyến đầu/tầm xa/cơ động) một mình quá yếu để đứng độc lập. Chế độ "+đội"
+  // gần như không đổi (0.603→0.608, trong nhiễu) vì sức mạnh đội đã gánh phần lớn.
+  // Xem finalize.js đầu file + meta.signalAudit trong dataset.json.
   document.getElementById("useTeam").checked = !!ready;
 }
 function renderSlots(){
@@ -636,8 +641,8 @@ const FEAT_LABEL = {
    sai âm thầm, không báo lỗi. Nên kiểm tra ngay lúc tải trang. */
 (function checkFeatureOrder(){
   const expect = {
-    draft: ["frontline","ranged","mobility","sumWr"],
-    withTeam: ["teamStrength","teamRating","frontline","ranged","mobility","sumWr"],
+    draft: ["frontline","ranged","mobility"],
+    withTeam: ["teamStrength","teamRating","frontline","ranged","mobility"],
   };
   for(const [key, want] of Object.entries(expect)){
     const got = (DATA.models[key] && DATA.models[key].features) || [];
@@ -663,7 +668,10 @@ function analyze(){
              : `Đội ${pB > pR ? "Xanh" : "Đỏ"} ${lead < 12 ? "nhỉnh nhẹ" : "có lợi thế"} theo mô hình`;
   document.getElementById("verdictSub").innerHTML = res.useTeam
     ? `Đang tính cả sức mạnh đội. Ở mức này mô hình xếp hạng đúng ${res.model.metrics.cvAuc.toFixed(3)} AUC — tốt hơn hẳn chế độ chỉ đọc đội hình.`
-    : `Chỉ đọc đội hình, không biết đội nào cầm. Phần lớn xác suất bên dưới đến từ <b>lợi thế side xanh ${pct1(DATA.baselines.blueWinRate)}</b> trong dữ liệu; đội hình chỉ điều chỉnh thêm một chút.`;
+    : `Chỉ đọc đội hình, không biết đội nào cầm. <b>Chế độ này hiện đo được AUC ${res.model.metrics.cvAuc.toFixed(3)}</b> — ` +
+      (res.model.metrics.cvAuc < 0.5
+        ? `dưới cả mức đoán ngẫu nhiên (đã bỏ win-rate tướng khỏi mô hình theo yêu cầu, chỉ còn 3 trục kit thô sơ). Đừng dựa vào chế độ này — chọn cả hai đội để có kết quả đáng tin.`
+        : `phần lớn xác suất bên dưới đến từ <b>lợi thế side xanh ${pct1(DATA.baselines.blueWinRate)}</b> trong dữ liệu; đội hình chỉ điều chỉnh thêm một chút.`);
   document.getElementById("probB").textContent = "Xanh " + pct1(pB);
   document.getElementById("probR").textContent = "Đỏ " + pct1(pR);
   document.getElementById("fillB").style.width = (pB*100)+"%";
@@ -1032,7 +1040,23 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     này có thể sai nếu độ sâu các khu vực khác nhau. Ngoài ra thống kê tướng <b>không</b> lấy từ giải
     quốc tế (đo thấy trận cũ khác patch làm hại: AUC 0,544 xuống 0,519), chỉ rating mới dùng.
     Và ở trận quốc tế, chế độ "chỉ đội hình" đo được AUC 0,454 — <b>tệ hơn đoán bừa</b>, nên ở CKTG
-    bắt buộc phải chọn đội thì con số mới có nghĩa.</p>`;
+    bắt buộc phải chọn đội thì con số mới có nghĩa.</p>
+
+    <p><b>Đã bỏ win-rate tướng khỏi mô hình theo yêu cầu người dùng (2026-09-17).</b> Người dùng
+    phản đối việc lấy tỉ lệ thắng của tướng làm căn cứ đánh giá đội hình — <i>"pick có vài trận nó
+    thắng thì con đấy mạnh nhất à?"</i>. Đã đo trước và báo rõ đánh đổi: giữ sumWr (win-rate tướng)
+    tốt hơn bỏ ở mọi mức tướng mới thực tế trong walk-forward (0%: AUC 0,610 vs 0,598; 10%: 0,605 vs
+    0,598; 20%: 0,602 vs 0,598), chỉ thua kit thuần ở mức cực đoan 40% tướng lạ trong 1 trận — gần
+    như không xảy ra thực tế. Người dùng vẫn chọn bỏ, ưu tiên đánh giá theo <b>kit/cấu trúc đội
+    hình</b> hơn lịch sử thắng-thua từng tướng, chấp nhận đổi lấy độ chính xác thấp hơn.</p>
+
+    <p>Kết quả đo lại sau khi bỏ, trên toàn bộ ${DATA.meta.games} trận: chế độ <b>"+đội"</b> gần như
+    không đổi (AUC 0,603→0,608, nằm trong nhiễu) vì sức mạnh đội đã gánh phần lớn tín hiệu. Nhưng chế
+    độ <b>"chỉ đội hình"</b> (chưa chọn đội) sụp từ AUC 0,549 xuống còn <b>0,471 — dưới cả mức đoán
+    ngẫu nhiên</b>, vì 3 trục kit còn lại (tuyến đầu/tầm xa/cơ động) quá yếu để đứng một mình. Vì vậy
+    trang giờ cảnh báo rõ trong ô "Kết quả dự đoán" khi chưa chọn đội, và trục sumWr được giữ nguyên
+    số liệu wrShrunk để hiển thị tham khảo (giống đối đầu từng đường) — chỉ không còn nạp vào mô hình.
+    Toàn bộ số liệu trước khi bỏ vẫn lưu ở đầu finalize.js, không xoá, để đối chiếu lại nếu cần.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
