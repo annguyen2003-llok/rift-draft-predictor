@@ -464,19 +464,17 @@ function predict(){
 }
 
 /* ---------- rendering ---------- */
+/* Thứ tự khu vực cố định trong dropdown — 4 giải theo dõi chính trước, còn lại
+   (LCS, CBLOL... khi thêm sau) xếp theo alphabet ở cuối, không nhảy lung tung
+   mỗi lần build lại dữ liệu. */
+const REGION_ORDER = ["LCK", "LPL", "LEC", "LCP"];
 function renderTeamPickers(){
-  /* Sắp theo RATING TOÀN CẦU, không theo tỉ lệ thắng: tỉ lệ thắng chỉ so sánh được
-     trong cùng một giải (mỗi giải luôn trung bình đúng 50%), nên xếp hạng theo nó
-     sẽ đặt đội đầu bảng giải yếu lên trên đội giữa bảng giải mạnh. */
-  const hasRating = Object.values(DATA.teams).some(t => typeof t.rating === "number");
   let list = Object.values(DATA.teams)
     /* Bỏ đội chưa rõ khu vực nhà (chỉ thấy ở giải quốc tế, chưa quét giải khu vực
        của họ) — hiện "INT · Tên — 45% trong giải" trong dropdown vừa vô nghĩa vừa
        gây hiểu lầm (không phải tỉ lệ thắng ở 1 giải thật). Dữ liệu của họ vẫn giữ
        nguyên, vẫn đóng góp vào rating qua bucket "OTHER" — chỉ ẩn khỏi lựa chọn. */
-    .filter(t => t.homeRegion)
-    .sort((a,b) =>
-      hasRating ? (b.rating||0)-(a.rating||0) : (a.homeRegion||a.league||"").localeCompare(b.homeRegion||b.league||"") || b.games-a.games);
+    .filter(t => t.homeRegion);
   /* Lọc theo danh sách CKTG đã chốt (data/worlds_teams.json), CHỈ ảnh hưởng
      dropdown — không đụng dữ liệu huấn luyện. Giải nào chưa chốt danh sách thì
      vẫn hiện đủ đội của giải đó như cũ. */
@@ -485,15 +483,27 @@ function renderTeamPickers(){
   if(lockedLeagues.size){
     list = list.filter(t => !lockedLeagues.has(t.homeRegion) || t.worldsQualified);
   }
+  /* Nhóm theo KHU VỰC trước (dropdown dùng <optgroup> để tách rõ ràng, không còn
+     lẫn lộn LCK/LPL/LEC vào chung một hàng như khi sắp theo rating toàn cầu),
+     rồi trong từng khu vực mới sắp theo rating giảm dần. */
+  const byRegion = {};
+  for(const t of list) (byRegion[t.homeRegion] = byRegion[t.homeRegion] || []).push(t);
+  for(const rg of Object.keys(byRegion)) byRegion[rg].sort((a,b) => (b.rating||0)-(a.rating||0));
+  const regions = Object.keys(byRegion).sort((a,b) => {
+    const ia = REGION_ORDER.indexOf(a), ib = REGION_ORDER.indexOf(b);
+    if(ia === -1 && ib === -1) return a.localeCompare(b);
+    if(ia === -1) return 1; if(ib === -1) return -1;
+    return ia - ib;
+  });
+  const optionsHtml = t => {
+    const rt = typeof t.rating === "number" ? ` · đẳng cấp ${t.rating>=0?"+":""}${t.rating.toFixed(2)}` : "";
+    const intl = t.intlGames ? ` · ${t.intlGames} trận quốc tế` : "";
+    return `<option value="${t.name}">${t.name} — ${pct(t.wr)} trong giải${rt}${intl}</option>`;
+  };
   for(const side of ["blue","red"]){
     const sel = document.getElementById("team-"+side);
     sel.innerHTML = `<option value="">— chưa chọn đội (chỉ dùng đội hình) —</option>` +
-      list.map(t => {
-        const rg = t.homeRegion || t.league;
-        const rt = typeof t.rating === "number" ? ` · đẳng cấp ${t.rating>=0?"+":""}${t.rating.toFixed(2)}` : "";
-        const intl = t.intlGames ? ` · ${t.intlGames} trận quốc tế` : "";
-        return `<option value="${t.name}">${rg} · ${t.name} — ${pct(t.wr)} trong giải${rt}${intl}</option>`;
-      }).join("");
+      regions.map(rg => `<optgroup label="${rg}">${byRegion[rg].map(optionsHtml).join("")}</optgroup>`).join("");
     sel.value = state[side === "blue" ? "teamBlue" : "teamRed"];
   }
 }
