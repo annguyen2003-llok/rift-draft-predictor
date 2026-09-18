@@ -413,10 +413,13 @@ const attrOf = (n, role) => (role && DATA.attrs[n + "|" + role]) || DATA.attrs[n
 const state = {blue:{}, red:{}, teamBlue:"", teamRed:""};
 let pending = null;
 
-/* ---------- features: identical definition to the training script ---------- */
+/* ---------- features: identical definition to the training script ----------
+   2026-09-18: chuyển hẳn sang đánh giá qua DRAFT — teamWr/teamRating không còn
+   là trục tính điểm, đội chỉ dùng để tra roster (biết ai đang cầm) cho
+   familiarity/poolDepth. Xem chú thích đầu finalize.js. */
 function sideFeatures(comp, teamName){
   let sumWr=0,sumPres=0,engage=0,frontline=0,cc=0,scaling=0,mobility=0,ranged=0,ad=0,ap=0;
-  let paceSum=0,durSum=0,nPace=0;
+  let paceSum=0,durSum=0,nPace=0, pickPriority=0, familiarity=0, poolDepth=0;
   for(const role of ROLES){
     const name = comp[role]; if(!name) continue;
     const c = DATA.champions[name], r = c && c.roles[role];
@@ -426,15 +429,24 @@ function sideFeatures(comp, teamName){
     engage+=a.engage; frontline+=a.frontline; cc+=a.cc; scaling+=a.scaling; mobility+=a.mobility; ranged+=a.ranged;
     if(a.dmg==="AP") ap+=1; else if(a.dmg==="Mixed"){ad+=.5;ap+=.5;} else ad+=1;
     if(c && c.avgGameKills != null){ paceSum+=c.avgGameKills; durSum+=c.avgGameDur; nPace++; }
+    // pickPriority: cấp-tướng thuần, không cần biết đội/tuyển thủ
+    pickPriority += DATA.pickPriority[name] != null ? DATA.pickPriority[name] : 0;
+    // familiarity/poolDepth: cần tra ĐÚNG tuyển thủ hiện tại qua đội|đường
+    const rost = teamName && DATA.roster[teamName+"|"+role];
+    if(rost && rost.playerId){
+      familiarity += DATA.familiarity[rost.playerId+"|"+name] || 0;
+      poolDepth += DATA.poolDepth[rost.playerId] || 0;
+    }
   }
   const t = teamName && DATA.teams[teamName];
   return {sumWr,sumPres,engage,frontline,cc,scaling,mobility,ranged,ad,ap,
+    pickPriority, familiarity, poolDepth,
     mixedness: 1 - Math.abs(ad-ap)/(ad+ap||1),
     pace: nPace ? paceSum/nPace : DATA.baselines.avgKills,
     lengthLean: nPace ? durSum/nPace : DATA.baselines.avgDuration,
+    // teamWr/teamRating: chỉ còn để HIỂN THỊ tham khảo (giống matchupEdge),
+    // không nạp vào raw[] của predict() nữa.
     teamWr: t ? t.wrShrunk : 0.5,
-    /* rating: thang đo TOÀN CẦU (so sánh được giữa các khu vực). Đội không rõ ->
-       0 = mức trung bình toàn cầu, không phải 0.5 như tỉ lệ thắng. */
     teamRating: t && typeof t.rating === "number" ? t.rating : 0,
     teamName};
 }
@@ -455,13 +467,11 @@ function predict(){
   const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
-  /* Thứ tự PHẢI khớp models.*.features trong finalize.js.
-     2026-09-17: sumWr (WR tướng) bỏ khỏi mô hình theo yêu cầu người dùng — xem
-     chú thích đầu finalize.js. wrShrunk của tướng vẫn hiển thị riêng để tham khảo. */
+  /* Thứ tự PHẢI khớp models.*.features trong finalize.js. */
   const raw = useTeam
-    ? [B.teamWr-R.teamWr, B.teamRating-R.teamRating, B.frontline-R.frontline,
-       B.ranged-R.ranged, B.mobility-R.mobility]
-    : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility];
+    ? [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility,
+       B.pickPriority-R.pickPriority, B.familiarity-R.familiarity, B.poolDepth-R.poolDepth]
+    : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.pickPriority-R.pickPriority];
   return {...runModel(model, raw), B, R, model, useTeam};
 }
 
@@ -485,12 +495,13 @@ function renderTeamPickers(){
   if(lockedLeagues.size){
     list = list.filter(t => !lockedLeagues.has(t.homeRegion) || t.worldsQualified);
   }
-  /* Nhóm theo KHU VỰC trước (dropdown dùng <optgroup> để tách rõ ràng, không còn
-     lẫn lộn LCK/LPL/LEC vào chung một hàng như khi sắp theo rating toàn cầu),
-     rồi trong từng khu vực mới sắp theo rating giảm dần. */
+  /* Nhóm theo KHU VỰC (dropdown dùng <optgroup> để tách rõ ràng). Sắp theo TÊN
+     trong từng khu vực — rating/wr giờ chỉ để tham khảo (không còn là trục tính
+     điểm từ 2026-09-18), sắp theo alphabet cho dễ tìm hơn là theo 1 số không
+     còn quyết định kết quả. */
   const byRegion = {};
   for(const t of list) (byRegion[t.homeRegion] = byRegion[t.homeRegion] || []).push(t);
-  for(const rg of Object.keys(byRegion)) byRegion[rg].sort((a,b) => (b.rating||0)-(a.rating||0));
+  for(const rg of Object.keys(byRegion)) byRegion[rg].sort((a,b) => a.name.localeCompare(b.name));
   const regions = Object.keys(byRegion).sort((a,b) => {
     const ia = REGION_ORDER.indexOf(a), ib = REGION_ORDER.indexOf(b);
     if(ia === -1 && ib === -1) return a.localeCompare(b);
@@ -498,9 +509,10 @@ function renderTeamPickers(){
     return ia - ib;
   });
   const optionsHtml = t => {
-    const rt = typeof t.rating === "number" ? ` · đẳng cấp ${t.rating>=0?"+":""}${t.rating.toFixed(2)}` : "";
-    const intl = t.intlGames ? ` · ${t.intlGames} trận quốc tế` : "";
-    return `<option value="${t.name}">${t.name} — ${pct(t.wr)} trong giải${rt}${intl}</option>`;
+    // rating/wr chỉ để THAM KHẢO — không còn nạp vào mô hình dự đoán, chọn đội
+    // ở đây giờ chỉ để tra đúng roster (tuyển thủ) cho trục độ quen tay/pool.
+    const rt = typeof t.rating === "number" ? ` · đẳng cấp (tham khảo) ${t.rating>=0?"+":""}${t.rating.toFixed(2)}` : "";
+    return `<option value="${t.name}">${t.name} — ${pct(t.wr)} trong giải${rt}</option>`;
   };
   for(const side of ["blue","red"]){
     const sel = document.getElementById("team-"+side);
@@ -515,20 +527,20 @@ function onTeamChange(){
   updateModeLabel();
   analyze();
 }
+/* 2026-09-18: ý nghĩa nút này đã đổi hẳn. Trước đây "+đội" nghĩa là cộng thêm
+   SỨC MẠNH ĐỘI (win rate/rating) làm trục tính điểm. Giờ team KHÔNG còn là
+   trục điểm — chọn đội chỉ để TRA ĐÚNG TUYỂN THỦ đang cầm, mở khoá 2 trục
+   draft cần biết người chơi: độ quen tay (đã cầm con này bao nhiêu lần) và độ
+   sâu pool (biết bao nhiêu tướng khác nhau). Không chọn đội thì 2 trục này = 0,
+   mô hình chỉ còn kit + ưu tiên pick (yếu hơn nhiều, nhưng đó là lựa chọn có
+   chủ đích của người dùng — xem finalize.js đầu file). */
 function updateModeLabel(){
   const ready = state.teamBlue && state.teamRed;
-  const draftAuc = DATA.models.draft.metrics.cvAuc;
+  const draftAuc = DATA.models.draft.metrics.cvAuc, teamAuc = DATA.models.withTeam.metrics.cvAuc;
   document.getElementById("modeLabel").innerHTML = ready
-    ? `Tính thêm sức mạnh đội <span class="thin">— luôn đo chính xác hơn qua mọi lần kiểm định (AUC ${draftAuc.toFixed(3)} → ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}), nên mặc định bật khi đã chọn đội</span>`
-    : `Tính thêm sức mạnh đội <span class="thin">— <b>bắt buộc nên bật</b>: chế độ chỉ đội hình hiện đo AUC ${draftAuc.toFixed(3)}${draftAuc < 0.5 ? " (dưới ngẫu nhiên)" : ""}, chọn cả hai đội ở trên để bật</span>`;
+    ? `Tính thêm độ quen tay & độ sâu pool tướng <span class="thin">— cần chọn đội để tra đúng tuyển thủ (AUC ${draftAuc.toFixed(3)} → ${teamAuc.toFixed(3)})</span>`
+    : `Tính thêm độ quen tay & độ sâu pool tướng <span class="thin">— chọn cả hai đội ở trên để tra tuyển thủ và bật (khuyên dùng, AUC ${draftAuc.toFixed(3)} → ${teamAuc.toFixed(3)})</span>`;
   document.getElementById("useTeam").disabled = !ready;
-  // 2026-09-14: mặc định BẬT khi đã chọn đủ 2 đội — "+đội" đo tốt hơn "chỉ đội hình"
-  // ở MỌI lần kiểm định trong suốt dự án.
-  // 2026-09-17: sau khi bỏ sumWr (win-rate tướng) khỏi mô hình theo yêu cầu người
-  // dùng, chế độ "chỉ đội hình" sụp hẳn xuống AUC ~0.47 (dưới ngẫu nhiên) — 3 trục
-  // kit (tuyến đầu/tầm xa/cơ động) một mình quá yếu để đứng độc lập. Chế độ "+đội"
-  // gần như không đổi (0.603→0.608, trong nhiễu) vì sức mạnh đội đã gánh phần lớn.
-  // Xem finalize.js đầu file + meta.signalAudit trong dataset.json.
   document.getElementById("useTeam").checked = !!ready;
 }
 function renderSlots(){
@@ -629,11 +641,12 @@ function resetAll(){
 const FEAT_LABEL = {
   sumWr:"Phong độ tướng (WR đã hiệu chỉnh)",
   scaling:"Thiên hướng hậu kỳ",
-  teamStrength:"Sức mạnh đội",
   frontline:"Độ dày tuyến đầu",
   ranged:"Số tướng tầm xa",
   mobility:"Tổng độ cơ động",
-  teamRating:"Đẳng cấp đội (thang toàn cầu)",
+  pickPriority:"Ưu tiên pick của giới chuyên môn",
+  familiarity:"Độ quen tay tuyển thủ",
+  poolDepth:"Độ sâu pool tướng",
 };
 
 /* Chốt an toàn: thứ tự đặc trưng ở đây phải khớp models.*.features do finalize.js
@@ -641,8 +654,8 @@ const FEAT_LABEL = {
    sai âm thầm, không báo lỗi. Nên kiểm tra ngay lúc tải trang. */
 (function checkFeatureOrder(){
   const expect = {
-    draft: ["frontline","ranged","mobility"],
-    withTeam: ["teamStrength","teamRating","frontline","ranged","mobility"],
+    draft: ["frontline","ranged","mobility","pickPriority"],
+    withTeam: ["frontline","ranged","mobility","pickPriority","familiarity","poolDepth"],
   };
   for(const [key, want] of Object.entries(expect)){
     const got = (DATA.models[key] && DATA.models[key].features) || [];
@@ -667,11 +680,11 @@ function analyze(){
     lead < 4 ? "Hai đội hình gần như ngang nhau"
              : `Đội ${pB > pR ? "Xanh" : "Đỏ"} ${lead < 12 ? "nhỉnh nhẹ" : "có lợi thế"} theo mô hình`;
   document.getElementById("verdictSub").innerHTML = res.useTeam
-    ? `Đang tính cả sức mạnh đội. Ở mức này mô hình xếp hạng đúng ${res.model.metrics.cvAuc.toFixed(3)} AUC — tốt hơn hẳn chế độ chỉ đọc đội hình.`
-    : `Chỉ đọc đội hình, không biết đội nào cầm. <b>Chế độ này hiện đo được AUC ${res.model.metrics.cvAuc.toFixed(3)}</b> — ` +
+    ? `Đang đánh giá qua draft đầy đủ (kit + ưu tiên pick + độ quen tay + độ sâu pool). Ở mức này mô hình xếp hạng đúng ${res.model.metrics.cvAuc.toFixed(3)} AUC.`
+    : `Chưa biết tuyển thủ (chưa chọn đội), chỉ còn kit + ưu tiên pick. <b>Chế độ này hiện đo được AUC ${res.model.metrics.cvAuc.toFixed(3)}</b> — ` +
       (res.model.metrics.cvAuc < 0.5
-        ? `dưới cả mức đoán ngẫu nhiên (đã bỏ win-rate tướng khỏi mô hình theo yêu cầu, chỉ còn 3 trục kit thô sơ). Đừng dựa vào chế độ này — chọn cả hai đội để có kết quả đáng tin.`
-        : `phần lớn xác suất bên dưới đến từ <b>lợi thế side xanh ${pct1(DATA.baselines.blueWinRate)}</b> trong dữ liệu; đội hình chỉ điều chỉnh thêm một chút.`);
+        ? `dưới cả mức đoán ngẫu nhiên. Đừng dựa vào chế độ này — chọn cả hai đội để mở khoá độ quen tay/pool, kết quả đáng tin hơn nhiều.`
+        : `phần lớn xác suất bên dưới đến từ <b>lợi thế side xanh ${pct1(DATA.baselines.blueWinRate)}</b> trong dữ liệu; draft chỉ điều chỉnh thêm một chút.`);
   document.getElementById("probB").textContent = "Xanh " + pct1(pB);
   document.getElementById("probR").textContent = "Đỏ " + pct1(pR);
   document.getElementById("fillB").style.width = (pB*100)+"%";
@@ -1056,7 +1069,33 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     ngẫu nhiên</b>, vì 3 trục kit còn lại (tuyến đầu/tầm xa/cơ động) quá yếu để đứng một mình. Vì vậy
     trang giờ cảnh báo rõ trong ô "Kết quả dự đoán" khi chưa chọn đội, và trục sumWr được giữ nguyên
     số liệu wrShrunk để hiển thị tham khảo (giống đối đầu từng đường) — chỉ không còn nạp vào mô hình.
-    Toàn bộ số liệu trước khi bỏ vẫn lưu ở đầu finalize.js, không xoá, để đối chiếu lại nếu cần.</p>`;
+    Toàn bộ số liệu trước khi bỏ vẫn lưu ở đầu finalize.js, không xoá, để đối chiếu lại nếu cần.</p>
+
+    <p><b>Chuyển hẳn sang đánh giá qua DRAFT — bỏ luôn sức mạnh đội (2026-09-18).</b> Người dùng
+    yêu cầu tiếp: đội chỉ nên dùng để tra dữ liệu tướng, không còn là trục quyết định. Trước khi làm,
+    tôi đưa ra bằng chứng phản bác: walk-forward trên 5 trận IG vs TES thật (05/09) cho "+đội" đúng
+    3/5, draft-only chỉ đúng 1/5 — ngược với quan sát của người dùng (có thể do họ test trên đội hình
+    giả định, không có kết quả thật để đối chiếu). Người dùng vẫn chọn giữ hướng draft sau khi nghe đầy
+    đủ, nên tôi đi tìm tín hiệu draft tốt nhất để thay vào chỗ <b>rating khu vực</b> vừa xây ở mục CKTG
+    phía trên (mục đó giờ chỉ còn giá trị tham khảo/hiển thị, không nạp vào mô hình dự đoán nữa) và
+    <b>teamWr</b> (tỉ lệ thắng đội):</p>
+    <ul style="margin:8px 0 8px 20px;line-height:1.7">
+      <li><b>Độ quen tay</b> (log số trận tuyển thủ đã cầm chính tướng này) — mạnh nhất, kéo AUC từ
+        0,468 (kit đơn thuần) lên 0,55+.</li>
+      <li><b>Độ sâu pool</b> (số tướng khác nhau tuyển thủ từng cầm) — hợp lý với fearless draft
+        (258/259 series không cho dùng lại tướng): pool rộng thì ít bị dồn vào tướng lạ ở ván sau.</li>
+      <li><b>Ưu tiên pick chuyên môn</b> (vị trí trung bình trong thứ tự draft toàn cục, suy từ
+        picksDraftOrder) — <i>hoàn toàn không dùng kết quả thắng/thua</i>, chỉ hỏi "giới chuyên môn coi
+        trọng tướng này đến đâu".</li>
+    </ul>
+    <p>Cảnh báo rò rỉ đã bắt được TRƯỚC khi ship: đo lần đầu bằng kfold ngẫu nhiên (cách đo cũ dùng cho
+    mọi mô hình) cho AUC ảo <b>0,705</b>, vì độ quen tay/ưu tiên pick là bộ đếm tăng dần theo thời gian
+    — fold "train" ngẫu nhiên lẫn cả trận tương lai. Walk-forward thật (chỉ dùng trận trước đó) đưa về
+    <b>${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}</b> — thấp hơn nhiều so với sức mạnh đội đã bỏ
+    (từng đo ~0,60+), đúng như đã báo trước khi người dùng quyết định. Chế độ "chỉ đội hình" (chưa chọn
+    đội, chỉ còn kit + ưu tiên pick) đo <b>${DATA.models.draft.metrics.cvAuc.toFixed(3)}</b>. Chọn đội
+    bây giờ không còn ảnh hưởng đến "đội nào mạnh hơn" — chỉ để tra đúng roster hiện tại nhằm tính độ
+    quen tay/pool của tuyển thủ.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 

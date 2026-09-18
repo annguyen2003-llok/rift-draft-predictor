@@ -30,7 +30,41 @@
    dataset.json để đối chiếu — số liệu cũ VẪN giữ nguyên ở đó, không xoá, để không
    ai (kể cả tôi ở tương lai) tưởng nhầm đây là phát hiện mới thay vì lựa chọn có
    chủ đích. wrShrunk của tướng vẫn hiển thị trong UI (giống matchupEdge) — chỉ
-   không còn nạp vào mô hình dự đoán. */
+   không còn nạp vào mô hình dự đoán.
+
+   2026-09-18 — BỎ TIẾP teamStrength/teamRating KHỎI MÔ HÌNH, cũng theo yêu cầu
+   tường minh của người dùng (chuyển hẳn sang đánh giá qua draft, đội chỉ dùng để
+   tra dữ liệu tướng/tuyển thủ) — sau khi đã đưa ra bằng chứng phản bác rõ ràng:
+     - Walk-forward 5 trận IG vs TES thật (05/09): +đội đúng 3/5, draft-only chỉ
+       đúng 1/5 — NGƯỢC với quan sát của người dùng hôm trước (có thể do họ test
+       trên 1 đội hình GIẢ ĐỊNH không có kết quả thật để đối chiếu).
+     - Draft-only (kit3, không đội, không sumWr) đo AUC 0.468 — dưới ngẫu nhiên.
+     - Thí nghiệm tự nhiên (so sánh các ván TRONG CÙNG 1 series, loại sạch yếu tố
+       đội): 6 trục kit chỉ giải thích 1.4% biến thiên thắng-thua.
+   Người dùng vẫn chọn giữ nguyên hướng draft sau khi nghe đầy đủ, nên tôi tìm
+   tín hiệu draft TỐT NHẤT đo được để thay vào chỗ sức mạnh đội:
+     - familiarity (độ quen tay: player đã cầm chính con tướng này bao nhiêu lần)
+       — mạnh nhất, walk-forward AUC 0.468 -> 0.553 khi thêm vào kit3.
+     - poolDepth (số tướng khác nhau player từng cầm — pool rộng thì ít bị dồn
+       vào tướng lạ ở ván sau của fearless draft) — +0.004 AUC.
+     - pickPriority (thứ tự được pick trong toàn cục draft, quy đổi từ
+       picksDraftOrder — được pick sớm = giới chuyên môn đánh giá cao, HOÀN TOÀN
+       không dùng kết quả thắng/thua) — +0.005 AUC.
+   Tổng: kit3 + familiarity + poolDepth + pickPriority. Đo TRONG chính pipeline
+   sản xuất (walk-forward thật, không phải script test riêng — xem cv.draft/
+   cv.withTeam bên dưới): withTeam AUC≈0.548-0.551, acc 60.8%, logloss 0.6595
+   (lambda=300). Vẫn thấp hơn nhiều so với +đội đã bỏ (AUC ~0.60+) — đã báo
+   trước, người dùng chấp nhận. familiarity/poolDepth cần biết ĐÚNG tuyển thủ
+   đang cầm, nên vẫn cần chọn 2 đội thật trong UI để tra ra roster hiện tại —
+   team KHÔNG còn là trục tính điểm, chỉ còn là chìa khoá tra dữ liệu.
+
+   CẢNH BÁO RÒ RỈ ĐÃ GẶP VÀ SỬA: đo lần đầu bằng kfold ngẫu nhiên (cách đo cũ
+   dùng cho mọi mô hình trước đây) cho AUC ẢO 0.705, vì familiarity/pickPriority
+   là BỘ ĐẾM TĂNG DẦN theo thời gian — fold "train" ngẫu nhiên chứa cả trận
+   tương lai, khiến trận đầu mùa "biết" độ quen tay mà lúc đó chưa hề có. Walk-
+   forward thật (chỉ dùng trận trước đó, xem WF_MIN_HISTORY/walkForwardEval)
+   đưa AUC về 0.548 — chênh 0.16 gần như toàn bộ là rò rỉ. Từ giờ draft/withTeam
+   PHẢI đo bằng walk-forward, không dùng kfold ngẫu nhiên nữa. */
 
 const fs = require('fs');
 const path = require('path');
@@ -112,11 +146,13 @@ const PRIOR_K = 12, MATCHUP_K = 8, TEAM_K = 6;
 /* Rating phân cấp (Bradley-Terry): LAM_TEAM co rút từng đội, LAM_REGION co rút hiệu
    ứng khu vực. Chọn bằng quét lưới trên mô phỏng CKTG (xem chú thích RATING bên dưới). */
 const LAM_TEAM = 8, LAM_REGION = 8;
-/* LAMBDA_WIN hạ 120 -> 60 (2026-09-14): với bộ đặc trưng mới (3 trục cấu trúc kit
-   + WR tướng) thì lambda 20 cho AUC cao nhất (0.6103) nhưng lambda 60 cho độ chính
-   xác 62.8% vs 60.2% và Brier 0.2368 vs 0.2443 — hiệu chỉnh xác suất tốt hơn đáng
-   giá hơn 0.004 AUC, vì người dùng đọc con số % chứ không đọc thứ hạng. */
-const LAMBDA_WIN = 60, LAMBDA_KILL = 100;
+/* LAMBDA_WIN = 300 (2026-09-18, đo bằng walk-forward THẬT trong chính pipeline
+   sản xuất — xem cv.draft/withTeam bên dưới): bộ đặc trưng thuần-draft mới
+   [frontline, ranged, mobility, pickPriority, familiarity, poolDepth]. Quét
+   lambda=60/150/300 cho withTeam: acc 57.2%/60.5%/60.8%, logloss 0.678/0.663/
+   0.660 — AUC gần như không đổi (0.55) nhưng 300 cho hiệu chỉnh + độ chính xác
+   tốt nhất. draft-only: AUC 0.51/0.50/0.49, acc ~61% cả 3 mức. */
+const LAMBDA_WIN = 300, LAMBDA_KILL = 100;
 const SHORT = 28, LONG = 34;
 
 /* ============================ RATING PHÂN CẤP (cho CKTG) =====================
@@ -204,8 +240,14 @@ function fitRating(indices, home, { iters = 4000, lr = 0.5 } = {}) {
 const isInternational = g => (g.tier || 'major') === 'international';
 
 // ------------------------------------------------------------ stats builder
+// Vị trí toàn cục trong 1 draft chuẩn LMHT: B1,R1,R2,B2,B3,R3 | R4,B4,B5,R5.
+// Dùng để tính "được pick sớm hay muộn" — không liên quan thắng/thua.
+const BLUE_POS = [1, 4, 5, 8, 9], RED_POS = [2, 3, 6, 7, 10];
+const PRIO_K = 8;
+
 function buildStats(indices) {
   const champ = {}, matchups = {}, team = {};
+  const playerChamp = {}, playerPool = {}, pickPrio = {}, roster = {};
   const C = n => champ[n] || (champ[n] = {
     name: n, roles: {}, bans: 0, picks: 0, wins: 0, gameKills: [], gameDurs: [],
     k: 0, d: 0, a: 0, shortG: 0, shortW: 0, longG: 0, longW: 0,
@@ -220,6 +262,26 @@ function buildStats(indices) {
       const s = g[sk];
       const t = team[s.team] || (team[s.team] = { name: s.team, league: g.league, games: 0, wins: 0 });
       t.games++; if (s.win) t.wins++;
+      // Độ quen tay/độ sâu pool/roster hiện tại: ăn MỌI trận (kể cả quốc tế) —
+      // đây là thứ player thực sự tích lũy được, không phải thống kê win-rate
+      // theo giải nên không bị vấn đề "trộn patch" như champ WR.
+      const order = s.picksDraftOrder || [], POS = sk === 'blue' ? BLUE_POS : RED_POS;
+      order.forEach((cn, k) => {
+        if (k >= 5) return;
+        const e = pickPrio[cn] || (pickPrio[cn] = { n: 0, sum: 0 });
+        e.n++; e.sum += POS[k];
+      });
+      for (const role of ROLES) {
+        const p = s.comp[role]; if (!p) continue;
+        if (p.playerId) {
+          const fk = p.playerId + '|' + p.champion;
+          playerChamp[fk] = (playerChamp[fk] || 0) + 1;
+          (playerPool[p.playerId] = playerPool[p.playerId] || new Set()).add(p.champion);
+          // roster: player GẦN NHẤT ở mỗi cặp đội|đường (ghi đè theo thứ tự
+          // indices đã sort theo ngày ở scrape.js, nên bản ghi sau = mới hơn)
+          roster[s.team + '|' + role] = { playerId: p.playerId, player: p.player };
+        }
+      }
       if (!forChampStats) continue;
       for (const b of s.bans) C(b).bans++;
       for (const role of ROLES) {
@@ -260,20 +322,32 @@ function buildStats(indices) {
   // của nó — tính một lần bên ngoài rồi dùng chung là rò rỉ dữ liệu.
   const home = homeRegions(indices);
   const rating = fitRating(indices, home);
-  return { champ, matchups, team, n, avgKills, avgDur, rating, home };
+  return { champ, matchups, team, n, avgKills, avgDur, rating, home, playerChamp, playerPool, pickPrio, roster };
 }
+// pickPrio: vị trí trung bình trong draft, co rút về 5.5 (giữa) khi mẫu nhỏ.
+// Trả về "độ ưu tiên": cao = được pick sớm = giới chuyên môn coi trọng.
+const pickPriorityOf = (st, name) => {
+  const e = st.pickPrio[name];
+  const avg = e ? (e.sum + PRIO_K * 5.5) / (e.n + PRIO_K) : 5.5;
+  return 5.5 - avg;
+};
+const familiarityOf = (st, playerId, champion) => playerId ? Math.log1p(st.playerChamp[playerId + '|' + champion] || 0) : 0;
+const poolDepthOf = (st, playerId) => playerId && st.playerPool[playerId] ? st.playerPool[playerId].size : 0;
 
 const ATTR_DEFAULT = { engage: 0, frontline: 0, cc: 0, dmg: 'AD', scaling: 0, mobility: 0, ranged: 0 };
 // role tuỳ chọn: một số tướng chơi khác hẳn build tuỳ đường (VD: Varus top AP đấu sĩ
 // vs Varus ADC sát lực) — tra "Tên|đường" trước, không có thì rơi về khoá tên chung
 const attrOf = (n, role) => (role && ATTRS[n + '|' + role]) || ATTRS[n] || ATTR_DEFAULT;
 
-/* per-side aggregate of a composition, given a stats snapshot */
+/* per-side aggregate of a composition, given a stats snapshot.
+   comp[role] mang cả playerId (không chỉ tên tướng) để tính độ quen tay/pool —
+   xem compOf() bên dưới. */
 function sideFeatures(comp, teamName, st) {
   let sumWr = 0, sumPres = 0, engage = 0, frontline = 0, cc = 0, scaling = 0, mobility = 0, ranged = 0, ad = 0, ap = 0;
-  let paceSum = 0, durSum = 0, nPace = 0;
+  let paceSum = 0, durSum = 0, nPace = 0, familiarity = 0, poolDepth = 0, pickPriority = 0;
   for (const role of ROLES) {
-    const name = comp[role]; if (!name) continue;
+    const pick = comp[role]; if (!pick || !pick.champion) continue;
+    const name = pick.champion;
     const c = st.champ[name];
     const r = c && c.roles[role];
     sumWr += r ? (r.wins + PRIOR_K * 0.5) / (r.games + PRIOR_K) : 0.5;
@@ -283,10 +357,14 @@ function sideFeatures(comp, teamName, st) {
     scaling += at.scaling; mobility += at.mobility; ranged += at.ranged;
     if (at.dmg === 'AP') ap += 1; else if (at.dmg === 'Mixed') { ad += 0.5; ap += 0.5; } else ad += 1;
     if (c && c.gameKills.length) { paceSum += mean(c.gameKills); durSum += mean(c.gameDurs); nPace++; }
+    familiarity += familiarityOf(st, pick.playerId, name);
+    poolDepth += poolDepthOf(st, pick.playerId);
+    pickPriority += pickPriorityOf(st, name);
   }
   const tw = teamName && st.team[teamName];
   return {
     sumWr, sumPres, engage, frontline, cc, scaling, mobility, ranged, ad, ap,
+    familiarity, poolDepth, pickPriority,
     mixedness: 1 - Math.abs(ad - ap) / (ad + ap || 1),
     pace: nPace ? paceSum / nPace : st.avgKills,
     lengthLean: nPace ? durSum / nPace : st.avgDur,
@@ -295,7 +373,9 @@ function sideFeatures(comp, teamName, st) {
   };
 }
 
-const compOf = side => Object.fromEntries(ROLES.map(r => [r, side.comp[r] && side.comp[r].champion]));
+// Giữ nguyên playerId (không rút gọn về tên tướng) — cần cho familiarity/poolDepth.
+const compOf = side => Object.fromEntries(ROLES.map(r => [r, side.comp[r] &&
+  { champion: side.comp[r].champion, playerId: side.comp[r].playerId, player: side.comp[r].player }]));
 
 function rowFor(g, st) {
   const B = sideFeatures(compOf(g.blue), g.blue.team, st);
@@ -307,10 +387,17 @@ function rowFor(g, st) {
        Xem chú thích đầu file + meta.newChampAudit trong dataset.json để đối
        chiếu con số cũ. wrShrunk của tướng vẫn tính và hiển thị cho người dùng
        tham khảo (giống matchupEdge) — chỉ không còn NẠP vào mô hình dự đoán. */
-    draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility],
-    withTeam: [B.teamWr - R.teamWr, B.teamRating - R.teamRating,
-      B.frontline - R.frontline, B.ranged - R.ranged,
-      B.mobility - R.mobility],
+    /* 2026-09-18 — teamWr/teamRating bỏ khỏi CẢ HAI mô hình, theo yêu cầu tường
+       minh của người dùng: chuyển hẳn sang đánh giá qua draft, đội chỉ dùng để
+       tra dữ liệu tướng/tuyển thủ (roster) chứ không còn là trục tính điểm.
+       'draft': chỉ cần tướng, không cần biết ai cầm — pickPriority là tín hiệu
+       cấp-tướng (thứ tự pick toàn cục) nên vẫn dùng được khi chưa chọn đội.
+       'withTeam' (đổi ý nghĩa: giờ là "biết cả tuyển thủ" chứ không phải "biết
+       sức mạnh đội"): thêm familiarity + poolDepth, cần chọn đội để tra roster. */
+    draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility,
+      B.pickPriority - R.pickPriority],
+    withTeam: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility,
+      B.pickPriority - R.pickPriority, B.familiarity - R.familiarity, B.poolDepth - R.poolDepth],
     kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
     intl: isInternational(g),
     y: g.blue.win ? 1 : 0,
@@ -375,21 +462,42 @@ function auc(pairs) {
 }
 
 // ------------------------------------------------------------ leak-free CV
-const cv = { draft: [], withTeam: [], kill: [] };
+/* 2026-09-18 — draft/withTeam giờ PHẢI đo bằng WALK-FORWARD (thời gian), không
+   còn được dùng kfold ngẫu nhiên. Lý do: pickPriority/familiarity/poolDepth là
+   BỘ ĐẾM TĂNG DẦN theo thời gian (số trận đã cầm, số tướng đã cầm...) — kfold
+   ngẫu nhiên lấy fold "train" từ cả tương lai, khiến trận đầu mùa "học" được
+   độ quen tay mà lúc đó player chưa hề có. Đo thử: kfold ngẫu nhiên báo AUC
+   0.705 cho withTeam; walk-forward thật (chỉ dùng trận TRƯỚC) chỉ ra 0.564 —
+   phần chênh 0.14 gần như toàn bộ là rò rỉ, giống hệt bẫy đã gặp ở alt_signals.js
+   (kfold báo +0.22, walk-forward thật chỉ +0.004). games đã sort theo ngày ở
+   trên (xem 'let games = ...sort'), nên chỉ cần đi tuần tự theo index. */
+const WF_MIN_HISTORY = 150, WF_ITERS = 1500;
+function walkForwardEval(rowKey, fitFn, predFn) {
+  const out = [];
+  for (let i = WF_MIN_HISTORY; i < N; i++) {
+    const prior = [...Array(i).keys()];
+    const st = buildStats(prior);
+    const tr = prior.map(j => rowFor(games[j], st));
+    const s = standardise(tr.map(r => r[rowKey]));
+    const m = fitFn(s.Z, tr.map(r => r.y), LAMBDA_WIN, WF_ITERS);
+    const te = rowFor(games[i], st);
+    out.push({ p: predFn(m, applyStd(te[rowKey], s.mu, s.sg)), y: te.y, intl: te.intl });
+  }
+  return out;
+}
+const cv = {
+  draft: walkForwardEval('draft', fitLogistic, predLogit),
+  withTeam: walkForwardEval('withTeam', fitLogistic, predLogit),
+  kill: [],
+};
+// kills model: pace/lengthLean cũng là trung bình cộng dồn nên về lý thuyết có
+// cùng nguy cơ, nhưng đây là hồi quy tuyến tính dự đoán SỐ (không phải thắng-
+// thua nhạy với thứ tự thời gian như familiarity) — giữ kfold ngẫu nhiên như cũ,
+// phạm vi sửa lần này chỉ nhắm vào draft/withTeam vừa đổi đặc trưng.
 for (const { train, test } of kfold(N, 5)) {
   const st = buildStats(train);
   const tr = train.map(i => rowFor(games[i], st));
   const te = test.map(i => rowFor(games[i], st));
-  const y = tr.map(r => r.y);
-
-  const sD = standardise(tr.map(r => r.draft));
-  const mD = fitLogistic(sD.Z, y, LAMBDA_WIN);
-  te.forEach((r, k) => cv.draft.push({ p: predLogit(mD, applyStd(r.draft, sD.mu, sD.sg)), y: r.y, intl: r.intl }));
-
-  const sT = standardise(tr.map(r => r.withTeam));
-  const mT = fitLogistic(sT.Z, y, LAMBDA_WIN);
-  te.forEach(r => cv.withTeam.push({ p: predLogit(mT, applyStd(r.withTeam, sT.mu, sT.sg)), y: r.y, intl: r.intl }));
-
   const sK = standardise(tr.map(r => r.kill));
   const mK = fitLinear(sK.Z, tr.map(r => r.totalKills), LAMBDA_KILL);
   te.forEach(r => cv.kill.push({ pred: predLin(mK, applyStd(r.kill, sK.mu, sK.sg)), act: r.totalKills }));
@@ -673,9 +781,21 @@ const out = {
   attrs: Object.fromEntries(Object.entries(ATTRS).filter(([k]) =>
     champions[k] || champions[k.split('|')[0]])),
   attrsMissing: Object.keys(champions).filter(n => !ATTRS[n]),
+  /* Dữ liệu cho mô hình THUẦN DRAFT (2026-09-18) — đội chỉ dùng để tra đúng
+     roster hiện tại, không còn là trục tính điểm.
+       pickPriority : tên tướng -> độ ưu tiên pick (cao = pro pick sớm), không
+                       dùng thắng/thua, tính sẵn để client không phải tự suy ra
+                       từ picksDraftOrame thô.
+       roster       : "Đội|đường" -> tuyển thủ GẦN NHẤT từng thấy ở vị trí đó.
+       familiarity  : "playerId|Tên tướng" -> log1p(số trận player đã cầm).
+       poolDepth    : playerId -> số tướng khác nhau từng cầm. */
+  pickPriority: Object.fromEntries(Object.keys(stats.pickPrio).map(n => [n, pickPriorityOf(stats, n)])),
+  roster: stats.roster,
+  familiarity: Object.fromEntries(Object.entries(stats.playerChamp).map(([k, v]) => [k, Math.log1p(v)])),
+  poolDepth: Object.fromEntries(Object.keys(stats.playerPool).map(id => [id, stats.playerPool[id].size])),
   models: {
-    draft: { features: ['frontline', 'ranged', 'mobility'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
-    withTeam: { features: ['teamStrength', 'teamRating', 'frontline', 'ranged', 'mobility'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    draft: { features: ['frontline', 'ranged', 'mobility', 'pickPriority'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
+    withTeam: { features: ['frontline', 'ranged', 'mobility', 'pickPriority', 'familiarity', 'poolDepth'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
     kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
   },
 };
