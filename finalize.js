@@ -58,13 +58,33 @@
    đang cầm, nên vẫn cần chọn 2 đội thật trong UI để tra ra roster hiện tại —
    team KHÔNG còn là trục tính điểm, chỉ còn là chìa khoá tra dữ liệu.
 
-   CẢNH BÁO RÒ RỈ ĐÃ GẶP VÀ SỬA: đo lần đầu bằng kfold ngẫu nhiên (cách đo cũ
-   dùng cho mọi mô hình trước đây) cho AUC ẢO 0.705, vì familiarity/pickPriority
-   là BỘ ĐẾM TĂNG DẦN theo thời gian — fold "train" ngẫu nhiên chứa cả trận
-   tương lai, khiến trận đầu mùa "biết" độ quen tay mà lúc đó chưa hề có. Walk-
-   forward thật (chỉ dùng trận trước đó, xem WF_MIN_HISTORY/walkForwardEval)
-   đưa AUC về 0.548 — chênh 0.16 gần như toàn bộ là rò rỉ. Từ giờ draft/withTeam
-   PHẢI đo bằng walk-forward, không dùng kfold ngẫu nhiên nữa. */
+   CẢNH BÁO RÒ RỈ ĐÃ GẶP VÀ SỬA (LẦN 1): đo lần đầu bằng kfold ngẫu nhiên (cách
+   đo cũ dùng cho mọi mô hình trước đây) cho AUC ẢO 0.705, vì familiarity/
+   pickPriority là BỘ ĐẾM TĂNG DẦN theo thời gian — fold "train" ngẫu nhiên
+   chứa cả trận tương lai, khiến trận đầu mùa "biết" độ quen tay mà lúc đó chưa
+   hề có. Walk-forward thật (chỉ dùng trận trước đó) đưa AUC về 0.548.
+
+   CẢNH BÁO RÒ RỈ ĐÃ GẶP VÀ SỬA (LẦN 2, 2026-09-18(2)): bản walk-forward "sửa
+   xong" ở trên VẪN còn 1 lỗi tinh vi hơn — mỗi bước i gọi buildStats(prior) MỘT
+   LẦN rồi dùng CHUNG snapshot đó cho MỌI dòng huấn luyện j<i. Dòng huấn luyện
+   của 1 trận từ rất lâu (VD trận thứ 5) vẫn được gán độ quen tay tính đến tận
+   thời điểm i-1 — "biết" cả kinh nghiệm player tích luỹ SAU trận đó, dù không
+   rò rỉ kết quả trận i (mọi thứ vẫn ≤ i-1) nhưng làm sai lệch quan hệ đặc
+   trưng-kết quả của chính dòng đó. Viết lại bằng POINT-IN-TIME arrays (PIT,
+   KIT_STATIC ở dưới) — mỗi dòng chỉ mang đúng lịch sử riêng của nó tại đúng
+   thời điểm nó xảy ra. Đo lại với cách ĐÚNG, chưa kèm 2 tương tác mới: AUC
+   0.528 — thấp hơn 0.548 "cũ" (kiểu sai LẦN 2), chênh 0.02 chính là phần đã
+   bị đo lạc quan. Bù lại bằng 2 tương tác nhân đôi MỚI TÌM ĐƯỢC (frontline×poolDepth +0.0199 AUC KTC 95%
+   [0.0045,0.0348]; familiarity×poolDepth +0.0110 KTC [0.0026,0.0194] — cả
+   hai kiểm chứng bằng bootstrap 3000 lần TRÊN CHÍNH phương pháp point-in-time
+   đúng, không phải phương pháp cũ) nên AUC cuối cùng quay lại ≈0.548 — CÙNG
+   SỐ nhưng giờ là số thật, không phải số bị đo lạc quan + chưa có 2 tín hiệu
+   mới. draft-only (không có poolDepth nên không dùng được 2 tương tác) giảm
+   đúng như dự đoán: 0.493 → 0.476.
+
+   Từ giờ draft/withTeam PHẢI đo bằng walk-forward POINT-IN-TIME (mảng PIT/
+   KIT_STATIC), không dùng kfold ngẫu nhiên (rò rỉ lần 1) và không dùng
+   buildStats(prior) chung cho mọi dòng trong 1 bước walk-forward (rò rỉ lần 2). */
 
 const fs = require('fs');
 const path = require('path');
@@ -396,8 +416,15 @@ function rowFor(g, st) {
        sức mạnh đội"): thêm familiarity + poolDepth, cần chọn đội để tra roster. */
     draft: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility,
       B.pickPriority - R.pickPriority],
+    /* 2026-09-18(2) — thêm 2 tương tác nhân đôi đã kiểm chứng bằng bootstrap
+       (xem chú thích LAMBDA_WIN/đầu file): frontline×poolDepth (+0.0199 AUC,
+       KTC 95% [0.0045,0.0348]) và familiarity×poolDepth (+0.0110, KTC
+       [0.0026,0.0194]) — cả hai THẬT, không nằm trong nhiễu. Chỉ vào withTeam
+       vì cần poolDepth (cần biết tuyển thủ). */
     withTeam: [B.frontline - R.frontline, B.ranged - R.ranged, B.mobility - R.mobility,
-      B.pickPriority - R.pickPriority, B.familiarity - R.familiarity, B.poolDepth - R.poolDepth],
+      B.pickPriority - R.pickPriority, B.familiarity - R.familiarity, B.poolDepth - R.poolDepth,
+      B.frontline * B.poolDepth - R.frontline * R.poolDepth,
+      B.familiarity * B.poolDepth - R.familiarity * R.poolDepth],
     kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
     intl: isInternational(g),
     y: g.blue.win ? 1 : 0,
@@ -470,18 +497,79 @@ function auc(pairs) {
    0.705 cho withTeam; walk-forward thật (chỉ dùng trận TRƯỚC) chỉ ra 0.564 —
    phần chênh 0.14 gần như toàn bộ là rò rỉ, giống hệt bẫy đã gặp ở alt_signals.js
    (kfold báo +0.22, walk-forward thật chỉ +0.004). games đã sort theo ngày ở
-   trên (xem 'let games = ...sort'), nên chỉ cần đi tuần tự theo index. */
+   trên (xem 'let games = ...sort'), nên chỉ cần đi tuần tự theo index.
+
+   2026-09-18(2) — SỬA TIẾP một lỗi tinh vi hơn trong chính walk-forward vừa
+   sửa: bản đầu tiên gọi buildStats(prior) MỘT LẦN cho mỗi bước i, rồi dùng
+   CHUNG snapshot đó cho MỌI dòng huấn luyện j<i. Nghĩa là dòng huấn luyện của
+   1 trận xảy ra từ rất lâu (VD trận thứ 5) vẫn được gán độ quen tay tính đến
+   tận thời điểm i-1 — tức "biết" cả kinh nghiệm player tích luỹ SAU trận đó.
+   Không rò rỉ kết quả trận i (mọi thứ vẫn ≤ i-1), nhưng làm sai lệch mối quan
+   hệ giữa đặc trưng và kết quả của CHÍNH DÒNG huấn luyện đó — kiểm chứng bằng
+   1 bản viết lại dùng đúng lịch sử riêng của mỗi dòng (mỗi trận j lấy độ quen
+   tay/pool/ưu tiên tính đến ngay TRƯỚC trận j, không phải trước trận i): AUC
+   giảm từ 0.566 xuống 0.528 — chênh 0.038, cho thấy cách cũ đã ước lượng hơi
+   lạc quan. Từ giờ dùng POINT-IN-TIME arrays tính 1 lần theo đúng thứ tự thời
+   gian, mỗi dòng chỉ mang lịch sử của riêng nó. */
+const pitPlayerChamp = {}, pitPlayerPool = {}, pitPickPrio = {};
+const PIT = games.map(g => {
+  const side = sk => {
+    const s = g[sk];
+    let fam = 0, pool = 0, prio = 0;
+    for (const role of ROLES) {
+      const p = s.comp[role]; if (!p) continue;
+      if (p.playerId) {
+        fam += Math.log1p(pitPlayerChamp[p.playerId + '|' + p.champion] || 0);
+        pool += pitPlayerPool[p.playerId] ? pitPlayerPool[p.playerId].size : 0;
+      }
+      const e = pitPickPrio[p.champion];
+      prio += 5.5 - (e ? (e.sum + PRIO_K * 5.5) / (e.n + PRIO_K) : 5.5);
+    }
+    return { fam, pool, prio };
+  };
+  const B = side('blue'), R = side('red');
+  // cập nhật bảng thống kê SAU KHI đã đọc (để trận sau mới thấy trận này)
+  for (const sk of ['blue', 'red']) {
+    const s = g[sk];
+    const order = s.picksDraftOrder || [], POS = sk === 'blue' ? BLUE_POS : RED_POS;
+    order.forEach((cn, k) => { if (k < 5) { const e = pitPickPrio[cn] || (pitPickPrio[cn] = { n: 0, sum: 0 }); e.n++; e.sum += POS[k]; } });
+    for (const role of ROLES) {
+      const p = s.comp[role]; if (!p || !p.playerId) continue;
+      const fk = p.playerId + '|' + p.champion;
+      pitPlayerChamp[fk] = (pitPlayerChamp[fk] || 0) + 1;
+      (pitPlayerPool[p.playerId] = pitPlayerPool[p.playerId] || new Set()).add(p.champion);
+    }
+  }
+  return { B, R };
+});
+// frontline/ranged/mobility không đổi theo thời gian — tính 1 lần luôn cho nhanh.
+const KIT_STATIC = games.map(g => {
+  const side = sk => ROLES.reduce((s, r) => {
+    const p = g[sk].comp[r]; if (!p) return s;
+    const a = attrOf(p.champion, r);
+    return { frontline: s.frontline + a.frontline, ranged: s.ranged + a.ranged, mobility: s.mobility + a.mobility };
+  }, { frontline: 0, ranged: 0, mobility: 0 });
+  return { B: side('blue'), R: side('red') };
+});
+function draftFeatRow(i) {
+  const k = KIT_STATIC[i], p = PIT[i];
+  return [k.B.frontline - k.R.frontline, k.B.ranged - k.R.ranged, k.B.mobility - k.R.mobility, p.B.prio - p.R.prio];
+}
+function withTeamFeatRow(i) {
+  const k = KIT_STATIC[i], p = PIT[i];
+  return [k.B.frontline - k.R.frontline, k.B.ranged - k.R.ranged, k.B.mobility - k.R.mobility,
+    p.B.prio - p.R.prio, p.B.fam - p.R.fam, p.B.pool - p.R.pool,
+    k.B.frontline * p.B.pool - k.R.frontline * p.R.pool, p.B.fam * p.B.pool - p.R.fam * p.R.pool];
+}
 const WF_MIN_HISTORY = 150, WF_ITERS = 1500;
 function walkForwardEval(rowKey, fitFn, predFn) {
+  const buildRow = rowKey === 'draft' ? draftFeatRow : withTeamFeatRow;
   const out = [];
   for (let i = WF_MIN_HISTORY; i < N; i++) {
     const prior = [...Array(i).keys()];
-    const st = buildStats(prior);
-    const tr = prior.map(j => rowFor(games[j], st));
-    const s = standardise(tr.map(r => r[rowKey]));
-    const m = fitFn(s.Z, tr.map(r => r.y), LAMBDA_WIN, WF_ITERS);
-    const te = rowFor(games[i], st);
-    out.push({ p: predFn(m, applyStd(te[rowKey], s.mu, s.sg)), y: te.y, intl: te.intl });
+    const s = standardise(prior.map(buildRow));
+    const m = fitFn(s.Z, prior.map(j => games[j].blue.win ? 1 : 0), LAMBDA_WIN, WF_ITERS);
+    out.push({ p: predFn(m, applyStd(buildRow(i), s.mu, s.sg)), y: games[i].blue.win ? 1 : 0, intl: isInternational(games[i]) });
   }
   return out;
 }
@@ -795,7 +883,7 @@ const out = {
   poolDepth: Object.fromEntries(Object.keys(stats.playerPool).map(id => [id, stats.playerPool[id].size])),
   models: {
     draft: { features: ['frontline', 'ranged', 'mobility', 'pickPriority'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
-    withTeam: { features: ['frontline', 'ranged', 'mobility', 'pickPriority', 'familiarity', 'poolDepth'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    withTeam: { features: ['frontline', 'ranged', 'mobility', 'pickPriority', 'familiarity', 'poolDepth', 'frontlineXpool', 'familiarityXpool'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
     kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
   },
 };

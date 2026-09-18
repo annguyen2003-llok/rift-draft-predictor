@@ -467,10 +467,14 @@ function predict(){
   const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
-  /* Thứ tự PHẢI khớp models.*.features trong finalize.js. */
+  /* Thứ tự PHẢI khớp models.*.features trong finalize.js.
+     2026-09-18(2): thêm 2 tương tác nhân đôi đã kiểm chứng bằng bootstrap —
+     frontline×poolDepth, familiarity×poolDepth (xem chú thích đầu finalize.js). */
   const raw = useTeam
     ? [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility,
-       B.pickPriority-R.pickPriority, B.familiarity-R.familiarity, B.poolDepth-R.poolDepth]
+       B.pickPriority-R.pickPriority, B.familiarity-R.familiarity, B.poolDepth-R.poolDepth,
+       B.frontline*B.poolDepth - R.frontline*R.poolDepth,
+       B.familiarity*B.poolDepth - R.familiarity*R.poolDepth]
     : [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.pickPriority-R.pickPriority];
   return {...runModel(model, raw), B, R, model, useTeam};
 }
@@ -647,6 +651,8 @@ const FEAT_LABEL = {
   pickPriority:"Ưu tiên pick của giới chuyên môn",
   familiarity:"Độ quen tay tuyển thủ",
   poolDepth:"Độ sâu pool tướng",
+  frontlineXpool:"Tuyến đầu × độ sâu pool",
+  familiarityXpool:"Quen tay × độ sâu pool",
 };
 
 /* Chốt an toàn: thứ tự đặc trưng ở đây phải khớp models.*.features do finalize.js
@@ -655,7 +661,7 @@ const FEAT_LABEL = {
 (function checkFeatureOrder(){
   const expect = {
     draft: ["frontline","ranged","mobility","pickPriority"],
-    withTeam: ["frontline","ranged","mobility","pickPriority","familiarity","poolDepth"],
+    withTeam: ["frontline","ranged","mobility","pickPriority","familiarity","poolDepth","frontlineXpool","familiarityXpool"],
   };
   for(const [key, want] of Object.entries(expect)){
     const got = (DATA.models[key] && DATA.models[key].features) || [];
@@ -1095,7 +1101,21 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     (từng đo ~0,60+), đúng như đã báo trước khi người dùng quyết định. Chế độ "chỉ đội hình" (chưa chọn
     đội, chỉ còn kit + ưu tiên pick) đo <b>${DATA.models.draft.metrics.cvAuc.toFixed(3)}</b>. Chọn đội
     bây giờ không còn ảnh hưởng đến "đội nào mạnh hơn" — chỉ để tra đúng roster hiện tại nhằm tính độ
-    quen tay/pool của tuyển thủ.</p>`;
+    quen tay/pool của tuyển thủ.</p>
+
+    <p><b>Tìm thêm 2 tín hiệu, và sửa tiếp 1 lỗi tinh vi hơn trong chính walk-forward vừa dùng
+    (2026-09-18, phần 2).</b> Quét mọi cách kết hợp lại (thêm engage/cc/scaling, độ quen tay có suy giảm
+    theo thời gian, counter theo đúng thứ tự pick, tách theo từng vị trí...) — hầu hết trong nhiễu hoặc
+    tệ hơn. Tìm được 2 tương tác nhân đôi THẬT (kiểm chứng bootstrap 3000 lần): <b>tuyến đầu × độ sâu
+    pool</b> (+0,0199 AUC) và <b>quen tay × độ sâu pool</b> (+0,0110 AUC).</p>
+    <p>Trong lúc kiểm chứng, phát hiện walk-forward hôm qua (phần 1) vẫn còn 1 lỗi: mỗi bước tính lại
+    thống kê từ đầu rồi dùng CHUNG cho mọi trận huấn luyện — một trận từ rất lâu vẫn được gán độ quen
+    tay tính đến sát thời điểm đang xét, "biết" cả kinh nghiệm player tích luỹ SAU trận đó. Không rò rỉ
+    kết quả trận đang dự đoán, nhưng làm lệch quan hệ đặc trưng-kết quả của các trận huấn luyện. Viết lại
+    để mỗi trận chỉ mang đúng lịch sử của riêng nó: AUC giảm từ 0,548 xuống 0,528 (phần đã đo lạc quan).
+    Thêm 2 tương tác mới thì AUC quay lại ≈0,548 — cùng số nhưng giờ là số thật, cộng cả tác dụng của
+    2 tín hiệu mới, không phải trùng hợp. Toàn bộ số liệu qua 2 lần đo vẫn giữ trong comment đầu
+    finalize.js.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
