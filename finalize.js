@@ -441,7 +441,23 @@ function standardise(X) {
 }
 const applyStd = (x, mu, sg) => x.map((v, j) => (v - mu[j]) / sg[j]);
 
-function fitLogistic(Z, y, lambda, iters = 6000, lr = 0.3) {
+/* freezeBias=true: KHÔNG cho hệ số chặn (intercept) học — giữ b=0 suốt quá
+   trình huấn luyện, theo yêu cầu tường minh của người dùng (2026-09-18(3)).
+   Lý do: khi đặc trưng kit yếu (gần 0 ở đa số trận vì 2 đội chuyên nghiệp draft
+   khá cân), intercept tự động hấp thụ tỉ lệ thắng CƠ BẢN của tập huấn luyện —
+   mà xanh thắng 59.2% trên toàn bộ 737 trận (nhất quán mọi giải: 53.8%-66.3%).
+   Kết quả: mô hình "chỉ đội hình" trên thực tế SỤP THÀNH "luôn đoán xanh"
+   (đo được acc=57.9%, ĐÚNG BẰNG acc của baseline "luôn đoán xanh") — không
+   phải đánh giá draft, mà là khai thác việc bên nào được xếp, không liên
+   quan gì đến tướng đã chọn. Đo đánh đổi (walk-forward 587 trận): bỏ
+   intercept mất 8.3 điểm % chính xác trung bình (KTC 95% [2.9, 14.0]) —
+   NHƯNG trên 20 trận gần nhất (xanh chỉ thắng 35%, ngược xu hướng lịch sử),
+   CÓ intercept cho acc=35.0% (sụp nặng vì "ăn theo" đúng lúc xu hướng đảo),
+   KHÔNG intercept cho acc=50.0% (không lệ thuộc bên nào, ổn định hơn nhiều).
+   Người dùng chọn KHÔNG intercept: draft-only giờ chỉ nói lên được gì từ
+   CHÍNH các tướng đã chọn, mặc định 50/50 khi kit cân bằng — không mượn lợi
+   thế side để tự nâng điểm chính xác của chính nó. */
+function fitLogistic(Z, y, lambda, iters = 6000, lr = 0.3, freezeBias = false) {
   const d = Z[0].length, n = Z.length, w = new Array(d).fill(0); let b = 0;
   for (let it = 0; it < iters; it++) {
     const gw = new Array(d).fill(0); let gb = 0;
@@ -452,7 +468,7 @@ function fitLogistic(Z, y, lambda, iters = 6000, lr = 0.3) {
       gb += e;
     }
     for (let j = 0; j < d; j++) w[j] -= lr * (gw[j] / n + (lambda / n) * w[j]);
-    b -= lr * (gb / n);
+    if (!freezeBias) b -= lr * (gb / n);
   }
   return { w, b };
 }
@@ -568,7 +584,9 @@ function walkForwardEval(rowKey, fitFn, predFn) {
   for (let i = WF_MIN_HISTORY; i < N; i++) {
     const prior = [...Array(i).keys()];
     const s = standardise(prior.map(buildRow));
-    const m = fitFn(s.Z, prior.map(j => games[j].blue.win ? 1 : 0), LAMBDA_WIN, WF_ITERS);
+    // freezeBias=true: xem chú thích tại fitLogistic() — draft/withTeam không
+    // được phép mượn lợi thế side xanh để tự nâng độ chính xác.
+    const m = fitFn(s.Z, prior.map(j => games[j].blue.win ? 1 : 0), LAMBDA_WIN, WF_ITERS, 0.3, true);
     out.push({ p: predFn(m, applyStd(buildRow(i), s.mu, s.sg)), y: games[i].blue.win ? 1 : 0, intl: isInternational(games[i]) });
   }
   return out;
@@ -595,10 +613,11 @@ for (const { train, test } of kfold(N, 5)) {
 const stats = buildStats([...Array(N).keys()]);
 const rows = games.map(g => rowFor(g, stats));
 const yAll = rows.map(r => r.y);
+// freezeBias=true ở cả 2 model thật (không chỉ lúc đo) — xem chú thích fitLogistic().
 const sDraft = standardise(rows.map(r => r.draft));
-const draftModel = fitLogistic(sDraft.Z, yAll, LAMBDA_WIN);
+const draftModel = fitLogistic(sDraft.Z, yAll, LAMBDA_WIN, 6000, 0.3, true);
 const sTeam = standardise(rows.map(r => r.withTeam));
-const teamModel = fitLogistic(sTeam.Z, yAll, LAMBDA_WIN);
+const teamModel = fitLogistic(sTeam.Z, yAll, LAMBDA_WIN, 6000, 0.3, true);
 const sKill = standardise(rows.map(r => r.kill));
 const killModel = fitLinear(sKill.Z, rows.map(r => r.totalKills), LAMBDA_KILL);
 

@@ -688,9 +688,8 @@ function analyze(){
   document.getElementById("verdictSub").innerHTML = res.useTeam
     ? `Đang đánh giá qua draft đầy đủ (kit + ưu tiên pick + độ quen tay + độ sâu pool). Ở mức này mô hình xếp hạng đúng ${res.model.metrics.cvAuc.toFixed(3)} AUC.`
     : `Chưa biết tuyển thủ (chưa chọn đội), chỉ còn kit + ưu tiên pick. <b>Chế độ này hiện đo được AUC ${res.model.metrics.cvAuc.toFixed(3)}</b> — ` +
-      (res.model.metrics.cvAuc < 0.5
-        ? `dưới cả mức đoán ngẫu nhiên. Đừng dựa vào chế độ này — chọn cả hai đội để mở khoá độ quen tay/pool, kết quả đáng tin hơn nhiều.`
-        : `phần lớn xác suất bên dưới đến từ <b>lợi thế side xanh ${pct1(DATA.baselines.blueWinRate)}</b> trong dữ liệu; draft chỉ điều chỉnh thêm một chút.`);
+      `gần 50/50 khi 2 bên draft cân bằng (mô hình không còn được phép mượn lợi thế side xanh để tự nâng độ chính xác — xem mục thông tin). ` +
+      `Chọn cả hai đội để mở khoá độ quen tay/pool, kết quả đáng tin hơn nhiều.`;
   document.getElementById("probB").textContent = "Xanh " + pct1(pB);
   document.getElementById("probR").textContent = "Đỏ " + pct1(pR);
   document.getElementById("fillB").style.width = (pB*100)+"%";
@@ -1115,7 +1114,23 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     để mỗi trận chỉ mang đúng lịch sử của riêng nó: AUC giảm từ 0,548 xuống 0,528 (phần đã đo lạc quan).
     Thêm 2 tương tác mới thì AUC quay lại ≈0,548 — cùng số nhưng giờ là số thật, cộng cả tác dụng của
     2 tín hiệu mới, không phải trùng hợp. Toàn bộ số liệu qua 2 lần đo vẫn giữ trong comment đầu
-    finalize.js.</p>`;
+    finalize.js.</p>
+
+    <p><b>Bỏ luôn lợi thế side xanh khỏi mô hình (2026-09-18, phần 3).</b> Người dùng phát hiện ra vấn
+    đề: khi kit yếu (gần như bằng 0 ở đa số trận vì 2 đội chuyên nghiệp draft khá cân), hồi quy logistic
+    tự động để <b>hệ số chặn (intercept)</b> hấp thụ tỉ lệ thắng cơ bản của tập huấn luyện — mà xanh
+    thắng ${pct1(DATA.baselines.blueWinRate)} trên toàn bộ dữ liệu, nhất quán ở mọi giải. Hậu quả: mô
+    hình "chỉ đội hình" trên thực tế SỤP THÀNH "luôn đoán xanh" — không phải đánh giá draft, mà là khai
+    thác việc bên nào được xếp, chẳng liên quan gì đến tướng đã chọn. <i>"Cái này bỏ đi chả có ý nghĩa gì
+    cả"</i> — người dùng nói đúng.</p>
+    <p>Đo đánh đổi trước khi bỏ: trên walk-forward 587 trận, có intercept cho acc 57.9% (đúng bằng acc
+    của baseline "luôn đoán xanh" — tức mô hình chưa từng thực sự lật kèo dựa trên draft), không
+    intercept cho acc 49.6% — mất 8,3 điểm % trung bình (KTC 95% [2,9; 14,0]). Nhưng trên 20 trận thật
+    gần nhất (05-13/09, xanh chỉ thắng 35% — ngược xu hướng lịch sử), có intercept sụp xuống acc 35%,
+    không intercept giữ acc 50% — ổn định hơn nhiều khi xu hướng đảo. Đã bỏ hẳn (freezeBias, xem
+    finalize.js): draft-only giờ chỉ nói lên được gì từ CHÍNH các tướng đã chọn, mặc định gần 50/50 khi
+    kit cân bằng, không mượn lợi thế side để tự nâng điểm chính xác của chính nó. AUC hiện tại:
+    chỉ đội hình ${DATA.models.draft.metrics.cvAuc.toFixed(3)}, +đội ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
