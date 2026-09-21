@@ -36,8 +36,9 @@
    phản ánh sát thương ĐỐI PHƯƠNG phải itemise chống lại).
    Tiến độ theo nhóm trong file (thứ tự đã có sẵn):
      ✓ tanks/frontline (19 con) — xong 2026-09-21
-     … fighters/bruisers, junglers, assassins/mid, control mages, marksmen,
-       remaining — CHƯA soát, để nguyên số cũ cho đến khi tới lượt. */
+     ✓ fighters/bruisers (28 con, kể cả Illaoi/Darius/Riven) — xong 2026-09-21
+     … junglers, assassins/mid, control mages, marksmen, remaining — CHƯA
+       soát, để nguyên số cũ cho đến khi tới lượt. */
 
 const A = (engage, frontline, cc, dmg, scaling, mobility, ranged) =>
   ({ engage, frontline, cc, dmg, scaling, mobility, ranged });
@@ -67,31 +68,31 @@ module.exports = {
   // ---------- fighters / bruisers ----------
   'Ambessa':       A(1, 1, 2, 'AD',   -0.3, 2, 0),
   'Aatrox':        A(1, 1, 2, 'AD',    0.0, 2, 0),
-  'Renekton':      A(0, 1, 1, 'AD',   -0.6, 1, 0),
-  'Olaf':          A(0, 1, 1, 'AD',   -0.4, 1, 0),
-  'Jax':           A(0, 1, 1, 'AD',    0.7, 2, 0),
-  'Fiora':         A(0, 0, 0, 'AD',    0.5, 2, 0),   // đấu sĩ 1v1/tách lính thuần, không có công cụ mở giao tranh hay CC, ult refresh khi hạ mục tiêu -> mạnh dần về cuối trận
+  'Renekton':      A(1, 1, 1, 'AD',   -0.6, 1, 0),   // 2026-09-21: engage 0->1 -- E (Slice and Dice) la dash 2 lan, dung chu dong lao vao muc tieu duoc, khong khac gi cac dau si dash khac trong file nay
+  'Olaf':          A(0, 1, 1, 'AD',   -0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- khong co dash/blink nao trong kit (Q la nem ranged, R chi mien nhiem CC + buff, khong tang toc)
+  'Jax':           A(0, 1, 1, 'AD',    0.7, 0, 0),   // 2026-09-21: mobility 2->0 -- khong co dash nao trong kit (Q tu buff danh, E la choang/do-don tai cho, R bien hinh tang chi so); tu tin sua vi day la nhan vat kinh dien "khong the dash" nen phai di bo toi
+  'Fiora':         A(0, 0, 0, 'AD',    0.65, 2, 0),   // đấu sĩ 1v1/tách lính thuần, không có công cụ mở giao tranh hay CC, ult refresh khi hạ mục tiêu -> mạnh dần về cuối trận. 2026-09-21: scaling 0.5->0.65 -- yeu som (mong manh, khong CC, de bi gank) manh cuoi la dinh nghia cot loi cua tuong nay, 0.5 danh gia thap
   'Camille':       A(1, 1, 2, 'AD',    0.2, 3, 0),   // fallback nếu xuất hiện ở đường khác top/support
   'Camille|top':   A(1, 1, 2, 'AD',    0.35, 3, 0),  // patch 26.16: mất burst/an toàn sớm, đổi lại sustain đường + scale tank — dịch nhẹ về hậu kỳ so với trước
   'Camille|support': A(0, 1, 1, 'AD',  0.0, 3, 0),    // build support: ít chủ động mở giao tranh hơn, thiên về bảo kê/peel cho carry, ít áp lực sát thương hơn bản top
   'Irelia':        A(1, 1, 2, 'AD',    0.2, 3, 0),
-  'Trundle':       A(0, 1, 1, 'AD',    0.2, 1, 0),
-  'Warwick':       A(1, 1, 2, 'Mixed', 0.0, 1, 0),
+  'Trundle':       A(0, 1, 1, 'AD',    0.4, 0, 0),   // 2026-09-21: mobility 1->0 (khong dash, E dung tuong tao dia hinh chu khong di chuyen Trundle); scaling 0.2->0.4 (R cuop % chi so doi phuong + tro nen kho giet -> ban chat late-game tank-duelist bi danh gia thap)
+  'Warwick':       A(1, 1, 2, 'Mixed', 0.0, 2, 0),   // 2026-09-21: mobility 1->2 -- co 2 dash thuc su (Q lao toi + R Infinite Duress lao toi khong the ngan can), khong chi 1
   'Kled':          A(1, 1, 2, 'AD',   -0.4, 2, 0),
-  'Yorick':        A(0, 1, 1, 'AD',    0.3, 0, 0),
+  'Yorick':        A(0, 1, 1, 'AD',    0.45, 0, 0),  // 2026-09-21: scaling 0.3->0.45 -- split-push/scaling duelist, quan doi hon ma cang ve sau cang manh (maiden + linh hon), 0.3 danh gia thap
   'Nasus':         A(0, 1, 1, 'AD',    0.9, 0, 0),   // bị nerf liên tiếp 26.16+26.17 (mất sustain đi đường) — đường sớm khó hơn nhưng bản chất hyperscale hậu kỳ không đổi, giữ nguyên số
-  'Mordekaiser':   A(1, 1, 1, 'AP',    0.4, 1, 0),
-  'Urgot':         A(0, 1, 1, 'AD',    0.1, 0, 0),
+  'Mordekaiser':   A(1, 1, 1, 'AP',    0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- E (Death's Grasp) keo MUC TIEU ve phia Morde, khong tu di chuyen Morde; khong con dash nao khac trong kit
+  'Urgot':         A(1, 1, 1, 'AD',    0.1, 1, 0),   // 2026-09-21: engage 0->1, mobility 0->1 -- E (Disdain) la dash+da muc tieu ra xa, VUA tu di chuyen Urgot VUA co the dung de chu dong lao vao doi thu, bi bo sot ca 2 truc
   'Gwen':          A(0, 1, 1, 'AP',    0.6, 1, 0),
   'Zaahen':        A(1, 1, 2, 'AD',    0.1, 2, 0),   // darkin skirmisher: W pull, E dash slow, revive passive
   'Sylas':         A(1, 1, 2, 'AP',    0.1, 2, 0),
   'Yone':          A(1, 1, 2, 'Mixed', 0.5, 2, 0),   // patch 26.17: buff khuyến khích lên đồ chí mạng — củng cố thiên hướng hậu kỳ
   'Yasuo':         A(0, 1, 1, 'AD',    0.6, 2, 0),   // patch 26.17: buff khuyến khích lên đồ chí mạng — củng cố thiên hướng hậu kỳ
   'Gragas':        A(1, 1, 2, 'AP',    0.2, 1, 0),
-  'Rumble':        A(0, 1, 1, 'AP',    0.0, 1, 0),
-  'Gnar':          A(1, 1, 3, 'Mixed', 0.3, 2, 1),
-  'Jayce':         A(0, 0, 1, 'AD',   -0.3, 2, 1),
-  'Rakan':         A(1, 1, 2, 'AP',    0.0, 3, 0),
+  'Rumble':        A(0, 1, 2, 'AP',    0.0, 0, 0),   // 2026-09-21: cc 1->2 (W + E + R deu la slow rieng biet, khong chi 1 nguon); mobility 1->0 (khong co dash/blink nao trong kit)
+  'Gnar':          A(1, 1, 3, 'AD',    0.3, 2, 1),   // 2026-09-21: dmg Mixed->AD -- doi chieu build thuc te gol.gg (S16 Summer): Trinity Force 100%, Sterak's Gage, Black Cleaver, Wit's End... toan AD/on-hit, khong co mon AP nao
+  'Jayce':         A(1, 0, 1, 'AD',   -0.3, 2, 1),   // 2026-09-21: engage 0->1 -- dang can (W "To the Skies!") la dash chu dong lao vao doi thu, du chi 1 trong 2 dang co cong cu nay
+  'Rakan':         A(1, 0, 2, 'AP',    0.0, 3, 0),   // 2026-09-21: frontline 1->0 -- Rakan la ho tro dive/all-in mong manh, khong len do tank, bi xep nham vao nhom "fighters/bruisers" (chi la nhan tren comment, khong anh huong tinh toan) nhung so frontline=1 la sai thuc te
   // 2026-09-21: 7 tướng thiếu kit, xuất hiện khi nạp thêm LCS/CBLOL/PCS/TCL/LJL/VCS
   'Illaoi':        A(0, 1, 1, 'AD',    0.0, 0, 0),   // đấu sĩ tọa độ/xúc tu, không có công cụ mở giao tranh hay cơ động, mạnh giữa trận
   'Darius':        A(0, 1, 1, 'AD',   -0.3, 0, 0),   // pull E là bắt lẻ, không phải engage đội hình; snowball qua stack máu
