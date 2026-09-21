@@ -865,7 +865,7 @@ function analyze(){
         <thead><tr><th>Tín hiệu</th><th class="num">AUC</th><th>Vào mô hình?</th><th>Ghi chú</th></tr></thead>
         <tbody>${DATA.meta.signalAudit.map(s => `<tr>
           <td>${FEAT_LABEL[s.feature] || s.feature}</td>
-          <td class="num">${s.auc.toFixed(3)}</td>
+          <td class="num">${s.auc == null ? "—" : s.auc.toFixed(3)}</td>
           <td class="${s.used ? "audit-yes" : "audit-no"}">${s.used ? "có" : "không"}</td>
           <td class="thin">${s.note}</td></tr>`).join("")}</tbody>
       </table>

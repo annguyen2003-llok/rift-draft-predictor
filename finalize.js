@@ -843,6 +843,8 @@ const out = {
       { feature: 'cc', auc: 0.631, used: false, note: 'tổng CC — không đạt ngưỡng khi chọn lọc tiến tới' },
       { feature: 'engage', auc: 0.632, used: false, note: 'công cụ mở giao tranh — không đạt ngưỡng (+0.0002)' },
       { feature: 'presence', auc: 0.500, used: false, note: 'mức ưu tiên pick/ban — không có tín hiệu' },
+      { feature: 'banPriority/firstPickEngage/scalingSpread/dmgImbalance/engage×cc/frontline×engage', auc: null, used: false, note: 'LOẠI 2026-09-21: vòng 2 dò tín hiệu thuần-kit (walk-forward+bootstrap trên baseline đã khoá bias) — tất cả trong nhiễu, riêng engage đơn lẻ THẬT nhưng có HẠI (-0.0137 AUC, KTC 95% [-0.0249,-0.0029]).' },
+      { feature: 'archetype clustering (k-means kit ADC×Support, k=3 mỗi vai)', auc: null, used: false, note: "LOẠI 2026-09-21: gom tướng theo LOẠI kit (không theo tên) để có mẫu dày hơn cặp tướng cụ thể (61% cặp ADC+Support chỉ có ≤2 trận). Test 2 hướng — (A) tương tác cấu trúc bot lane theo archetype (engage×cc, ranged×mobility): trong nhiễu, cả hai lệch âm nhẹ. (B) tỉ lệ thắng theo BUCKET archetype (mẫu dày hơn cặp tướng riêng nên đỡ nhiễu hơn sumWr cũ, nhưng VỀ BẢN CHẤT vẫn là trục thắng/thua mà người dùng đã chọn bỏ — đo riêng, không ghép vào draft-only): +0.0225 AUC nhưng KTC 95% [-0.0058,0.0507] vẫn chứa 0 — chưa đủ chắc để coi là thật. Kết luận: không gian tín hiệu chỉ-từ-kit (không cần danh tính tuyển thủ) coi như đã dò cạn ở khối lượng dữ liệu hiện tại." },
     ],
     /* Kiểm định mô phỏng TƯỚNG MỚI (walk-forward 339 trận, che dữ liệu win-rate lúc
        dự đoán theo tỉ lệ tướng lạ trong trận). Con số = AUC.
