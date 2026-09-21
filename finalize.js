@@ -626,6 +626,21 @@ const cv = {
 // cùng nguy cơ, nhưng đây là hồi quy tuyến tính dự đoán SỐ (không phải thắng-
 // thua nhạy với thứ tự thời gian như familiarity) — giữ kfold ngẫu nhiên như cũ,
 // phạm vi sửa lần này chỉ nhắm vào draft/withTeam vừa đổi đặc trưng.
+/* 2026-09-21 — thử thêm TEMPO CẤP ĐỘI (trung bình tổng mạng/thời gian LỊCH SỬ
+   của chính đội đó, co rút về trung bình chung với TEAM_K=6, giống cách tính
+   teamWr) vào feature của kill model, sau khi người dùng hỏi "bật đội có giúp
+   đoán kill/thời gian chính xác hơn?" — câu trả lời trước đó là KHÔNG, vì model
+   kill chưa từng dùng dữ liệu đội ở bất kỳ đâu. Đo bằng walk-forward toàn bộ
+   678 trận (từ index 150) + bootstrap 3000 lần: thêm tempo đội vào [pace,
+   lengthLean] cho MAE 6.791→6.755, R² 0.0032→0.0225 — NHƯNG bootstrap MAE delta
+   KTC 95% [-0.227, 0.146] vẫn chứa 0, không đủ chắc để coi là thật. Thử luôn
+   tempo đội THAY HẲN cho pace/lengthLean cấp-tướng: tệ hơn baseline (MAE 6.915,
+   R² -0.0096). Kết luận: tempo cấp đội KHÔNG cải thiện được kill model một
+   cách đáng tin — giữ nguyên [pace, lengthLean] cấp-tướng, KHÔNG nối "bật đội"
+   với kill/thời gian. Vì kết quả không đạt ngưỡng, tiêu chí draft-only cho
+   thắng/thua (draft/withTeam ở trên) cũng KHÔNG thay đổi theo yêu cầu có điều
+   kiện của người dùng — familiarity/poolDepth vẫn giữ vai trò cũ trong
+   withTeam. */
 for (const { train, test } of kfold(N, 5)) {
   const st = buildStats(train);
   const tr = train.map(i => rowFor(games[i], st));
