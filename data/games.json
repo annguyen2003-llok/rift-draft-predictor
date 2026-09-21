@@ -112757,5 +112757,470 @@
    "killTotalsMatch": true,
    "teams": "Movistar KOI|Karmine Corp"
   }
+ },
+ {
+  "ok": true,
+  "gameId": 83082,
+  "duration": "27:58",
+  "durationMin": 27.97,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-20",
+  "weekFromPage": "FINALS",
+  "tournamentFromPage": "LEC 2026 Summer Playoffs",
+  "blue": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": true,
+   "kills": 15,
+   "towers": 10,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 60200,
+   "bans": [
+    "Vi",
+    "Cassiopeia",
+    "Jarvan IV",
+    "Pantheon",
+    "Trundle"
+   ],
+   "picksDraftOrder": [
+    "Ashe",
+    "Seraphine",
+    "Ambessa",
+    "Wukong",
+    "Orianna"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 0,
+     "d": 2,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Wukong",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 9,
+     "d": 1,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 2,
+     "d": 2,
+     "a": 11
+    },
+    "adc": {
+     "champion": "Ashe",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 2,
+     "d": 0,
+     "a": 8
+    },
+    "support": {
+     "champion": "Seraphine",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 2,
+     "d": 0,
+     "a": 12
+    }
+   }
+  },
+  "red": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": false,
+   "kills": 5,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 47200,
+   "bans": [
+    "Nocturne",
+    "Xin Zhao",
+    "Galio",
+    "Chogath",
+    "Skarner"
+   ],
+   "picksDraftOrder": [
+    "Rumble",
+    "Zeri",
+    "Yuumi",
+    "Ryze",
+    "Lee Sin"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 3,
+     "d": 4,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 2,
+     "d": 4,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Zeri",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 0,
+     "d": 2,
+     "a": 2
+    },
+    "support": {
+     "champion": "Yuumi",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 0,
+     "d": 1,
+     "a": 2
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LEC",
+  "tier": "major",
+  "tournament": "LEC 2026 Summer Playoffs",
+  "date": "2026-09-20",
+  "week": "FINALS",
+  "seriesId": 83082,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "G2 Esports|Movistar KOI"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83083,
+  "duration": "31:47",
+  "durationMin": 31.78,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-20",
+  "weekFromPage": "FINALS",
+  "tournamentFromPage": "LEC 2026 Summer Playoffs",
+  "blue": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": true,
+   "kills": 21,
+   "towers": 10,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 67600,
+   "bans": [
+    "Vi",
+    "Cassiopeia",
+    "Nocturne",
+    "Jayce",
+    "Anivia"
+   ],
+   "picksDraftOrder": [
+    "Yunara",
+    "Lulu",
+    "Poppy",
+    "Akali",
+    "Kled"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Kled",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 3,
+     "d": 1,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Poppy",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 2,
+     "d": 1,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 6,
+     "d": 1,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 8,
+     "d": 3,
+     "a": 10
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 2,
+     "d": 2,
+     "a": 18
+    }
+   }
+  },
+  "red": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": false,
+   "kills": 8,
+   "towers": 1,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 54400,
+   "bans": [
+    "Xin Zhao",
+    "Ezreal",
+    "Bard",
+    "Yone",
+    "Olaf"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Kalista",
+    "Renata Glasc",
+    "Lissandra",
+    "Renekton"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Renekton",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 1,
+     "d": 5,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 2,
+     "d": 5,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Lissandra",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 0,
+     "d": 2,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 3,
+     "d": 5,
+     "a": 2
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 2,
+     "d": 4,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LEC",
+  "tier": "major",
+  "tournament": "LEC 2026 Summer Playoffs",
+  "date": "2026-09-20",
+  "week": "FINALS",
+  "seriesId": 83082,
+  "gameInSeries": 2,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "G2 Esports|Movistar KOI"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83084,
+  "duration": "29:06",
+  "durationMin": 29.1,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-20",
+  "weekFromPage": "FINALS",
+  "tournamentFromPage": "LEC 2026 Summer Playoffs",
+  "blue": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": true,
+   "kills": 13,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 59900,
+   "bans": [
+    "Vi",
+    "Cassiopeia",
+    "Karma",
+    "Trundle",
+    "Jayce"
+   ],
+   "picksDraftOrder": [
+    "Caitlyn",
+    "Lux",
+    "Skarner",
+    "LeBlanc",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 3,
+     "d": 0,
+     "a": 5
+    },
+    "jungle": {
+     "champion": "Skarner",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 1,
+     "d": 0,
+     "a": 9
+    },
+    "mid": {
+     "champion": "LeBlanc",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 3,
+     "d": 2,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Caitlyn",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 3,
+     "d": 0,
+     "a": 2
+    },
+    "support": {
+     "champion": "Lux",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 3,
+     "d": 0,
+     "a": 4
+    }
+   }
+  },
+  "red": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": false,
+   "kills": 2,
+   "towers": 1,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 47800,
+   "bans": [
+    "Nautilus",
+    "Olaf",
+    "Nocturne",
+    "Gnar",
+    "Twisted Fate"
+   ],
+   "picksDraftOrder": [
+    "Bard",
+    "Ezreal",
+    "Ahri",
+    "KSante",
+    "Qiyana"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 0,
+     "d": 2,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 1,
+     "d": 4,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Ahri",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 0,
+     "d": 5,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 0,
+     "d": 2,
+     "a": 1
+    },
+    "support": {
+     "champion": "Bard",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 1,
+     "d": 0,
+     "a": 1
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LEC",
+  "tier": "major",
+  "tournament": "LEC 2026 Summer Playoffs",
+  "date": "2026-09-20",
+  "week": "FINALS",
+  "seriesId": 83082,
+  "gameInSeries": 3,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "G2 Esports|Movistar KOI"
+  }
  }
 ]
