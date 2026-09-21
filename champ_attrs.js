@@ -74,6 +74,10 @@ module.exports = {
   'Gnar':          A(1, 1, 3, 'Mixed', 0.3, 2, 1),
   'Jayce':         A(0, 0, 1, 'AD',   -0.3, 2, 1),
   'Rakan':         A(1, 1, 2, 'AP',    0.0, 3, 0),
+  // 2026-09-21: 7 tướng thiếu kit, xuất hiện khi nạp thêm LCS/CBLOL/PCS/TCL/LJL/VCS
+  'Illaoi':        A(0, 1, 1, 'AD',    0.0, 0, 0),   // đấu sĩ tọa độ/xúc tu, không có công cụ mở giao tranh hay cơ động, mạnh giữa trận
+  'Darius':        A(0, 1, 1, 'AD',   -0.3, 0, 0),   // pull E là bắt lẻ, không phải engage đội hình; snowball qua stack máu
+  'Riven':         A(0, 0, 0, 'AD',   -0.2, 3, 0),   // đấu sĩ cơ động bậc nhất (3 lần dash trong combo), không CC, snowball sớm
 
   // ---------- junglers (diver / skirmisher) ----------
   'Lee Sin':       A(1, 1, 2, 'AD',   -0.7, 3, 0),
@@ -89,6 +93,11 @@ module.exports = {
   'Graves':        A(0, 1, 1, 'AD',    0.1, 1, 1),
   'Nidalee':       A(0, 0, 0, 'AP',    0.0, 2, 1),
   'Elise':         A(0, 0, 2, 'AP',   -0.4, 2, 1),
+  'Rengar':        A(1, 0, 0, 'AD',   -0.3, 3, 0),   // an chờ + nhảy vào bắt lẻ (engage cho 1 mục tiêu, không phải diện rộng), không CC, mạnh sớm
+  'Kayn':          A(1, 1, 1, 'Mixed', 0.1, 3, 0),   // linh hoạt 2 dạng (Rhaast tank / Sát thủ), ult khoá 1 mục tiêu, xuyên tường bằng W
+  'Zac':           A(1, 2, 3, 'AP',   -0.2, 2, 0),   // engage tank kinh điển: nhảy diện rộng + choáng, CC dày
+  'Ivern':         A(0, 1, 2, 'AP',    0.1, 1, 1),   // enchanter đi rừng, Daisy làm tuyến đầu, rễ trói (E), không gank sát thương
+  'Talon':         A(0, 0, 0, 'AD',   -0.4, 3, 0),   // sát thủ bảng thuần, vượt tường bằng E, không CC, đỉnh điểm sớm
 
   // ---------- assassins / mid ----------
   'Akali':         A(0, 0, 1, 'AP',    0.0, 3, 0),

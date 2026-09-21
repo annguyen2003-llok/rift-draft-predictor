@@ -35,7 +35,11 @@ const TOURNAMENTS = [
   { league: 'LEC', name: 'LEC 2026 Summer Playoffs', tier: 'major' },
 
   // 'minor': thêm để có dữ liệu khu vực nhà cho đội dự CKTG (xem data/worlds_teams.json)
+  // 2026-09-21: pool giải CHỈ gồm LCK/LPL/LEC/LCP/LCS theo yêu cầu người dùng —
+  // đã thử thêm CBLOL/LJL/TCL/PCS/VCS rồi bỏ lại (quá yếu, không cần theo dõi).
   { league: 'LCP', name: 'LCP 2026 Split 3', tier: 'minor' },
+  { league: 'LCS', name: 'LCS 2026 Summer', tier: 'minor' },
+  { league: 'LCS', name: 'LCS 2026 Summer Playoffs', tier: 'minor' },
 
   { league: 'INT', name: 'MSI 2026', tier: 'international', from: '2026-01-01' },
   { league: 'INT', name: 'Esports World Cup 2026', tier: 'international', from: '2026-01-01' },

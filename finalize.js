@@ -140,8 +140,16 @@ console.log(`Patch theo từng giải (không lọc gì, chỉ để hiển th�
    Lý do: trần cũ xoá các trận CŨ NHẤT, mà giải quốc tế (MSI tháng 6-7, First Stand
    tháng 3) chính là những trận cũ nhất — tức là nó sẽ xoá đúng thứ quý nhất, thứ
    DUY NHẤT nối được các khu vực với nhau. Mất chúng thì rating toàn cầu sập về lại
-   trạng thái "mỗi giải một thước đo riêng", và điều đó xảy ra âm thầm không báo gì. */
-const GAME_CAP = 900;
+   trạng thái "mỗi giải một thước đo riêng", và điều đó xảy ra âm thầm không báo gì.
+
+   2026-09-21 — trần nâng tiếp 900 -> 2000. Lý do: thử thêm 6 khu vực chuẩn bị
+   CKTG (LCS/CBLOL/PCS/TCL/LJL/VCS) khiến tổng vượt 900 NGAY LẦN QUÉT ĐẦU, cắt
+   oan 170 trận trong đó có tới 21/37 trận LJL và 55+25+19 trận của chính
+   LPL/LCK/LEC — 3 giải THEO DÕI CHÍNH. Sau đó người dùng quyết định rút pool
+   giải lại còn LCK/LPL/LEC/LCP/LCS (bỏ CBLOL/LJL/TCL/PCS/VCS vì quá yếu), nên
+   quy mô thực tế nhỏ hơn 2000 nhiều — nhưng vẫn giữ trần này làm mức trần AN
+   TOÀN nếu sau này mở lại các khu vực khác, không cần hạ xuống. */
+const GAME_CAP = 2000;
 const isIntl = g => (g.tier || 'major') === 'international';
 let staleGames = [];
 if (games.length > GAME_CAP) {

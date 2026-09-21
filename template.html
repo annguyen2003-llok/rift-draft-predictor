@@ -483,7 +483,7 @@ function predict(){
 /* Thứ tự khu vực cố định trong dropdown — 4 giải theo dõi chính trước, còn lại
    (LCS, CBLOL... khi thêm sau) xếp theo alphabet ở cuối, không nhảy lung tung
    mỗi lần build lại dữ liệu. */
-const REGION_ORDER = ["LCK", "LPL", "LEC", "LCP"];
+const REGION_ORDER = ["LCK", "LPL", "LEC", "LCP", "LCS"];
 function renderTeamPickers(){
   let list = Object.values(DATA.teams)
     /* Bỏ đội chưa rõ khu vực nhà (chỉ thấy ở giải quốc tế, chưa quét giải khu vực
