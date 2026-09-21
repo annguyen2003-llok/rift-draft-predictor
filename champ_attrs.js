@@ -38,8 +38,13 @@
      ✓ tanks/frontline (19 con) — xong 2026-09-21
      ✓ fighters/bruisers (28 con, kể cả Illaoi/Darius/Riven) — xong 2026-09-21
      ✓ junglers (18 con) — xong 2026-09-21
-     … assassins/mid, control mages, marksmen, remaining — CHƯA soát, để
-       nguyên số cũ cho đến khi tới lượt. */
+     ✓ assassins/mid (8 con) — xong 2026-09-21
+     ✓ control mages (28 con) — xong 2026-09-21
+     ✓ marksmen (21 con, kể cả 3 biến thể Varus) — xong 2026-09-21
+     ✓ remaining (25 con) — xong 2026-09-21
+     TOÀN BỘ 133 tướng đã soát xong lượt 1 (2026-09-21). Bước tiếp theo (đã
+     hẹn với người dùng): coordinate giữa các tướng — điều gì tạo nên 1 draft
+     lý tưởng, dựa trên lớp kit đã soát kỹ này. */
 
 const A = (engage, frontline, cc, dmg, scaling, mobility, ranged) =>
   ({ engage, frontline, cc, dmg, scaling, mobility, ranged });
@@ -120,17 +125,17 @@ module.exports = {
   'Talon':         A(1, 0, 0, 'AD',   -0.4, 3, 0),   // sát thủ bảng thuần, không CC, đỉnh điểm sớm. 2026-09-21: engage 0->1 -- E (vượt tường) là công cụ kinh điển để bất ngờ lao vào 1 mục tiêu tách đoàn, đúng nghĩa "ép giao tranh theo yêu cầu"
 
   // ---------- assassins / mid ----------
-  'Akali':         A(0, 0, 1, 'AP',    0.0, 3, 0),
-  'Locke':         A(0, 0, 2, 'AP',    0.0, 3, 0),   // AP assassin: Q slows, E blink+dash, R 99% slow + execute
-  'LeBlanc':       A(0, 0, 1, 'AP',   -0.1, 2, 1),   // patch 26.17: buff tốc đánh + tỉ lệ AP — bớt lệ thuộc vào combo giết sớm, dịch nhẹ về hậu kỳ
-  'Ahri':          A(0, 0, 2, 'AP',    0.2, 2, 1),
-  'Aurora':        A(0, 0, 2, 'AP',    0.2, 2, 1),
+  'Akali':         A(1, 0, 0, 'AP',    0.0, 3, 0),   // 2026-09-21: engage 0->1 (E lat/dash + R dash-strike 2 lan deu la cong cu chu dong lao vao 1 muc tieu, giong Zed/Talon); cc 1->0 (khong tim thay nguon CC thuc su trong kit -- Twilight Shroud la stealth, khong CC)
+  'Locke':         A(1, 0, 2, 'AP',    0.0, 3, 0),   // AP assassin: Q slows, E blink+dash, R 99% slow + execute. 2026-09-21: engage 0->1 -- "E blink+dash" (mo ta san co) la cong cu lao vao muc tieu, cung mau voi Akali/Zed. Build thuc te gol.gg xac nhan AP (Lich Bane, Rabadon's, Rocketbelt) — khong doi
+  'LeBlanc':       A(1, 0, 1, 'AP',   -0.1, 2, 1),   // patch 26.17: buff tốc đánh + tỉ lệ AP — bớt lệ thuộc vào combo giết sớm. 2026-09-21: engage 0->1 -- E (Ethereal Chains) la root TAM XA, cung co che voi Elise Cocoon (cung vua sua sang engage=1)
+  'Ahri':          A(1, 0, 2, 'AP',    0.2, 3, 1),   // 2026-09-21: engage 0->1 (E Charm keo muc tieu ve phia minh, dang hook/root tam xa); mobility 2->3 (R Spirit Rush cho toi 3 lan dash, khong chi 1-2)
+  'Aurora':        A(0, 0, 2, 'AP',    0.2, 2, 1),   // build thuc te gol.gg xac nhan AP (Shadowflame, Rocketbelt, Rabadon's, Void Staff) — khong doi. Kit chua du tu tin de sua engage/cc/mobility, de nguyen
   'Pyke':          A(1, 0, 2, 'AD',    0.0, 2, 0),
-  'Tristana':      A(1, 0, 1, 'AD',    0.3, 2, 1),
+  'Tristana':      A(1, 0, 2, 'AD',    0.3, 2, 1),   // 2026-09-21: cc 1->2 -- co 2 nguon knockback rieng biet (E kich no bom + R Buster Shot), khong chi 1
   'Vayne':         A(0, 0, 1, 'AD',    0.9, 1, 1),   // trong dữ liệu chỉ xuất hiện ở top; patch 26.17 nerf diện rộng riêng Vayne top (giảm sức mạnh chung, không đổi hướng hậu kỳ)
 
   // ---------- control mages ----------
-  'Ryze':          A(0, 0, 1, 'AP',    0.8, 1, 1),
+  'Ryze':          A(1, 0, 1, 'AP',    0.8, 1, 1),   // 2026-09-21: engage 0->1 -- R (Realm Warp) day cả team ngay vào 1 diem, dung de nhay vao sau lung doi thu -- cong cu chu dong ep giao tranh o tam cao
   'Orianna':       A(1, 0, 2, 'AP',    0.6, 0, 1),
   'Syndra':        A(0, 0, 2, 'AP',    0.6, 0, 1),
   'Viktor':        A(0, 0, 2, 'AP',    0.8, 0, 1),
@@ -142,28 +147,28 @@ module.exports = {
   'Azir':          A(1, 0, 2, 'AP',    0.6, 1, 1),
   'Hwei':          A(0, 0, 2, 'AP',    0.6, 0, 1),
   'Xerath':        A(0, 0, 2, 'AP',    0.7, 0, 1),
-  'Ziggs':         A(0, 0, 1, 'AP',    0.5, 0, 1),
-  'Swain':         A(0, 1, 2, 'AP',    0.4, 0, 1),
-  'Aurelion Sol':  A(0, 0, 2, 'AP',    0.7, 2, 1),
-  'Mel':           A(0, 0, 1, 'AP',    0.8, 0, 1),
-  'Twisted Fate':  A(0, 0, 2, 'Mixed', 0.0, 1, 1),
+  'Ziggs':         A(0, 0, 1, 'AP',    0.5, 1, 1),   // 2026-09-21: mobility 0->1 -- W (Satchel Charge) tu ban ban than bay xa, la cong cu tu di chuyen thuc su du chu yeu dung de thoat than
+  'Swain':         A(1, 1, 2, 'AP',    0.4, 0, 1),   // 2026-09-21: engage 0->1 -- E (Nevermove) la day/troi tam xa, cung co che voi Elise/LeBlanc/Karma (deu vua sua sang engage=1)
+  'Aurelion Sol':  A(1, 0, 2, 'AP',    0.7, 2, 1),   // 2026-09-21: engage 0->1 -- E (Singularity) hut doi thu vao 1 vung, R co the choang -- co cong cu ep giao tranh thuc su
+  'Mel':           A(0, 0, 1, 'AP',    0.8, 0, 1),   // build thuc te gol.gg xac nhan AP (Rocketbelt, Luden's, Rabadon's, Void Staff) — khong doi. Kit chua du tu tin de sua engage/cc, de nguyen
+  'Twisted Fate':  A(1, 0, 2, 'Mixed', 0.0, 1, 1),   // 2026-09-21: engage 0->1 -- R (Destiny) la dich chuyen toan cuc toi 1 muc tieu da lo dien, mot trong nhung cong cu gank/engage kinh dien nhat game
   'Lux':           A(0, 0, 2, 'AP',    0.4, 0, 1),
   'Neeko':         A(1, 0, 2, 'AP',    0.3, 1, 1),
   'Seraphine':     A(1, 0, 2, 'AP',    0.7, 0, 1),
-  'Karma':         A(0, 0, 1, 'AP',    0.2, 1, 1),
+  'Karma':         A(1, 0, 1, 'AP',    0.2, 0, 1),   // 2026-09-21: engage 0->1 (W Focused Resolve la day tam xa, cung co che voi Elise/LeBlanc/Swain); mobility 1->0 (khong co dash/blink nao trong kit, E chi la khien+toc do cho dong minh)
   'Lulu':          A(0, 0, 2, 'AP',    0.2, 0, 1),
   'Milio':         A(0, 0, 1, 'AP',    0.1, 0, 1),
   'Renata Glasc':  A(1, 0, 2, 'AP',    0.3, 0, 1),
   'Bard':          A(1, 0, 2, 'AP',    0.2, 2, 1),
   'Soraka':        A(0, 0, 2, 'AP',    0.3, 0, 1),
-  'Yuumi':         A(0, 0, 2, 'AP',    0.3, 0, 1),
+  'Yuumi':         A(0, 0, 2, 'AP',    0.3, 1, 1),   // 2026-09-21: mobility 0->1 -- E (Zoomies) tu tang toc do ban than khi gan voi dong minh, dong nhat voi tien le Mundo/Blitzcrank
   'Nami':          A(1, 0, 2, 'AP',    0.2, 0, 1),
 
   // ---------- marksmen ----------
   'Samira':        A(0, 0, 0, 'AD',    0.3, 2, 0),   // xạ thủ CẬN CHIẾN, cần đồng đội khống chế trước mới combo được, dash + ult AoE xử tốp
   'Jhin':          A(0, 0, 2, 'AD',    0.5, 0, 1),
   'Corki':         A(0, 0, 0, 'Mixed', 0.4, 1, 1),
-  'Ezreal':        A(0, 0, 1, 'Mixed', 0.5, 2, 1),
+  'Ezreal':        A(0, 0, 0, 'Mixed', 0.5, 2, 1),   // 2026-09-21: cc 1->0 -- soat lai toan bo kit (Q/W/E/R) khong tim thay nguon CC nao (khong slow/stun/root), chi la poke+blink+ho tro
   'Lucian':        A(0, 0, 0, 'AD',   -0.3, 2, 1),
   'Varus':         A(1, 0, 2, 'Mixed', 0.4, 0, 1),   // fallback nếu xuất hiện ở đường khác top/adc
   'Varus|top':     A(1, 0, 2, 'AP',    0.1, 0, 1),   // build AP đấu sĩ (Liandry/Nashor on-hit), đấu tay giữa game, không cần kéo dài
@@ -172,13 +177,13 @@ module.exports = {
   'Sivir':         A(0, 0, 0, 'AD',    0.3, 1, 1),
   'Ashe':          A(1, 0, 3, 'AD',    0.5, 0, 1),
   'Xayah':         A(0, 0, 2, 'AD',    0.6, 1, 1),
-  'Caitlyn':       A(0, 0, 2, 'AD',    0.4, 0, 1),
-  'Yunara':        A(0, 0, 1, 'Mixed', 0.8, 1, 1),
+  'Caitlyn':       A(0, 0, 2, 'AD',    0.4, 1, 1),   // 2026-09-21: mobility 0->1 -- E (90 Caliber Net) tu ban ban than lui ve sau khi kich hoat, tu di chuyen Caitlyn du la de thoat than
+  'Yunara':        A(0, 0, 1, 'AD',    0.8, 1, 1),   // 2026-09-21: dmg Mixed->AD -- doi chieu build thuc te gol.gg (S16 Summer): Kraken Slayer, Infinity Edge, Runaan's Hurricane, Lord Dominik's... toan AD crit chuan, khong co mon AP nao
   'Kalista':       A(1, 0, 1, 'AD',   -0.2, 3, 1),
-  'Miss Fortune':  A(0, 0, 1, 'AD',    0.3, 0, 1),
+  'Miss Fortune':  A(0, 0, 1, 'AD',    0.3, 1, 1),   // 2026-09-21: mobility 0->1 -- W (Strut) tu tang toc do ban than, dong nhat voi tien le Mundo/Blitzcrank/Ziggs
   'KogMaw':        A(0, 0, 1, 'Mixed', 0.95, 0, 1),
   'Zeri':          A(0, 0, 1, 'AD',    0.7, 3, 1),
-  'Draven':        A(0, 0, 1, 'AD',   -0.3, 1, 1),
+  'Draven':        A(0, 0, 1, 'AD',   -0.3, 2, 1),   // 2026-09-21: mobility 1->2 -- W (Blood Rush) tu tang toc do ban than la co che cot loi de dua kim va rut lui, dong nhat voi tien le Mundo/MF/Ziggs
   'Aphelios':      A(0, 0, 2, 'AD',    0.7, 0, 1),
   'Jinx':          A(0, 0, 1, 'AD',    0.8, 0, 1),
   'Smolder':       A(0, 0, 1, 'Mixed', 0.9, 1, 1),
@@ -186,29 +191,29 @@ module.exports = {
   // ---------- remaining champions seen in the scanned games ----------
   /* 2026-09-15: 8 tướng dưới đây xuất hiện khi nạp thêm các giải QUỐC TẾ (MSI,
      EWC, First Stand). First Stand đá patch 16.5 nên meta khác hẳn giải hè. */
-  'Gangplank':     A(0, 1, 1, 'AD',    0.8, 1, 0),   // thùng dầu là CC gián tiếp; crit scale rất mạnh cuối trận
+  'Gangplank':     A(0, 1, 1, 'AD',    0.8, 0, 0),   // thùng dầu là CC gián tiếp; crit scale rất mạnh cuối trận. 2026-09-21: mobility 1->0 -- khong co dash/blink/tang toc nao trong kit, thuan poke+zone
   'Morgana':       A(0, 0, 2, 'AP',    0.2, 0, 1),   // trói + ult khoá, nhưng không tự mở giao tranh
   'Veigar':        A(0, 0, 2, 'AP',    1.0, 0, 1),   // lồng CC; cộng dồn sức mạnh vô hạn -> hypercarry
-  'Garen':         A(0, 1, 1, 'AD',   -0.2, 1, 0),   // không có công cụ bắt; mạnh sớm, đuối cuối
-  'Senna':         A(0, 0, 1, 'AD',    0.6, 0, 1),   // cộng dồn hồn, tầm đánh tăng dần -> mạnh dần
-  'Viego':         A(0, 1, 1, 'AD',    0.5, 2, 0),   // chiếm xác giúp giao tranh kéo dài có lợi
-  'RekSai':        A(1, 1, 1, 'AD',   -0.4, 2, 0),   // ult bắt tầm xa = engage; rừng mạnh sớm
-  'Sett':          A(1, 2, 2, 'AD',    0.1, 1, 0),   // W/E kéo + tuyến đầu dày
-  'Udyr':          A(0, 1, 2, 'Mixed', 0.2, 1, 0),
+  'Garen':         A(0, 1, 1, 'AD',   -0.2, 1, 0),   // không có công cụ bắt; mạnh sớm, đuối cuối. 2026-09-21: cc 0->1 -- Q (Decisive Strike) cam lang muc tieu khi kich hoat, bi bo sot
+  'Senna':         A(0, 0, 2, 'AD',    0.6, 0, 1),   // cộng dồn hồn, tầm đánh tăng dần -> mạnh dần. 2026-09-21: cc 1->2 -- co 2 nguon rieng biet (W troi tam xa + E slow trong vung), khong chi 1
+  'Viego':         A(1, 1, 2, 'AD',    0.5, 2, 0),   // chiếm xác giúp giao tranh kéo dài có lợi. 2026-09-21: engage 0->1 (Q la dash xuyen qua muc tieu VA troi, R la dash-strike chiem xac -- 2 cong cu lao vao doi thu bi bo sot); cc 1->2 (Q troi + W so hai, khong chi 1)
+  'RekSai':        A(1, 1, 0, 'AD',   -0.4, 3, 0),   // ult bắt tầm xa = engage; rừng mạnh sớm. 2026-09-21: cc 1->0 (khong tim thay nguon CC thuc su trong kit, suc manh la co dong/dam bang chu khong khoa dich); mobility 2->3 (mang tunnel E + R deu la di chuyen manh, chua ke burrow di nhanh hon khi an minh)
+  'Sett':          A(1, 2, 2, 'AD',    0.1, 0, 0),   // W/E kéo + tuyến đầu dày. 2026-09-21: mobility 1->0 -- W/E/R deu KEO doi thu ve phia Sett, khong tu di chuyen Sett
+  'Udyr':          A(1, 1, 2, 'Mixed', 0.2, 2, 0),   // 2026-09-21: engage 0->1, mobility 1->2 -- ban lam moi (rework) co Q (dash-kick) va E (charge tang toc do + hich) la 2 cong cu tu lao vao doi thu; do tin cay trung binh vi chi tiet kit sau rework
   'Belveth':       A(1, 1, 2, 'AD',    0.6, 3, 0),
   'Diana':         A(1, 1, 2, 'AP',    0.2, 2, 0),
-  'Zoe':           A(0, 0, 2, 'AP',    0.3, 1, 1),
+  'Zoe':           A(1, 0, 2, 'AP',    0.3, 2, 1),   // 2026-09-21: engage 0->1, mobility 1->2 -- co 2 cong cu tu di chuyen thuc su (E xuyen tuong + R blink), du dung nao cung co the dan toi giac ngu/slow theo sau
   'Volibear':      A(1, 2, 2, 'Mixed', 0.3, 1, 0),
   'Shyvana':       A(1, 1, 1, 'Mixed', 0.4, 2, 0),
   'Kennen':        A(1, 0, 3, 'AP',    0.4, 2, 1),   // patch 26.16: ult cộng thêm sát thương lẫn kháng chịu — trụ giao tranh tốt hơn, dịch nhẹ về hậu kỳ
-  'KhaZix':        A(0, 0, 0, 'AD',    0.1, 3, 0),
+  'KhaZix':        A(1, 0, 0, 'AD',    0.1, 3, 0),   // 2026-09-21: engage 0->1 -- E (Leap) la dash kinh dien de nhay vao bat 1 muc tieu tach doan, giong Zed/Talon/Naafiri
   'Zyra':          A(1, 0, 2, 'AP',    0.4, 0, 1),
   'Tahm Kench':    A(1, 2, 2, 'AP',    0.2, 1, 0),
   'Hecarim':       A(1, 1, 2, 'AD',    0.1, 2, 0),   // ult fear + knockback = engage
   'Kindred':       A(0, 0, 1, 'AD',    0.7, 2, 1),   // scales on marks, R denies a kill but isn't engage
-  'Tryndamere':    A(0, 0, 0, 'AD',    0.8, 1, 0),   // crit hypercarry duelist, undying rage, no CC on others
+  'Tryndamere':    A(1, 0, 1, 'AD',    0.8, 1, 0),   // crit hypercarry duelist, undying rage. 2026-09-21: engage 0->1 (E Spinning Slash la dash lao vao muc tieu tach doan); cc 0->1 -- W (Mocking Shout) THUC RA co slow dien rong quanh doi thu, mau cu ghi "no CC on others" la sai
   'Taric':         A(1, 2, 3, 'AP',    0.2, 0, 0),   // long-range stun (Dazzle) + armor link + invuln ult
   'Vladimir':      A(0, 1, 0, 'AP',    0.6, 1, 0),   // health-stacking sustain mage, Sanguine Pool dodges but no hard CC
-  'Vex':           A(1, 0, 2, 'AP',    0.4, 0, 1),   // fear (E) is real hard CC, burst mage, punishes dashes
+  'Vex':           A(1, 0, 2, 'AP',    0.4, 1, 1),   // fear (E) is real hard CC, burst mage, punishes dashes. 2026-09-21: mobility 0->1 -- R (Shadow Surge) la dash xuyen bong toi 1 muc tieu, bi bo sot
   'VelKoz':        A(0, 0, 2, 'AP',    0.4, 0, 1),   // poke/burst mage, W knockup + E slow zone, channelled execute ult
 };
