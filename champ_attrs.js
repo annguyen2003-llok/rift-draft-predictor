@@ -37,8 +37,9 @@
    Tiến độ theo nhóm trong file (thứ tự đã có sẵn):
      ✓ tanks/frontline (19 con) — xong 2026-09-21
      ✓ fighters/bruisers (28 con, kể cả Illaoi/Darius/Riven) — xong 2026-09-21
-     … junglers, assassins/mid, control mages, marksmen, remaining — CHƯA
-       soát, để nguyên số cũ cho đến khi tới lượt. */
+     ✓ junglers (18 con) — xong 2026-09-21
+     … assassins/mid, control mages, marksmen, remaining — CHƯA soát, để
+       nguyên số cũ cho đến khi tới lượt. */
 
 const A = (engage, frontline, cc, dmg, scaling, mobility, ranged) =>
   ({ engage, frontline, cc, dmg, scaling, mobility, ranged });
@@ -101,22 +102,22 @@ module.exports = {
   // ---------- junglers (diver / skirmisher) ----------
   'Lee Sin':       A(1, 1, 2, 'AD',   -0.7, 3, 0),
   'Jarvan IV':     A(1, 1, 2, 'AD',   -0.2, 2, 0),
-  'Vi':            A(1, 1, 2, 'AD',   -0.2, 2, 0),
+  'Vi':            A(1, 1, 2, 'AD',   -0.2, 3, 0),   // 2026-09-21: mobility 2->3 -- co 2 dash thuc su (Q Vault Breaker + R Cease and Desist), khong chi 1
   'Xin Zhao':      A(1, 1, 2, 'AD',   -0.5, 2, 0),
   'Wukong':        A(1, 1, 2, 'AD',    0.1, 2, 0),
   'Pantheon':      A(1, 1, 2, 'AD',   -0.7, 2, 0),
-  'Nocturne':      A(1, 0, 2, 'AD',   -0.1, 2, 0),
-  'Naafiri':       A(0, 0, 1, 'AD',   -0.2, 3, 0),
+  'Nocturne':      A(1, 0, 2, 'AD',   -0.1, 1, 0),   // 2026-09-21: mobility 2->1 -- chi 1 cong cu tu di chuyen thuc su (R, dash toan cau); Q la skillshot khong di chuyen ban than, W chan don khong dash
+  'Naafiri':       A(1, 0, 1, 'AD',   -0.2, 3, 0),   // 2026-09-21: engage 0->1 -- W (dash + goi bay dan) va E (lan 2 dash toi muc tieu danh dau) deu la cong cu chu dong lao vao doi thu, khong chi ne/rut
   'Qiyana':        A(1, 0, 2, 'AD',   -0.3, 3, 0),
-  'Zed':           A(0, 0, 0, 'AD',   -0.1, 3, 0),
+  'Zed':           A(1, 0, 1, 'AD',   -0.1, 3, 0),    // 2026-09-21: engage 0->1 (R Death Mark la dash-strike ap sat 1 muc tieu de buoc giao tranh 1v1, dung y nghia "chu dong ep giao tranh" theo dinh nghia dau file); cc 0->1 (E Shadow Slash la slow dien rong quanh Zed/bong, bi bo sot)
   'Graves':        A(0, 1, 1, 'AD',    0.1, 1, 1),
-  'Nidalee':       A(0, 0, 0, 'AP',    0.0, 2, 1),
-  'Elise':         A(0, 0, 2, 'AP',   -0.4, 2, 1),
-  'Rengar':        A(1, 0, 0, 'AD',   -0.3, 3, 0),   // an chờ + nhảy vào bắt lẻ (engage cho 1 mục tiêu, không phải diện rộng), không CC, mạnh sớm
+  'Nidalee':       A(0, 0, 1, 'AP',   -0.3, 2, 1),   // 2026-09-21: cc 0->1 (bay Bushwhack slow khi kich hoat, bi bo sot); scaling 0.0->-0.3 -- 1 trong nhung tuong di rung MANH SOM/gank-poke bac nhat, giam manh ve sau, 0.0 danh gia thap
+  'Elise':         A(1, 0, 2, 'AP',   -0.4, 2, 1),   // 2026-09-21: engage 0->1 -- Cocoon (W dang nguoi) la root TAM XA, ve co che giong Nautilus Q/Thresh Q (cung duoc xep engage=1) -- ROOT tu xa de dong doi theo sau la mot dang engage/pick chuan
+  'Rengar':        A(1, 0, 1, 'AD',   -0.3, 3, 0),   // an chờ + nhảy vào bắt lẻ (engage cho 1 mục tiêu, không phải diện rộng), mạnh sớm. 2026-09-21: cc 0->1 -- E (Bola Strike) la slow tam xa, bi bo sot khi ghi "khong CC"
   'Kayn':          A(1, 1, 1, 'Mixed', 0.1, 3, 0),   // linh hoạt 2 dạng (Rhaast tank / Sát thủ), ult khoá 1 mục tiêu, xuyên tường bằng W
   'Zac':           A(1, 2, 3, 'AP',   -0.2, 2, 0),   // engage tank kinh điển: nhảy diện rộng + choáng, CC dày
-  'Ivern':         A(0, 1, 2, 'AP',    0.1, 1, 1),   // enchanter đi rừng, Daisy làm tuyến đầu, rễ trói (E), không gank sát thương
-  'Talon':         A(0, 0, 0, 'AD',   -0.4, 3, 0),   // sát thủ bảng thuần, vượt tường bằng E, không CC, đỉnh điểm sớm
+  'Ivern':         A(1, 1, 2, 'AP',    0.1, 2, 1),   // enchanter đi rừng, Daisy làm tuyến đầu. 2026-09-21: engage 0->1, mobility 1->2 -- Rootcaller (Q) trói mục tiêu TỪ XA và Ivern TỰ DASH tới ngay khi trúng đích -- vừa là root vừa là cách anh ta tự lao vào combo, không chỉ đứng yên bắn rễ
+  'Talon':         A(1, 0, 0, 'AD',   -0.4, 3, 0),   // sát thủ bảng thuần, không CC, đỉnh điểm sớm. 2026-09-21: engage 0->1 -- E (vượt tường) là công cụ kinh điển để bất ngờ lao vào 1 mục tiêu tách đoàn, đúng nghĩa "ép giao tranh theo yêu cầu"
 
   // ---------- assassins / mid ----------
   'Akali':         A(0, 0, 1, 'AP',    0.0, 3, 0),
