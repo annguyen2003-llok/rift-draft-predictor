@@ -100,6 +100,22 @@ const ROLES = ['top', 'jungle', 'mid', 'adc', 'support'];
 // để đưa vào tính WR/đối đầu, dù trận đó vẫn còn trong games.json để tra cứu thô.
 const droppedGames = rawGames.filter(g => !g.integrity.picksMatchScoreboard);
 let games = rawGames.filter(g => g.integrity.picksMatchScoreboard);
+/* LỖI PHÁT HIỆN 2026-09-21: games.json KHÔNG được sắp xếp theo ngày — file này
+   ghép từ nhiều lượt quét theo giải/theo batch (mỗi giải/loại giải append vào
+   cuối lúc quét), nên các khối INT/LCP/LCS nằm SAU khối LPL/LCK/LEC trong file
+   dù ngày của chúng SỚM HƠN nhiều (VD: khối INT ở index ~502-656 có ngày từ
+   2026-03-16, đứng sau khối LPL/LCK/LEC đã tới 2026-09-13). Một comment cũ ở
+   walkForwardEval nói "games đã sort theo ngày ở trên" — SAI, dòng sort đó chỉ
+   nằm trong nhánh GAME_CAP hiếm khi kích hoạt (games.length > 2000). Hậu quả:
+   PIT/walkForwardEval đi tuần tự theo INDEX, nên với 3 khối bị chèn sai vị trí,
+   "lịch sử trước đó" (index nhỏ hơn) thực ra chứa cả trận diễn ra SAU trận đang
+   xét theo ngày thật — rò rỉ thời gian vào chính cơ chế được xây để chống rò rỉ.
+   Sort tường minh tại đây để cả PIT/KIT_STATIC và walk-forward CV phía dưới đi
+   đúng thứ tự thời gian thật; không ảnh hưởng model production cuối (rowFor
+   dùng buildStats trên toàn bộ index, không phụ thuộc thứ tự) — chỉ ảnh hưởng
+   độ chính xác của số đo CV và các đặc trưng tích luỹ theo thời gian
+   (familiarity/poolDepth/pickPriority). */
+games.sort((a, b) => a.date.localeCompare(b.date) || (a.seriesId - b.seriesId) || (a.gameId - b.gameId));
 if (droppedGames.length) {
   console.log(`Loại ${droppedGames.length} trận khỏi huấn luyện vì pick không khớp scoreboard: ` +
     droppedGames.map(g => `#${g.gameId} (${g.blue.team} vs ${g.red.team}, ${g.date})`).join(', '));
@@ -520,8 +536,10 @@ function auc(pairs) {
    độ quen tay mà lúc đó player chưa hề có. Đo thử: kfold ngẫu nhiên báo AUC
    0.705 cho withTeam; walk-forward thật (chỉ dùng trận TRƯỚC) chỉ ra 0.564 —
    phần chênh 0.14 gần như toàn bộ là rò rỉ, giống hệt bẫy đã gặp ở alt_signals.js
-   (kfold báo +0.22, walk-forward thật chỉ +0.004). games đã sort theo ngày ở
-   trên (xem 'let games = ...sort'), nên chỉ cần đi tuần tự theo index.
+   (kfold báo +0.22, walk-forward thật chỉ +0.004). games được sort theo ngày
+   ngay sau khi lọc integrity (xem chú thích "LỖI PHÁT HIỆN 2026-09-21" gần đầu
+   file — dòng sort đó ban đầu KHÔNG tồn tại dù comment ở đây từng khẳng định có,
+   nên chỉ cần đi tuần tự theo index.
 
    2026-09-18(2) — SỬA TIẾP một lỗi tinh vi hơn trong chính walk-forward vừa
    sửa: bản đầu tiên gọi buildStats(prior) MỘT LẦN cho mỗi bước i, rồi dùng

@@ -1130,7 +1130,21 @@ Việc cập nhật đầy đủ (quét lại từng trang trận đấu, tính 
     không intercept giữ acc 50% — ổn định hơn nhiều khi xu hướng đảo. Đã bỏ hẳn (freezeBias, xem
     finalize.js): draft-only giờ chỉ nói lên được gì từ CHÍNH các tướng đã chọn, mặc định gần 50/50 khi
     kit cân bằng, không mượn lợi thế side để tự nâng điểm chính xác của chính nó. AUC hiện tại:
-    chỉ đội hình ${DATA.models.draft.metrics.cvAuc.toFixed(3)}, +đội ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}.</p>`;
+    chỉ đội hình ${DATA.models.draft.metrics.cvAuc.toFixed(3)}, +đội ${DATA.models.withTeam.metrics.cvAuc.toFixed(3)}.</p>
+
+    <p><b>Lỗi thứ tự thời gian phát hiện và sửa (2026-09-21).</b> <code>data/games.json</code> ghép từ
+    nhiều lượt quét theo giải/theo batch, nên KHÔNG được sắp xếp theo ngày trong file — các khối trận
+    quốc tế/LCP/LCS bị chèn sau khối LPL/LCK/LEC trong file dù ngày của chúng sớm hơn nhiều (có khối lùi
+    tới tận tháng 3). <code>finalize.js</code> có 1 comment cũ khẳng định "games đã sort theo ngày" —
+    hoá ra sai, không có dòng sort nào chạy trên thực tế. Vì walk-forward và các đặc trưng tích luỹ theo
+    thời gian (familiarity/poolDepth/pickPriority) đi tuần tự theo INDEX của mảng, "lịch sử trước đó" của
+    nhiều trận thực ra chứa cả trận diễn ra SAU nó theo ngày thật — rò rỉ thời gian ngay trong chính cơ
+    chế được xây để chống rò rỉ. Đã thêm dòng sort tường minh ngay sau khi lọc integrity. Ảnh hưởng đo
+    được: chỉ-đội-hình AUC 0,523→0,472 (giờ đúng là dưới ngẫu nhiên khi đo đúng thời gian, càng khẳng
+    định draft-only gần như không có tín hiệu độc lập), +đội hình AUC 0,591→0,585 (đổi ít hơn vì
+    familiarity/poolDepth vẫn chủ yếu tích luỹ đúng trong khối LPL/LCK/LEC lớn nhất, ít bị khối lệch chi
+    phối). Trọng số mô hình đang chạy trên trang KHÔNG đổi (huấn luyện cuối dùng thống kê toàn bộ dữ liệu,
+    không phụ thuộc thứ tự mảng) — chỉ số đo "mô hình chính xác bao nhiêu %" ở trên là thứ được sửa.</p>`;
   document.getElementById("infoOverlay").classList.add("open");
 }
 
