@@ -19,7 +19,25 @@
      26.17 buff: Aurelion Sol, Cho'Gath, Irelia, LeBlanc, Qiyana, Trundle, Yasuo, Yone
      26.17 nerf: Graves, Nasus, Nocturne, Thresh, Vayne (riêng đường trên), Xerath
    Chỉ chỉnh `scaling` khi patch note nói rõ dịch chuyển SỚM/MUỘN (VD: "mất burst
-   sớm đổi lấy scale tank"); buff/nerf sức mạnh chung chung không đổi trục này. */
+   sớm đổi lấy scale tank"); buff/nerf sức mạnh chung chung không đổi trục này.
+
+   2026-09-21 — bắt đầu soát lại TOÀN BỘ 133 tướng theo yêu cầu người dùng ("còn
+   1 tháng đến CKTG, học kỹ kit từng con một"), mỗi phiên vài chục con, không
+   vội. Quy ước `mobility` được làm rõ và áp lại nhất quán khi soát: CHỈ tính kỹ
+   năng khiến CHÍNH tướng đó di chuyển (dash/blink/tăng tốc bản thân) — kỹ năng
+   kéo/đẩy ĐỐI PHƯƠNG (VD: Alistar W đẩy mục tiêu, Thresh Q/lồng đèn kéo mục
+   tiêu hoặc đồng minh, KHÔNG kéo chính Thresh) không tính. Nguồn đối chiếu
+   thêm (theo gợi ý người dùng): trang gol.gg/champion/champion-stats/<id>/...
+   có sẵn bảng rune/summoner/item build thật theo % pro pick (server-rendered,
+   xem scratchpad/golgg/golgg_champion.js) — dùng để kiểm tra lại các trường hợp
+   `dmg` mơ hồ (VD: build 100% tank/AD không có món AP nào → đủ chắc để chốt
+   AD thay vì Mixed), KHÔNG dùng để suy ra dmg từ đồ CHÍNH tướng đó build (Ornn
+   build toàn tank nhưng kỹ năng vẫn là AP — build phản ánh CÁCH CHƠI, dmg field
+   phản ánh sát thương ĐỐI PHƯƠNG phải itemise chống lại).
+   Tiến độ theo nhóm trong file (thứ tự đã có sẵn):
+     ✓ tanks/frontline (19 con) — xong 2026-09-21
+     … fighters/bruisers, junglers, assassins/mid, control mages, marksmen,
+       remaining — CHƯA soát, để nguyên số cũ cho đến khi tới lượt. */
 
 const A = (engage, frontline, cc, dmg, scaling, mobility, ranged) =>
   ({ engage, frontline, cc, dmg, scaling, mobility, ranged });
@@ -33,18 +51,18 @@ module.exports = {
   'Poppy':         A(1, 2, 3, 'AD',    0.25, 1, 0),  // patch 26.16: mất burst/an toàn sớm, đổi lại sustain đường + scale tank (cùng hướng đổi với Camille)
   'Shen':          A(1, 2, 1, 'AP',    0.2, 1, 0),
   'Dr. Mundo':     A(0, 2, 1, 'AP',    0.5, 1, 0),
-  'Chogath':       A(0, 2, 3, 'AP',    0.6, 0, 0),
-  'KSante':        A(1, 2, 3, 'Mixed', 0.2, 2, 0),
+  'Chogath':       A(0, 2, 3, 'AP',    0.85, 0, 0),  // 2026-09-21 soat lai: co che cot loi la STACK VINH VIEN qua an mang (R Feast) -- hyperscale kinh dien giong Nasus/Veigar, 0.6 danh gia thap tinh chat "cang dai cang manh vo han" cua tuong nay
+  'KSante':        A(1, 2, 3, 'AD',    0.2, 2, 0),   // 2026-09-21: doi Mixed->AD, kiem tra build thuc te gol.gg (S16 Summer) top 10 item toan tank/AD (Iceborn Gauntlet, Plated Steelcaps, Jak'Sho, Kaenic Rookern...), khong co item AP nao -- kit khong co ti le AP thuc su
   'Sejuani':       A(1, 2, 3, 'AP',    0.3, 1, 0),
-  'Skarner':       A(1, 2, 3, 'Mixed', 0.3, 2, 0),
+  'Skarner':       A(1, 2, 3, 'AD',    0.3, 2, 0),   // 2026-09-21: doi Mixed->AD, build thuc te gol.gg toan tank/on-hit (Unending Despair, Heartsteel, Protoplasm Harness...), khong co AP -- sat thuong kit la AD/on-hit sau rework
   'Maokai':        A(1, 2, 3, 'AP',    0.3, 1, 0),
   'Nautilus':      A(1, 2, 3, 'AP',    0.2, 1, 0),
-  'Leona':         A(1, 2, 3, 'AP',    0.0, 0, 0),
-  'Alistar':       A(1, 2, 3, 'AP',   -0.1, 1, 0),
+  'Leona':         A(1, 2, 3, 'AP',   -0.15, 1, 0),  // 2026-09-21: mobility 0->1 (E Zenith Blade la dash/lao toi muc tieu, tu di chuyen Leona chu khong chi keo doi phuong nhu Blitzcrank Q) -- xem chu thich tong quat cuoi file; scaling 0.0->-0.15, Leona la lane bully manh SOM, giam anh huong tuong doi ve sau du CC van con
+  'Alistar':       A(1, 2, 3, 'AP',   -0.1, 0, 0),   // 2026-09-21: mobility 1->0 -- Q (AoE tai cho) va W (danh bat MUC TIEU ra xa) khong he di chuyen Alistar, khong co dash/blink nao trong kit ngoai flash
   'Rell':          A(1, 2, 3, 'AP',    0.0, 1, 0),
-  'Braum':         A(1, 2, 3, 'AP',    0.1, 0, 0),
-  'Thresh':        A(1, 1, 3, 'AP',    0.2, 1, 0),
-  'Blitzcrank':    A(1, 1, 3, 'AP',   -0.1, 0, 0),
+  'Braum':         A(1, 2, 3, 'AP',    0.1, 1, 0),   // 2026-09-21: mobility 0->1 -- W (Stand Behind Me) la buoc nhay/dash toi vi tri dong minh, tu di chuyen Braum
+  'Thresh':        A(1, 1, 3, 'AP',    0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- khong co dash tu than (Q keo MUC TIEU ve minh, den long chi ho tro dong minh dash, khong phai Thresh); scaling 0.2->0.4, co che nhat hon hoi VINH VIEN (giong Nasus/Veigar) la tin hieu hyperscale ro rang, 0.2 danh gia thap
+  'Blitzcrank':    A(1, 1, 3, 'AP',   -0.1, 1, 0),   // 2026-09-21: mobility 0->1, dong nhat voi tien le Dr. Mundo trong file nay (tang toc do ban than = mobility theo dinh nghia dau file) -- W (Overdrive) cho Blitzcrank tu tang toc
 
   // ---------- fighters / bruisers ----------
   'Ambessa':       A(1, 1, 2, 'AD',   -0.3, 2, 0),
