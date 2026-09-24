@@ -637,58 +637,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Split 3",
-  "seriesId": 80591,
-  "matchup": "Top Esports vs AL",
-  "teamRight": "Anyone s Legend",
-  "teamLeft": "Top Esports",
-  "games": 2,
-  "week": "WEEK2",
-  "patch": "16.14",
-  "date": "2026-07-29"
- },
- {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Split 3",
-  "seriesId": 80594,
-  "matchup": "BLG vs LGD Gaming",
-  "teamRight": "LGD Gaming",
-  "teamLeft": "Bilibili Gaming",
-  "games": 3,
-  "week": "WEEK2",
-  "patch": "16.14",
-  "date": "2026-07-29"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Rounds 3-4",
-  "seriesId": 80654,
-  "matchup": "Kiwoom DRX vs NS",
-  "teamRight": "Kiwoom DRX",
-  "teamLeft": "Nongshim RedForce",
-  "games": 2,
-  "week": "WEEK10",
-  "patch": "16.14",
-  "date": "2026-07-29"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Rounds 3-4",
-  "seriesId": 80657,
-  "matchup": "T1 vs KT Rolster",
-  "teamRight": "T1",
-  "teamLeft": "KT Rolster",
-  "games": 2,
-  "week": "WEEK10",
-  "patch": "16.14",
-  "date": "2026-07-29"
- },
- {
   "league": "LCP",
   "tier": "minor",
   "tournament": "LCP 2026 Split 3",
