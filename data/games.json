@@ -125933,5 +125933,780 @@
    "killTotalsMatch": true,
    "teams": "FlyQuest|Team Liquid"
   }
+ },
+ {
+  "ok": true,
+  "gameId": 83095,
+  "duration": "33:34",
+  "durationMin": 33.57,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-25",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "Shopify Rebellion",
+   "teamFull": "Shopify Rebellion",
+   "win": false,
+   "kills": 5,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 56600,
+   "bans": [
+    "Cassiopeia",
+    "Rumble",
+    "Nocturne",
+    "Jayce",
+    "Vayne"
+   ],
+   "picksDraftOrder": [
+    "Lucian",
+    "Milio",
+    "Locke",
+    "KSante",
+    "Pantheon"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "2359",
+     "player": "Fudge",
+     "k": 0,
+     "d": 4,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Pantheon",
+     "playerId": "733",
+     "player": "Contractz",
+     "k": 2,
+     "d": 3,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "5566",
+     "player": "Zinie",
+     "k": 3,
+     "d": 0,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Lucian",
+     "playerId": "2085",
+     "player": "Bvoy",
+     "k": 0,
+     "d": 3,
+     "a": 0
+    },
+    "support": {
+     "champion": "Milio",
+     "playerId": "854",
+     "player": "Zeyzal",
+     "k": 0,
+     "d": 2,
+     "a": 4
+    }
+   }
+  },
+  "red": {
+   "team": "FlyQuest",
+   "teamFull": "FlyQuest",
+   "win": true,
+   "kills": 12,
+   "towers": 8,
+   "dragons": 5,
+   "barons": 2,
+   "gold": 66200,
+   "bans": [
+    "Vi",
+    "Kalista",
+    "Olaf",
+    "Twisted Fate",
+    "Gnar"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Karma",
+    "Syndra",
+    "Gwen",
+    "Lee Sin"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gwen",
+     "playerId": "5456",
+     "player": "Gakgos",
+     "k": 3,
+     "d": 0,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "4612",
+     "player": "Gryffinn",
+     "k": 5,
+     "d": 1,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "2648",
+     "player": "Quad",
+     "k": 2,
+     "d": 2,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "4885",
+     "player": "Massu",
+     "k": 2,
+     "d": 1,
+     "a": 6
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "6344",
+     "player": "Cryogen",
+     "k": 0,
+     "d": 1,
+     "a": 8
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-09-25",
+  "week": "ROUND2",
+  "seriesId": 83095,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Shopify Rebellion|FlyQuest"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83096,
+  "duration": "25:51",
+  "durationMin": 25.85,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-25",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "FlyQuest",
+   "teamFull": "FlyQuest",
+   "win": false,
+   "kills": 8,
+   "towers": 4,
+   "dragons": 1,
+   "barons": 1,
+   "gold": 48400,
+   "bans": [
+    "Cassiopeia",
+    "Nocturne",
+    "Orianna",
+    "Ryze",
+    "Poppy"
+   ],
+   "picksDraftOrder": [
+    "Kalista",
+    "Renata Glasc",
+    "Ornn",
+    "Qiyana",
+    "Annie"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ornn",
+     "playerId": "5456",
+     "player": "Gakgos",
+     "k": 0,
+     "d": 1,
+     "a": 5
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "4612",
+     "player": "Gryffinn",
+     "k": 3,
+     "d": 6,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Annie",
+     "playerId": "2648",
+     "player": "Quad",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "4885",
+     "player": "Massu",
+     "k": 4,
+     "d": 2,
+     "a": 2
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "6344",
+     "player": "Cryogen",
+     "k": 1,
+     "d": 2,
+     "a": 5
+    }
+   }
+  },
+  "red": {
+   "team": "Shopify Rebellion",
+   "teamFull": "Shopify Rebellion",
+   "win": true,
+   "kills": 15,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 0,
+   "gold": 51500,
+   "bans": [
+    "Shyvana",
+    "Jarvan IV",
+    "Jayce",
+    "Wukong",
+    "Viktor"
+   ],
+   "picksDraftOrder": [
+    "Rumble",
+    "Xayah",
+    "Rakan",
+    "Vi",
+    "Taliyah"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "2359",
+     "player": "Fudge",
+     "k": 4,
+     "d": 1,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "733",
+     "player": "Contractz",
+     "k": 7,
+     "d": 1,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Taliyah",
+     "playerId": "5566",
+     "player": "Zinie",
+     "k": 2,
+     "d": 3,
+     "a": 10
+    },
+    "adc": {
+     "champion": "Xayah",
+     "playerId": "2085",
+     "player": "Bvoy",
+     "k": 2,
+     "d": 2,
+     "a": 6
+    },
+    "support": {
+     "champion": "Rakan",
+     "playerId": "854",
+     "player": "Zeyzal",
+     "k": 0,
+     "d": 1,
+     "a": 9
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-09-25",
+  "week": "ROUND2",
+  "seriesId": 83095,
+  "gameInSeries": 2,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "FlyQuest|Shopify Rebellion"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83097,
+  "duration": "29:22",
+  "durationMin": 29.37,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-25",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "Shopify Rebellion",
+   "teamFull": "Shopify Rebellion",
+   "win": false,
+   "kills": 4,
+   "towers": 1,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 48100,
+   "bans": [
+    "Cassiopeia",
+    "Nocturne",
+    "Caitlyn",
+    "Trundle",
+    "Viktor"
+   ],
+   "picksDraftOrder": [
+    "Yunara",
+    "Lulu",
+    "Sion",
+    "Wukong",
+    "Lissandra"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Sion",
+     "playerId": "2359",
+     "player": "Fudge",
+     "k": 0,
+     "d": 3,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Wukong",
+     "playerId": "733",
+     "player": "Contractz",
+     "k": 2,
+     "d": 6,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Lissandra",
+     "playerId": "5566",
+     "player": "Zinie",
+     "k": 0,
+     "d": 4,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "2085",
+     "player": "Bvoy",
+     "k": 2,
+     "d": 4,
+     "a": 1
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "854",
+     "player": "Zeyzal",
+     "k": 0,
+     "d": 1,
+     "a": 3
+    }
+   }
+  },
+  "red": {
+   "team": "FlyQuest",
+   "teamFull": "FlyQuest",
+   "win": true,
+   "kills": 17,
+   "towers": 11,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 62000,
+   "bans": [
+    "Olaf",
+    "Jarvan IV",
+    "Sylas",
+    "Xin Zhao",
+    "Orianna"
+   ],
+   "picksDraftOrder": [
+    "Jayce",
+    "Ziggs",
+    "Nautilus",
+    "Tristana",
+    "Ivern"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "5456",
+     "player": "Gakgos",
+     "k": 4,
+     "d": 0,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Ivern",
+     "playerId": "4612",
+     "player": "Gryffinn",
+     "k": 0,
+     "d": 1,
+     "a": 16
+    },
+    "mid": {
+     "champion": "Tristana",
+     "playerId": "2648",
+     "player": "Quad",
+     "k": 7,
+     "d": 0,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Ziggs",
+     "playerId": "4885",
+     "player": "Massu",
+     "k": 4,
+     "d": 3,
+     "a": 9
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "6344",
+     "player": "Cryogen",
+     "k": 2,
+     "d": 0,
+     "a": 11
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-09-25",
+  "week": "ROUND2",
+  "seriesId": 83095,
+  "gameInSeries": 3,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Shopify Rebellion|FlyQuest"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83098,
+  "duration": "22:46",
+  "durationMin": 22.77,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-25",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "FlyQuest",
+   "teamFull": "FlyQuest",
+   "win": false,
+   "kills": 7,
+   "towers": 3,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 42100,
+   "bans": [
+    "Cassiopeia",
+    "Nocturne",
+    "Orianna",
+    "Mel",
+    "Zeri"
+   ],
+   "picksDraftOrder": [
+    "Ashe",
+    "Seraphine",
+    "Ryze",
+    "Kled",
+    "Volibear"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Kled",
+     "playerId": "5456",
+     "player": "Gakgos",
+     "k": 2,
+     "d": 3,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Volibear",
+     "playerId": "4612",
+     "player": "Gryffinn",
+     "k": 1,
+     "d": 5,
+     "a": 2
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "2648",
+     "player": "Quad",
+     "k": 2,
+     "d": 3,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Ashe",
+     "playerId": "4885",
+     "player": "Massu",
+     "k": 2,
+     "d": 5,
+     "a": 0
+    },
+    "support": {
+     "champion": "Seraphine",
+     "playerId": "6344",
+     "player": "Cryogen",
+     "k": 0,
+     "d": 3,
+     "a": 3
+    }
+   }
+  },
+  "red": {
+   "team": "Shopify Rebellion",
+   "teamFull": "Shopify Rebellion",
+   "win": true,
+   "kills": 19,
+   "towers": 9,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 49500,
+   "bans": [
+    "Ambessa",
+    "Bard",
+    "Naafiri",
+    "Jax",
+    "Vayne"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Olaf",
+    "Sylas",
+    "Varus",
+    "Alistar"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "2359",
+     "player": "Fudge",
+     "k": 2,
+     "d": 2,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "733",
+     "player": "Contractz",
+     "k": 5,
+     "d": 2,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Sylas",
+     "playerId": "5566",
+     "player": "Zinie",
+     "k": 3,
+     "d": 1,
+     "a": 7
+    },
+    "adc": {
+     "champion": "Varus",
+     "playerId": "2085",
+     "player": "Bvoy",
+     "k": 8,
+     "d": 1,
+     "a": 2
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "854",
+     "player": "Zeyzal",
+     "k": 1,
+     "d": 1,
+     "a": 12
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-09-25",
+  "week": "ROUND2",
+  "seriesId": 83095,
+  "gameInSeries": 4,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "FlyQuest|Shopify Rebellion"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83099,
+  "duration": "25:13",
+  "durationMin": 25.22,
+  "patch": "16.17",
+  "dateFromPage": "2026-09-25",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "Shopify Rebellion",
+   "teamFull": "Shopify Rebellion",
+   "win": true,
+   "kills": 16,
+   "towers": 9,
+   "dragons": 1,
+   "barons": 1,
+   "gold": 54200,
+   "bans": [
+    "Cassiopeia",
+    "Nocturne",
+    "Ambessa",
+    "Twisted Fate",
+    "Vayne"
+   ],
+   "picksDraftOrder": [
+    "Galio",
+    "Naafiri",
+    "Gnar",
+    "Kaisa",
+    "Amumu"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "2359",
+     "player": "Fudge",
+     "k": 4,
+     "d": 1,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "733",
+     "player": "Contractz",
+     "k": 7,
+     "d": 1,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Galio",
+     "playerId": "5566",
+     "player": "Zinie",
+     "k": 0,
+     "d": 1,
+     "a": 13
+    },
+    "adc": {
+     "champion": "Kaisa",
+     "playerId": "2085",
+     "player": "Bvoy",
+     "k": 4,
+     "d": 1,
+     "a": 4
+    },
+    "support": {
+     "champion": "Amumu",
+     "playerId": "854",
+     "player": "Zeyzal",
+     "k": 1,
+     "d": 0,
+     "a": 11
+    }
+   }
+  },
+  "red": {
+   "team": "FlyQuest",
+   "teamFull": "FlyQuest",
+   "win": false,
+   "kills": 4,
+   "towers": 1,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 42800,
+   "bans": [
+    "Akali",
+    "Caitlyn",
+    "Renekton",
+    "Miss Fortune",
+    "Corki"
+   ],
+   "picksDraftOrder": [
+    "Orianna",
+    "Shyvana",
+    "Camille",
+    "Jhin",
+    "Rell"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Camille",
+     "playerId": "5456",
+     "player": "Gakgos",
+     "k": 1,
+     "d": 4,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Shyvana",
+     "playerId": "4612",
+     "player": "Gryffinn",
+     "k": 2,
+     "d": 3,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "2648",
+     "player": "Quad",
+     "k": 0,
+     "d": 3,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "4885",
+     "player": "Massu",
+     "k": 1,
+     "d": 3,
+     "a": 1
+    },
+    "support": {
+     "champion": "Rell",
+     "playerId": "6344",
+     "player": "Cryogen",
+     "k": 0,
+     "d": 3,
+     "a": 0
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-09-25",
+  "week": "ROUND2",
+  "seriesId": 83095,
+  "gameInSeries": 5,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Shopify Rebellion|FlyQuest"
+  }
  }
 ]
