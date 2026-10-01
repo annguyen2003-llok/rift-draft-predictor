@@ -637,58 +637,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Split 3",
-  "seriesId": 80981,
-  "matchup": "JD Gaming vs LGD Gaming",
-  "teamRight": "JD Gaming",
-  "teamLeft": "LGD Gaming",
-  "games": 3,
-  "week": "WEEK3",
-  "patch": "16.15",
-  "date": "2026-08-05"
- },
- {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Split 3",
-  "seriesId": 80984,
-  "matchup": "EDG vs Top Esports",
-  "teamRight": "EDward Gaming",
-  "teamLeft": "Top Esports",
-  "games": 2,
-  "week": "WEEK3",
-  "patch": "16.15",
-  "date": "2026-08-05"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Rounds 3-4",
-  "seriesId": 81026,
-  "matchup": "BRO vs NS",
-  "teamRight": "Nongshim RedForce",
-  "teamLeft": "HANJIN BRION",
-  "games": 3,
-  "week": "WEEK11",
-  "patch": "16.15",
-  "date": "2026-08-05"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Rounds 3-4",
-  "seriesId": 81029,
-  "matchup": "HLE vs Gen.G",
-  "teamRight": "Gen.G",
-  "teamLeft": "Hanwha Life Esports",
-  "games": 3,
-  "week": "WEEK11",
-  "patch": "16.15",
-  "date": "2026-08-05"
- },
- {
   "league": "LCP",
   "tier": "minor",
   "tournament": "LCP 2026 Split 3",
