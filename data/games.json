@@ -127948,5 +127948,625 @@
    "killTotalsMatch": true,
    "teams": "Team Liquid|Cloud9"
   }
+ },
+ {
+  "ok": true,
+  "gameId": 83292,
+  "duration": "30:36",
+  "durationMin": 30.6,
+  "patch": "16.17",
+  "dateFromPage": "2026-10-03",
+  "weekFromPage": "ROUND4",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": false,
+   "kills": 6,
+   "towers": 5,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 56600,
+   "bans": [
+    "Vi",
+    "Nocturne",
+    "Qiyana",
+    "Locke",
+    "Akali"
+   ],
+   "picksDraftOrder": [
+    "Lucian",
+    "Milio",
+    "Syndra",
+    "Gwen",
+    "Xin Zhao"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gwen",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 1,
+     "d": 5,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Xin Zhao",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 3,
+     "d": 5,
+     "a": 2
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 0,
+     "d": 3,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Lucian",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 2,
+     "d": 3,
+     "a": 0
+    },
+    "support": {
+     "champion": "Milio",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 0,
+     "d": 4,
+     "a": 2
+    }
+   }
+  },
+  "red": {
+   "team": "Cloud9",
+   "teamFull": "Cloud9",
+   "win": true,
+   "kills": 20,
+   "towers": 11,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 66700,
+   "bans": [
+    "Olaf",
+    "Gnar",
+    "Cassiopeia",
+    "Lee Sin",
+    "Jarvan IV"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Karma",
+    "KSante",
+    "Orianna",
+    "Naafiri"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "3434",
+     "player": "Thanatos",
+     "k": 5,
+     "d": 1,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "1634",
+     "player": "Blaber",
+     "k": 7,
+     "d": 3,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "4861",
+     "player": "Loki",
+     "k": 4,
+     "d": 0,
+     "a": 10
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "1979",
+     "player": "Tactical",
+     "k": 2,
+     "d": 1,
+     "a": 10
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "1301",
+     "player": "Vulcan",
+     "k": 2,
+     "d": 1,
+     "a": 14
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-10-03",
+  "week": "ROUND4",
+  "seriesId": 83292,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "LYON|Cloud9"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83293,
+  "duration": "36:36",
+  "durationMin": 36.6,
+  "patch": "16.17",
+  "dateFromPage": "2026-10-03",
+  "weekFromPage": "ROUND4",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "Cloud9",
+   "teamFull": "Cloud9",
+   "win": false,
+   "kills": 9,
+   "towers": 8,
+   "dragons": 2,
+   "barons": 2,
+   "gold": 71500,
+   "bans": [
+    "Cassiopeia",
+    "Nocturne",
+    "Wukong",
+    "Lee Sin",
+    "Qiyana"
+   ],
+   "picksDraftOrder": [
+    "Yunara",
+    "Lulu",
+    "Gnar",
+    "Skarner",
+    "Aurora"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "3434",
+     "player": "Thanatos",
+     "k": 2,
+     "d": 4,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Skarner",
+     "playerId": "1634",
+     "player": "Blaber",
+     "k": 0,
+     "d": 3,
+     "a": 6
+    },
+    "mid": {
+     "champion": "Aurora",
+     "playerId": "4861",
+     "player": "Loki",
+     "k": 4,
+     "d": 5,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "1979",
+     "player": "Tactical",
+     "k": 3,
+     "d": 5,
+     "a": 3
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "1301",
+     "player": "Vulcan",
+     "k": 0,
+     "d": 3,
+     "a": 7
+    }
+   }
+  },
+  "red": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": true,
+   "kills": 20,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 77100,
+   "bans": [
+    "Vi",
+    "Ryze",
+    "Galio",
+    "Jarvan IV",
+    "Akali"
+   ],
+   "picksDraftOrder": [
+    "Rumble",
+    "Jhin",
+    "Nautilus",
+    "Sylas",
+    "KhaZix"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 1,
+     "d": 4,
+     "a": 11
+    },
+    "jungle": {
+     "champion": "KhaZix",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 4,
+     "d": 2,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Sylas",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 10,
+     "d": 2,
+     "a": 8
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 5,
+     "d": 0,
+     "a": 8
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 0,
+     "d": 1,
+     "a": 15
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-10-03",
+  "week": "ROUND4",
+  "seriesId": 83292,
+  "gameInSeries": 2,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Cloud9|LYON"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83294,
+  "duration": "38:20",
+  "durationMin": 38.33,
+  "patch": "16.17",
+  "dateFromPage": "2026-10-03",
+  "weekFromPage": "ROUND4",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": true,
+   "kills": 14,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 2,
+   "gold": 77000,
+   "bans": [
+    "Seraphine",
+    "Vi",
+    "Lee Sin",
+    "Lissandra",
+    "Ryze"
+   ],
+   "picksDraftOrder": [
+    "LeBlanc",
+    "Qiyana",
+    "Varus",
+    "Renata Glasc",
+    "Sion"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Sion",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 0,
+     "d": 1,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 6,
+     "d": 0,
+     "a": 2
+    },
+    "mid": {
+     "champion": "LeBlanc",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 4,
+     "d": 4,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Varus",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 4,
+     "d": 1,
+     "a": 5
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 0,
+     "d": 1,
+     "a": 9
+    }
+   }
+  },
+  "red": {
+   "team": "Cloud9",
+   "teamFull": "Cloud9",
+   "win": false,
+   "kills": 7,
+   "towers": 5,
+   "dragons": 3,
+   "barons": 0,
+   "gold": 68600,
+   "bans": [
+    "Olaf",
+    "Kalista",
+    "Nocturne",
+    "Caitlyn",
+    "Alistar"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Leona",
+    "Poppy",
+    "Jayce",
+    "Vex"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "3434",
+     "player": "Thanatos",
+     "k": 1,
+     "d": 3,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Poppy",
+     "playerId": "1634",
+     "player": "Blaber",
+     "k": 5,
+     "d": 2,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Vex",
+     "playerId": "4861",
+     "player": "Loki",
+     "k": 0,
+     "d": 5,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Cassiopeia",
+     "playerId": "1979",
+     "player": "Tactical",
+     "k": 0,
+     "d": 2,
+     "a": 0
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "1301",
+     "player": "Vulcan",
+     "k": 1,
+     "d": 2,
+     "a": 3
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-10-03",
+  "week": "ROUND4",
+  "seriesId": 83292,
+  "gameInSeries": 3,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "LYON|Cloud9"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83295,
+  "duration": "32:12",
+  "durationMin": 32.2,
+  "patch": "16.17",
+  "dateFromPage": "2026-10-03",
+  "weekFromPage": "ROUND4",
+  "tournamentFromPage": "LCS 2026 Summer Playoffs",
+  "blue": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": true,
+   "kills": 15,
+   "towers": 8,
+   "dragons": 1,
+   "barons": 2,
+   "gold": 64100,
+   "bans": [
+    "Seraphine",
+    "Nocturne",
+    "Ziggs",
+    "Rakan",
+    "Neeko"
+   ],
+   "picksDraftOrder": [
+    "Ryze",
+    "Alistar",
+    "Trundle",
+    "Garen",
+    "Jinx"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Garen",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 3,
+     "d": 1,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Trundle",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 0,
+     "d": 3,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 7,
+     "d": 1,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Jinx",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 5,
+     "d": 2,
+     "a": 7
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 0,
+     "d": 3,
+     "a": 13
+    }
+   }
+  },
+  "red": {
+   "team": "Cloud9",
+   "teamFull": "Cloud9",
+   "win": false,
+   "kills": 10,
+   "towers": 4,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 57400,
+   "bans": [
+    "Olaf",
+    "Caitlyn",
+    "Annie",
+    "Volibear",
+    "Corki"
+   ],
+   "picksDraftOrder": [
+    "Vi",
+    "Renekton",
+    "Taliyah",
+    "Aphelios",
+    "Thresh"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Renekton",
+     "playerId": "3434",
+     "player": "Thanatos",
+     "k": 0,
+     "d": 1,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "1634",
+     "player": "Blaber",
+     "k": 1,
+     "d": 3,
+     "a": 6
+    },
+    "mid": {
+     "champion": "Taliyah",
+     "playerId": "4861",
+     "player": "Loki",
+     "k": 7,
+     "d": 3,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Aphelios",
+     "playerId": "1979",
+     "player": "Tactical",
+     "k": 2,
+     "d": 4,
+     "a": 4
+    },
+    "support": {
+     "champion": "Thresh",
+     "playerId": "1301",
+     "player": "Vulcan",
+     "k": 0,
+     "d": 4,
+     "a": 9
+    }
+   }
+  },
+  "warnings": [],
+  "league": "LCS",
+  "tier": "minor",
+  "tournament": "LCS 2026 Summer Playoffs",
+  "date": "2026-10-03",
+  "week": "ROUND4",
+  "seriesId": 83292,
+  "gameInSeries": 4,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "LYON|Cloud9"
+  }
  }
 ]
