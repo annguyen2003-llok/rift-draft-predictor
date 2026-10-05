@@ -37,6 +37,20 @@ const TOURNAMENTS = [
   // 'minor': thêm để có dữ liệu khu vực nhà cho đội dự CKTG (xem data/worlds_teams.json)
   // 2026-09-21: pool giải CHỈ gồm LCK/LPL/LEC/LCP/LCS theo yêu cầu người dùng —
   // đã thử thêm CBLOL/LJL/TCL/PCS/VCS rồi bỏ lại (quá yếu, không cần theo dõi).
+  /* 2026-10-05 — ĐÃ THỬ VÀ BỎ: thêm "LCP 2026 Split 2/2 Playoffs/1/1 Playoffs"
+     (from: 2026-01-01) để tăng độ sâu lịch sử familiarity/poolDepth cho LCP
+     (lúc đó trung bình thấp hơn hẳn LPL/LCK: 0.547 vs 0.731/0.606 — nghi ngờ
+     do thiếu dữ liệu chứ không phải kém kinh nghiệm thật, vì LCP chỉ có 1
+     entry trong khi mọi giải khác có 2-3). Kết quả đo: AUC withTeam TỤT
+     0.588->0.526 — và quan trọng hơn, tụt ngay cả khi đánh giá lại TRÊN ĐÚNG
+     699 trận giống hệt trước khi thêm (0.588->0.539), không phải do tập test
+     có thêm trận khó — tức là MÔ HÌNH THẬT SỰ TỆ ĐI trên các trận đã đo
+     trước đó. Khả năng cao: 203 trận LCP đầu mùa (patch 16.1-16.3, 16.7-16.10,
+     roster/meta rất khác) làm lệch phân bố chuẩn hoá (mu/sg) dùng để scale
+     đặc trưng familiarity/poolDepth mỗi bước walk-forward, pha loãng tín hiệu
+     thay vì làm giàu thêm. Đã REVERT (xem git log 2026-10-05) — không thêm
+     lại ý tưởng này trừ khi có cách chuẩn hoá cục bộ theo cửa sổ thời gian
+     gần thay vì dùng toàn bộ lịch sử (thay đổi kiến trúc lớn hơn, chưa làm). */
   { league: 'LCP', name: 'LCP 2026 Split 3', tier: 'minor' },
   { league: 'LCS', name: 'LCS 2026 Summer', tier: 'minor' },
   { league: 'LCS', name: 'LCS 2026 Summer Playoffs', tier: 'minor' },

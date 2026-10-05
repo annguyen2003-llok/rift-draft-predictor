@@ -71,6 +71,7 @@ module.exports = {
   'Thresh':        A(1, 1, 3, 'AP',    0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- khong co dash tu than (Q keo MUC TIEU ve minh, den long chi ho tro dong minh dash, khong phai Thresh); scaling 0.2->0.4, co che nhat hon hoi VINH VIEN (giong Nasus/Veigar) la tin hieu hyperscale ro rang, 0.2 danh gia thap
   'Blitzcrank':    A(1, 1, 3, 'AP',   -0.1, 1, 0),   // 2026-09-21: mobility 0->1, dong nhat voi tien le Dr. Mundo trong file nay (tang toc do ban than = mobility theo dinh nghia dau file) -- W (Overdrive) cho Blitzcrank tu tang toc
   'Amumu':         A(1, 2, 3, 'AP',    0.1, 0, 0),   // 2026-10-05: tuong moi xuat hien trong tran quet. Q (Bandage Toss) la stun tam xa (khong keo/day ban than -> mobility=0, chi la CC+engage), R (Curse of the Sad Mummy) la AoE stun dien rong -- engage tank CC day kinh dien, tuong tu Nautilus/Maokai
+  'Janna':         A(0, 0, 3, 'AP',    0.1, 0, 1),   // 2026-10-05: tuong moi xuat hien trong tran quet. Enchanter thuan phong thu: Q (Howling Gale) knockup, W (Zephyr) slow aura, R (Monsoon) AoE day lui + hoi mau -- cc day (3) nhung engage=0 vi muc dich la DAY DOI THU RA XA khoi dong minh (peel), khong phai ep giao tranh; khong dash trong kit
 
   // ---------- fighters / bruisers ----------
   'Ambessa':       A(1, 1, 2, 'AD',   -0.3, 2, 0),
