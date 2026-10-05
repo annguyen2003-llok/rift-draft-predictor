@@ -1,7 +1,10 @@
 {
   "_note": "Danh sách đội dự CKTG đã CHỐT theo từng giải. Chỉ dùng để lọc dropdown chọn đội cho gọn — KHÔNG ảnh hưởng đến dữ liệu huấn luyện (win-rate tướng, rating khu vực vẫn dùng toàn bộ đội đã quét, xem finalize.js). Giải chưa có danh sách ở đây (mảng rỗng hoặc thiếu key) thì dropdown vẫn hiện đủ tất cả đội như cũ.",
   "LCK": ["Gen.G", "Hanwha Life Esports", "T1", "Dplus KIA"],
-  "LPL": [],
-  "LEC": [],
-  "LCP": ["Team Secret Whales", "CTBC Flying Oyster", "MVK Esports"]
+  "LPL": ["Anyone s Legend", "Bilibili Gaming", "Top Esports", "Invictus Gaming"],
+  "LEC": ["G2 Esports", "Movistar KOI", "Karmine Corp"],
+  "LCP": ["Team Secret Whales", "CTBC Flying Oyster", "MVK Esports"],
+  "LCS": ["Team Liquid", "LYON", "Cloud9"],
+  "CBLOL": ["Los Grandes", "FURIA"],
+  "_note2": "CBLOL (Los Grandes, FURIA) dự CKTG nhưng khu vực này KHÔNG được quét (loại bỏ 2026-09-21, vẫn giữ quyết định đó) — 2 đội này không có trận nào trong games.json nên finalize.js tạo entry RỖNG riêng cho họ (games=0, roster trống) chỉ để chọn được trong dropdown, không có số liệu thật. Chưa chốt: CBLOL Split 2 Champion (đội thứ 3 của CBLOL) — theo Wikipedia lúc tra (2026-10-05) vẫn là TBD, bổ sung khi có tên."
 }

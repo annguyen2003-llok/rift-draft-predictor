@@ -783,6 +783,26 @@ for (const t of Object.values(stats.team)) {
     worldsQualified: !!worldsQualified[t.name],
   };
 }
+/* 2026-10-05 — đội dự CKTG từ khu vực CHƯA TỪNG quét giải khu vực (hiện chỉ
+   có CBLOL: Los Grandes, FURIA — khu vực này đã bị loại khỏi theo dõi
+   2026-09-21 vì yếu, quyết định đó GIỮ NGUYÊN, KHÔNG quét thêm trận CBLOL
+   nào). Bất ngờ: cả 2 đội NÀY ĐÃ CÓ dữ liệu thật trong teams{} — từng chơi
+   vài trận quốc tế (MSI/EWC/First Stand) nên vẫn lọt vào stats.team — nhưng
+   homeRegion=null (chỉ gán được khi có ít nhất 1 trận GIẢI KHU VỰC, mà CBLOL
+   thì không quét) khiến vòng filter trong template.html
+   ("Bỏ đội chưa rõ khu vực nhà") ẩn mất họ khỏi dropdown dù dữ liệu có thật.
+   Sửa: với MỌI đội trong worlds_teams.json, nếu đã tồn tại trong teams{}
+   nhưng homeRegion còn null thì gán = tên giải (để hiện đúng optgroup); nếu
+   CHƯA tồn tại (chưa từng chơi trận nào kể cả quốc tế) mới tạo entry rỗng. */
+for (const [league, list] of Object.entries(worldsTeamsRaw)) {
+  if (league.startsWith('_') || !Array.isArray(list)) continue;
+  for (const name of list) {
+    if (teams[name]) { if (!teams[name].homeRegion) teams[name].homeRegion = league; continue; }
+    teams[name] = { name, league, homeRegion: league,
+      games: 0, wins: 0, wr: null, wrShrunk: 0.5,
+      rating: 0, ratingDev: 0, intlGames: 0, worldsQualified: true };
+  }
+}
 let matchupPairs = 0, matchupWithData = 0;
 for (const role of Object.keys(stats.matchups))
   for (const a of Object.keys(stats.matchups[role]))
