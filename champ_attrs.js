@@ -21,6 +21,24 @@
    Chỉ chỉnh `scaling` khi patch note nói rõ dịch chuyển SỚM/MUỘN (VD: "mất burst
    sớm đổi lấy scale tank"); buff/nerf sức mạnh chung chung không đổi trục này.
 
+   2026-10-08 — đối chiếu patch 26.20 (gol.gg 16.20, patch CKTG 2026, live
+   07/10) — đọc trực tiếp từ leagueoflegends.com (JSON __NEXT_DATA__, không
+   qua tóm tắt bên thứ 3). CHỈ áp phần "Champions"/"Items" đầu trang (Summoner's
+   Rift thật) — phần "Classic" (tướng bản cũ, chế độ riêng, có Fiora/Graves/
+   Fizz/Kennen/Nautilus buff/nerf RIÊNG) và ARAM/Mayhem KHÔNG áp dụng, khác
+   hẳn balance Summoner's Rift:
+     Nghiêng MUỘN hơn (scaling tăng): Cassiopeia, Diana, Mordekaiser, Swain,
+       Tahm Kench, Yunara (Q cắt sát thương SỚM nặng hơn MUỘN theo tỉ lệ %),
+       Lillia (mới thêm — R kéo dài thời gian ngủ theo rank)
+     Nghiêng SỚM hơn (scaling giảm): Ambessa (nerf riêng sát thương cuối trận),
+       Ashe (nerf AD/level — cộng dồn theo thời gian)
+     Buff SỚM (không đổi scaling vì là buff tuyến dưới/laning, không phải
+       đường cong sức mạnh theo thời gian): Lucian (AD/level TĂNG dù vậy —
+       xem riêng, đây là buff MUỘN bù lại 1 nerf laning patch trước)
+     Không đổi (buff chung chung/bù item, không có tín hiệu sớm-muộn rõ):
+       Kennen, Kindred, K'Sante, Neeko, Smolder (đã 0.9, gần trần), Vayne
+       (đã 0.9, buff chỉ là laning QoL nhỏ không đáng đổi).
+
    2026-09-21 — bắt đầu soát lại TOÀN BỘ 133 tướng theo yêu cầu người dùng ("còn
    1 tháng đến CKTG, học kỹ kit từng con một"), mỗi phiên vài chục con, không
    vội. Quy ước `mobility` được làm rõ và áp lại nhất quán khi soát: CHỈ tính kỹ
@@ -75,7 +93,7 @@ module.exports = {
   'Janna':         A(0, 0, 3, 'AP',    0.1, 0, 1),   // 2026-10-05: tuong moi xuat hien trong tran quet. Enchanter thuan phong thu: Q (Howling Gale) knockup, W (Zephyr) slow aura, R (Monsoon) AoE day lui + hoi mau -- cc day (3) nhung engage=0 vi muc dich la DAY DOI THU RA XA khoi dong minh (peel), khong phai ep giao tranh; khong dash trong kit
 
   // ---------- fighters / bruisers ----------
-  'Ambessa':       A(1, 1, 2, 'AD',   -0.3, 2, 0),
+  'Ambessa':       A(1, 1, 2, 'AD',   -0.35, 2, 0),  // patch 26.20: nerf passive rieng o SAT THUONG CUOI TRAM DAU (giam ca flat lan ti le AD) vi "qua on dinh ve hau ky" -- cang nghieng ve som hon truoc
   'Aatrox':        A(1, 1, 2, 'AD',    0.0, 2, 0),
   'Renekton':      A(1, 1, 1, 'AD',   -0.6, 1, 0),   // 2026-09-21: engage 0->1 -- E (Slice and Dice) la dash 2 lan, dung chu dong lao vao muc tieu duoc, khong khac gi cac dau si dash khac trong file nay
   'Olaf':          A(0, 1, 1, 'AD',   -0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- khong co dash/blink nao trong kit (Q la nem ranged, R chi mien nhiem CC + buff, khong tang toc)
@@ -90,7 +108,7 @@ module.exports = {
   'Kled':          A(1, 1, 2, 'AD',   -0.4, 2, 0),
   'Yorick':        A(0, 1, 1, 'AD',    0.45, 0, 0),  // 2026-09-21: scaling 0.3->0.45 -- split-push/scaling duelist, quan doi hon ma cang ve sau cang manh (maiden + linh hon), 0.3 danh gia thap
   'Nasus':         A(0, 1, 1, 'AD',    0.9, 0, 0),   // bị nerf liên tiếp 26.16+26.17 (mất sustain đi đường) — đường sớm khó hơn nhưng bản chất hyperscale hậu kỳ không đổi, giữ nguyên số
-  'Mordekaiser':   A(1, 1, 1, 'AP',    0.4, 0, 0),   // 2026-09-21: mobility 1->0 -- E (Death's Grasp) keo MUC TIEU ve phia Morde, khong tu di chuyen Morde; khong con dash nao khac trong kit
+  'Mordekaiser':   A(1, 1, 1, 'AP',    0.5, 0, 0),   // 2026-09-21: mobility 1->0 -- E (Death's Grasp) keo MUC TIEU ve phia Morde, khong tu di chuyen Morde; khong con dash nao khac trong kit. Patch 26.20: Q buff ro rang CHI o cap do 10-20 ("sat thuong hon ve sau"), R giam thoi gian hoi chieu -- ca hai deu la tin hieu nghieng ve muon ro rang, 0.4->0.5
   'Urgot':         A(1, 1, 1, 'AD',    0.1, 1, 0),   // 2026-09-21: engage 0->1, mobility 0->1 -- E (Disdain) la dash+da muc tieu ra xa, VUA tu di chuyen Urgot VUA co the dung de chu dong lao vao doi thu, bi bo sot ca 2 truc
   'Gwen':          A(0, 1, 1, 'AP',    0.6, 1, 0),
   'Zaahen':        A(1, 1, 2, 'AD',    0.1, 2, 0),   // darkin skirmisher: W pull, E dash slow, revive passive
@@ -126,6 +144,7 @@ module.exports = {
   'Zac':           A(1, 2, 3, 'AP',   -0.2, 2, 0),   // engage tank kinh điển: nhảy diện rộng + choáng, CC dày
   'Ivern':         A(1, 1, 2, 'AP',    0.1, 2, 1),   // enchanter đi rừng, Daisy làm tuyến đầu. 2026-09-21: engage 0->1, mobility 1->2 -- Rootcaller (Q) trói mục tiêu TỪ XA và Ivern TỰ DASH tới ngay khi trúng đích -- vừa là root vừa là cách anh ta tự lao vào combo, không chỉ đứng yên bắn rễ
   'Talon':         A(1, 0, 0, 'AD',   -0.4, 3, 0),   // sát thủ bảng thuần, không CC, đỉnh điểm sớm. 2026-09-21: engage 0->1 -- E (vượt tường) là công cụ kinh điển để bất ngờ lao vào 1 mục tiêu tách đoàn, đúng nghĩa "ép giao tranh theo yêu cầu"
+  'Lillia':        A(0, 0, 2, 'AP',    0.15, 1, 0),  // 2026-10-08: tuong chua xuat hien trong tran quet, them truoc vi patch 26.20 vua buff lan 2 lien tiep (de huong toi do thinh hanh o CKTG). E (Swirlseed) slow, R (Lilting Lullaby) la NGU -- AoE CC manh dan theo thoi gian. Khong co dash thuc su (W chi cho tang toc do khi trung muc tieu da bi danh dau -- tinh mobility=1 theo quy uoc "tang toc = mobility"). Patch 26.20: R keo dai thoi gian ngu THEO RANK (truoc co dinh 2.5s, gio 2.5/2.75/3s) -- tin hieu nghieng ve muon ro rang
 
   // ---------- assassins / mid ----------
   'Akali':         A(1, 0, 0, 'AP',    0.0, 3, 0),   // 2026-09-21: engage 0->1 (E lat/dash + R dash-strike 2 lan deu la cong cu chu dong lao vao 1 muc tieu, giong Zed/Talon); cc 1->0 (khong tim thay nguon CC thuc su trong kit -- Twilight Shroud la stealth, khong CC)
@@ -142,7 +161,7 @@ module.exports = {
   'Orianna':       A(1, 0, 2, 'AP',    0.6, 0, 1),
   'Syndra':        A(0, 0, 2, 'AP',    0.6, 0, 1),
   'Viktor':        A(0, 0, 2, 'AP',    0.8, 0, 1),
-  'Cassiopeia':    A(0, 0, 2, 'AP',    0.6, 0, 1),
+  'Cassiopeia':    A(0, 0, 2, 'AP',    0.65, 0, 1),  // patch 26.20: giam mau/mana GOC -- muc tieu ro la lam yeu TAI NGUYEN SOM ("thong tri lane som", "lam viec vat va hon de tao loi the"), nghieng nhe ve muon hon
   'Anivia':        A(1, 0, 3, 'AP',    0.8, 0, 1),
   'Annie':         A(1, 0, 3, 'AP',    0.1, 0, 1),
   'Lissandra':     A(1, 0, 3, 'AP',    0.2, 1, 1),
@@ -151,7 +170,7 @@ module.exports = {
   'Hwei':          A(0, 0, 2, 'AP',    0.6, 0, 1),
   'Xerath':        A(0, 0, 2, 'AP',    0.7, 0, 1),
   'Ziggs':         A(0, 0, 1, 'AP',    0.5, 1, 1),   // 2026-09-21: mobility 0->1 -- W (Satchel Charge) tu ban ban than bay xa, la cong cu tu di chuyen thuc su du chu yeu dung de thoat than
-  'Swain':         A(1, 1, 2, 'AP',    0.4, 0, 1),   // 2026-09-21: engage 0->1 -- E (Nevermove) la day/troi tam xa, cung co che voi Elise/LeBlanc/Karma (deu vua sua sang engage=1)
+  'Swain':         A(1, 1, 2, 'AP',    0.45, 0, 1),  // 2026-09-21: engage 0->1 -- E (Nevermove) la day/troi tam xa, cung co che voi Elise/LeBlanc/Karma (deu vua sua sang engage=1). Patch 26.20: W sat thuong tang NHIEU HON O CAC CAP DO SAU (buoc nhay lon dan theo rank, +10 len +40), nghieng nhe ve muon hon
   'Aurelion Sol':  A(1, 0, 2, 'AP',    0.7, 2, 1),   // 2026-09-21: engage 0->1 -- E (Singularity) hut doi thu vao 1 vung, R co the choang -- co cong cu ep giao tranh thuc su
   'Mel':           A(0, 0, 1, 'AP',    0.8, 0, 1),   // build thuc te gol.gg xac nhan AP (Rocketbelt, Luden's, Rabadon's, Void Staff) — khong doi. Kit chua du tu tin de sua engage/cc, de nguyen
   'Twisted Fate':  A(1, 0, 2, 'Mixed', 0.0, 1, 1),   // 2026-09-21: engage 0->1 -- R (Destiny) la dich chuyen toan cuc toi 1 muc tieu da lo dien, mot trong nhung cong cu gank/engage kinh dien nhat game
@@ -172,16 +191,16 @@ module.exports = {
   'Jhin':          A(0, 0, 2, 'AD',    0.5, 0, 1),
   'Corki':         A(0, 0, 0, 'Mixed', 0.4, 1, 1),
   'Ezreal':        A(0, 0, 0, 'Mixed', 0.5, 2, 1),   // 2026-09-21: cc 1->0 -- soat lai toan bo kit (Q/W/E/R) khong tim thay nguon CC nao (khong slow/stun/root), chi la poke+blink+ho tro
-  'Lucian':        A(0, 0, 0, 'AD',   -0.3, 2, 1),
+  'Lucian':        A(0, 0, 0, 'AD',   -0.25, 2, 1),  // patch 26.20: buff AD/level (2.5->2.9) o duong duoi -- tang sat thuong CONG DON theo thoi gian, nghieng nhe ve muon hon
   'Varus':         A(1, 0, 2, 'Mixed', 0.4, 0, 1),   // fallback nếu xuất hiện ở đường khác top/adc
   'Varus|top':     A(1, 0, 2, 'AP',    0.1, 0, 1),   // build AP đấu sĩ (Liandry/Nashor on-hit), đấu tay giữa game, không cần kéo dài
   'Varus|adc':     A(1, 0, 2, 'Mixed', 0.5, 0, 1),   // build sát lực/crit chuẩn ADC, scale hậu kỳ tốt hơn
   'Kaisa':         A(0, 0, 0, 'Mixed', 0.6, 2, 1),
   'Sivir':         A(0, 0, 0, 'AD',    0.3, 1, 1),
-  'Ashe':          A(1, 0, 3, 'AD',    0.5, 0, 1),
+  'Ashe':          A(1, 0, 3, 'AD',    0.4, 0, 1),   // patch 26.20: nerf AD/level (3.5->3) -- giam sat thuong CONG DON THEO THOI GIAN, nghieng nhe ve som hon
   'Xayah':         A(0, 0, 2, 'AD',    0.6, 1, 1),
   'Caitlyn':       A(0, 0, 2, 'AD',    0.4, 1, 1),   // 2026-09-21: mobility 0->1 -- E (90 Caliber Net) tu ban ban than lui ve sau khi kich hoat, tu di chuyen Caitlyn du la de thoat than
-  'Yunara':        A(0, 0, 1, 'AD',    0.8, 1, 1),   // 2026-09-21: dmg Mixed->AD -- doi chieu build thuc te gol.gg (S16 Summer): Kraken Slayer, Infinity Edge, Runaan's Hurricane, Lord Dominik's... toan AD crit chuan, khong co mon AP nao
+  'Yunara':        A(0, 0, 1, 'AD',    0.85, 1, 1),  // 2026-09-21: dmg Mixed->AD -- doi chieu build thuc te gol.gg (S16 Summer): Kraken Slayer, Infinity Edge, Runaan's Hurricane, Lord Dominik's... toan AD crit chuan, khong co mon AP nao. Patch 26.20: nerf Q danh dong deu -2 moi rank nhung ti le % lon hon han o rank thap (40% o rank1 vs 8% o rank5) -- cat sat thuong SOM nang hon nhieu so voi muon, cung huong voi ghi chu chinh thuc "hyperscaler" -- cang nghieng ve muon hon
   'Kalista':       A(1, 0, 1, 'AD',   -0.2, 3, 1),
   'Miss Fortune':  A(0, 0, 1, 'AD',    0.3, 1, 1),   // 2026-09-21: mobility 0->1 -- W (Strut) tu tang toc do ban than, dong nhat voi tien le Mundo/Blitzcrank/Ziggs
   'KogMaw':        A(0, 0, 1, 'Mixed', 0.95, 0, 1),
@@ -204,14 +223,14 @@ module.exports = {
   'Sett':          A(1, 2, 2, 'AD',    0.1, 0, 0),   // W/E kéo + tuyến đầu dày. 2026-09-21: mobility 1->0 -- W/E/R deu KEO doi thu ve phia Sett, khong tu di chuyen Sett
   'Udyr':          A(1, 1, 2, 'Mixed', 0.2, 2, 0),   // 2026-09-21: engage 0->1, mobility 1->2 -- ban lam moi (rework) co Q (dash-kick) va E (charge tang toc do + hich) la 2 cong cu tu lao vao doi thu; do tin cay trung binh vi chi tiet kit sau rework
   'Belveth':       A(1, 1, 2, 'AD',    0.6, 3, 0),
-  'Diana':         A(1, 1, 2, 'AP',    0.2, 2, 0),
+  'Diana':         A(1, 1, 2, 'AP',    0.25, 2, 0),  // patch 26.20: buff ti le khien cua W rieng cho BAN DAU SI/BRUISER (duy tri giao tranh dai hon, khong phai combo burst nhanh) -- nghieng nhe ve muon hon
   'Zoe':           A(1, 0, 2, 'AP',    0.3, 2, 1),   // 2026-09-21: engage 0->1, mobility 1->2 -- co 2 cong cu tu di chuyen thuc su (E xuyen tuong + R blink), du dung nao cung co the dan toi giac ngu/slow theo sau
   'Volibear':      A(1, 2, 2, 'Mixed', 0.3, 1, 0),
   'Shyvana':       A(1, 1, 1, 'Mixed', 0.4, 2, 0),
   'Kennen':        A(1, 0, 3, 'AP',    0.4, 2, 1),   // patch 26.16: ult cộng thêm sát thương lẫn kháng chịu — trụ giao tranh tốt hơn, dịch nhẹ về hậu kỳ
   'KhaZix':        A(1, 0, 0, 'AD',    0.1, 3, 0),   // 2026-09-21: engage 0->1 -- E (Leap) la dash kinh dien de nhay vao bat 1 muc tieu tach doan, giong Zed/Talon/Naafiri
   'Zyra':          A(1, 0, 2, 'AP',    0.4, 0, 1),
-  'Tahm Kench':    A(1, 2, 2, 'AP',    0.2, 1, 0),
+  'Tahm Kench':    A(1, 2, 2, 'AP',    0.35, 1, 0),  // patch 26.20: Q hoi mau GAN NHU GAP DOI o rank toi da (25->50), buff tang manh theo rank -- tin hieu nghieng ve muon ro rang
   'Hecarim':       A(1, 1, 2, 'AD',    0.1, 2, 0),   // ult fear + knockback = engage
   'Kindred':       A(0, 0, 1, 'AD',    0.7, 2, 1),   // scales on marks, R denies a kill but isn't engage
   'Tryndamere':    A(1, 0, 1, 'AD',    0.8, 1, 0),   // crit hypercarry duelist, undying rage. 2026-09-21: engage 0->1 (E Spinning Slash la dash lao vao muc tieu tach doan); cc 0->1 -- W (Mocking Shout) THUC RA co slow dien rong quanh doi thu, mau cu ghi "no CC on others" la sai
