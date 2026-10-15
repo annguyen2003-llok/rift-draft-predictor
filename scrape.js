@@ -25,7 +25,7 @@ const CUTOFF = process.env.CUTOFF || "2026-08-06";   // đổi bằng config.js 
      'minor'         — giải khu vực nhỏ; thêm khi cần đội đó cho CKTG.
    from: mốc ngày riêng, ghi đè CUTOFF. Giải quốc tế diễn ra tháng 3-7/2026, nằm
    NGOÀI cửa sổ 8 tuần gần đây, nên nếu dùng CUTOFF chung thì bị loại sạch. */
-const TOURNAMENTS = [
+let TOURNAMENTS = [
   { league: 'LCK', name: 'LCK 2026 Rounds 3-4', tier: 'major' },
   { league: 'LCK', name: 'LCK 2026 Season Play-In', tier: 'major' },
   { league: 'LCK', name: 'LCK 2026 Season Playoffs', tier: 'major' },
@@ -176,7 +176,43 @@ async function fetchTeamGameRefs(entry) {
   return out;
 }
 
+/* 2026-10-15 — TỰ ĐỘNG DÒ TÌM giải Chung kết Thế giới (World Championship) thật.
+   Trước đó TOURNAMENTS là danh sách tĩnh viết sẵn — cron chạy hằng ngày sẽ lặng lẽ
+   BỎ QUA Worlds mãi mãi cho tới khi có người thêm tay 1 dòng, dù gol.gg đã lên
+   trang thật. Hàm này gọi đúng API đã dùng để kiểm tra thủ công trước đây
+   (ajax.trlist.php, season=S16) mỗi lần chạy, so khớp tên giải với mẫu
+   "World Championship <năm>" (quy ước đặt tên thật của gol.gg cho Worlds, khác
+   với "World Star Challengers Invitational" hay "LJL ... Championship" — những
+   giải có chữ "World"/"Championship" nhưng KHÔNG PHẢI Worlds thật, đã gặp khi dò
+   thủ công 2026-09-15/10-05/10-15). Nếu tìm thấy và CHƯA có trong TOURNAMENTS,
+   tự thêm vào (tier 'international', from đầu năm — giống MSI/EWC/First Stand)
+   rồi báo rõ ra console để lần chạy nào phát hiện cũng để lại dấu vết trong log
+   cron, không âm thầm. Lỗi ở bước dò (gol.gg lỗi, đổi API...) KHÔNG được làm
+   hỏng phần quét các giải tĩnh còn lại — bọc try/catch, lỗi chỉ log cảnh báo. */
+const WORLDS_NAME_RE = /^World Championship \d{4}$/i;
+async function discoverWorldsTournament() {
+  try {
+    const res = await fetch('https://gol.gg/tournament/ajax.trlist.php', {
+      method: 'POST',
+      headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'season=S16',
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) { console.error(`  !! Dò Worlds that bai: HTTP ${res.status} tu ajax.trlist.php`); return; }
+    const text = await res.text();
+    const names = [...text.matchAll(/"trname":"([^"]+)"/g)].map(m => m[1]);
+    const found = names.find(n => WORLDS_NAME_RE.test(n));
+    if (!found) return;   // chua len trang — binh thuong, khong phai loi
+    if (TOURNAMENTS.some(t => t.name === found)) return;   // da co san (them tay truoc do)
+    TOURNAMENTS = [...TOURNAMENTS, { league: 'INT', name: found, tier: 'international', from: '2026-01-01' }];
+    console.error(`\n>>> TU DONG PHAT HIEN giai Worlds that: "${found}" — da them vao TOURNAMENTS cho lan quet nay.\n`);
+  } catch (e) {
+    console.error('  !! Dò Worlds loi (khong anh huong cac giai khac):', e.message);
+  }
+}
+
 async function main() {
+  await discoverWorldsTournament();
   // Nếu 1 giải fetch thất bại HOÀN TOÀN (không còn cache nào dùng tạm được), giữ lại
   // các series cũ của đúng giải đó từ series.json thay vì để trống — tránh lặp lại sự
   // cố 2026-09-14: gol.gg sập toàn bộ khiến file bị ghi đè bằng danh sách rỗng.
