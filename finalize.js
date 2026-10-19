@@ -704,6 +704,21 @@ const baseline = {
 };
 
 // ------------------------------------------------------------ published dataset
+/* 2026-10-19 — LỖI PHÁT HIỆN: attrsMissing cũ chỉ quét Object.keys(champions),
+   mà `champions` (object ngay dưới) chỉ chứa tướng xuất hiện ở trận GIẢI KHU
+   VỰC (forChampStats trong buildStats loại hẳn trận quốc tế — đúng thiết kế
+   "2 bể dữ liệu" cho thống kê win-rate, xem chú thích TÁCH HAI BỂ phía trên).
+   Hậu quả không lường trước: 1 tướng XUẤT HIỆN LẦN ĐẦU ở trận quốc tế (VD
+   Twitch ở Worlds 2026 Play-In) không bao giờ lọt vào `champions`, nên kiểm
+   tra "thiếu kit" im lặng bỏ sót — trong khi attrOf() vẫn ám thầm dùng
+   ATTR_DEFAULT sai cho MỌI trận có tướng đó. Sửa: `allPickedChampions` quét
+   TOÀN BỘ games (mọi tier), dùng cho cả attrsMissing lẫn attrs export —
+   không phụ thuộc việc tướng có được tính vào thống kê win-rate khu vực hay
+   không. Người dùng tự phát hiện ra khoảng trống này khi xem lại Play-in thật. */
+const allPickedChampions = new Set();
+for (const g of games) for (const sk of ['blue', 'red']) for (const role of ROLES) {
+  const p = g[sk].comp[role]; if (p) allPickedChampions.add(p.champion);
+}
 const champions = {};
 for (const c of Object.values(stats.champ)) {
   const roles = {};
@@ -949,8 +964,8 @@ const out = {
   baselines, baseline,
   champions, matchups: stats.matchups, rolePools, teams,
   attrs: Object.fromEntries(Object.entries(ATTRS).filter(([k]) =>
-    champions[k] || champions[k.split('|')[0]])),
-  attrsMissing: Object.keys(champions).filter(n => !ATTRS[n]),
+    allPickedChampions.has(k) || allPickedChampions.has(k.split('|')[0]))),
+  attrsMissing: [...allPickedChampions].filter(n => !ATTRS[n]),
   /* Dữ liệu cho mô hình THUẦN DRAFT (2026-09-18) — đội chỉ dùng để tra đúng
      roster hiện tại, không còn là trục tính điểm.
        pickPriority : tên tướng -> độ ưu tiên pick (cao = pro pick sớm), không

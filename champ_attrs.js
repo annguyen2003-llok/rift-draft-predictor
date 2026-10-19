@@ -197,6 +197,7 @@ module.exports = {
   'Varus|adc':     A(1, 0, 2, 'Mixed', 0.5, 0, 1),   // build sát lực/crit chuẩn ADC, scale hậu kỳ tốt hơn
   'Kaisa':         A(0, 0, 0, 'Mixed', 0.6, 2, 1),
   'Sivir':         A(0, 0, 0, 'AD',    0.3, 1, 1),
+  'Twitch':        A(0, 0, 1, 'AD',    0.55, 0, 1),  // 2026-10-19: xuat hien o Worlds Play-In That (tran quoc te), bi bo sot vi attrsMissing cu chi quet champions object (chi an giai khu vuc). Q (Ambush) tang hinh+toc danh khi lo dien, khong CC/dash; W (Venom Cask) la slow dien rong -- cc=1; khong co engage/dash chu dong, thien ve an minh bat le hon la ep giao tranh; scaling nghieng muon: doc chong chat + do on-hit lam anh ta ngay cang nguy hiem ve sau, giong nhom Jinx/KogMaw nhung linh hoat hon giua tran nen khong dat muc cuc doan 0.8-0.9
   'Ashe':          A(1, 0, 3, 'AD',    0.4, 0, 1),   // patch 26.20: nerf AD/level (3.5->3) -- giam sat thuong CONG DON THEO THOI GIAN, nghieng nhe ve som hon
   'Xayah':         A(0, 0, 2, 'AD',    0.6, 1, 1),
   'Caitlyn':       A(0, 0, 2, 'AD',    0.4, 1, 1),   // 2026-09-21: mobility 0->1 -- E (90 Caliber Net) tu ban ban than lui ve sau khi kich hoat, tu di chuyen Caitlyn du la de thoat than
