@@ -764,6 +764,36 @@ for (const { name, role } of manualChamps) {
     console.log(`Thêm thủ công: ${name} @ ${role} (chưa có số liệu thật)`);
   }
 }
+/* 2026-10-19 — TỰ ĐỘNG đối chiếu: tướng/đường CÓ xuất hiện thật trong games.json
+   (kể cả trận quốc tế, VD Twitch ở Worlds Play-In) nhưng KHÔNG lọt vào champions
+   vì forChampStats loại trận quốc tế khỏi thống kê win-rate khu vực (đúng thiết
+   kế "2 bể dữ liệu", xem chú thích allPickedChampions phía trên) — nếu không xử
+   lý, tướng đó có attrs đúng nhưng KHÔNG chọn được trên picker (rolePools/
+   DATA.champions là nguồn DUY NHẤT UI dùng để liệt kê tướng, xem template.html).
+   Tái dùng ĐÚNG cơ chế "thêm thủ công" ở trên (addedManually, 0 picks/wins —
+   không bịa số liệu quốc tế giả làm số liệu khu vực) thay vì tạo path mới,
+   nhưng tự động theo dữ liệu thật thay vì cần liệt kê tay trong
+   manual_champs.json. Qua 1 lượt allPickedChampions theo (tướng, vai trò) để
+   biết chính xác vai trò nào thiếu. */
+const pickedRoles = {};
+for (const g of games) for (const sk of ['blue', 'red']) for (const role of ROLES) {
+  const p = g[sk].comp[role]; if (p) (pickedRoles[p.champion] = pickedRoles[p.champion] || new Set()).add(role);
+}
+for (const [name, roles] of Object.entries(pickedRoles)) {
+  for (const role of roles) {
+    if (champions[name] && champions[name].roles[role]) continue;
+    if (!champions[name]) {
+      champions[name] = {
+        name, picks: 0, wins: 0, bans: 0, wr: null, wrShrunk: 0.5, presence: 0, banRate: 0,
+        roles: {}, kda: 0, avgGameKills: null, avgGameDur: null,
+        shortGameWR: null, shortG: 0, longGameWR: null, longG: 0,
+        addedManually: true,
+      };
+    }
+    champions[name].roles[role] = { games: 0, wins: 0, wr: null, wrShrunk: 0.5, kda: 0 };
+    console.log(`Tự đối chiếu: ${name} @ ${role} (chỉ có ở trận quốc tế, chưa có số liệu khu vực)`);
+  }
+}
 
 const rolePools = {};
 for (const role of ROLES) {
