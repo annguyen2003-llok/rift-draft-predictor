@@ -176,20 +176,30 @@ async function fetchTeamGameRefs(entry) {
   return out;
 }
 
-/* 2026-10-15 — TỰ ĐỘNG DÒ TÌM giải Chung kết Thế giới (World Championship) thật.
+/* 2026-10-15 — TỰ ĐỘNG DÒ TÌM giải Chung kết Thế giới (Worlds) thật.
    Trước đó TOURNAMENTS là danh sách tĩnh viết sẵn — cron chạy hằng ngày sẽ lặng lẽ
    BỎ QUA Worlds mãi mãi cho tới khi có người thêm tay 1 dòng, dù gol.gg đã lên
    trang thật. Hàm này gọi đúng API đã dùng để kiểm tra thủ công trước đây
-   (ajax.trlist.php, season=S16) mỗi lần chạy, so khớp tên giải với mẫu
-   "World Championship <năm>" (quy ước đặt tên thật của gol.gg cho Worlds, khác
-   với "World Star Challengers Invitational" hay "LJL ... Championship" — những
-   giải có chữ "World"/"Championship" nhưng KHÔNG PHẢI Worlds thật, đã gặp khi dò
-   thủ công 2026-09-15/10-05/10-15). Nếu tìm thấy và CHƯA có trong TOURNAMENTS,
-   tự thêm vào (tier 'international', from đầu năm — giống MSI/EWC/First Stand)
-   rồi báo rõ ra console để lần chạy nào phát hiện cũng để lại dấu vết trong log
-   cron, không âm thầm. Lỗi ở bước dò (gol.gg lỗi, đổi API...) KHÔNG được làm
-   hỏng phần quét các giải tĩnh còn lại — bọc try/catch, lỗi chỉ log cảnh báo. */
-const WORLDS_NAME_RE = /^World Championship \d{4}$/i;
+   (ajax.trlist.php, season=S16) mỗi lần chạy.
+   2026-10-19 — SỬA LỖI: mẫu cũ "World Championship <năm>" SAI — gol.gg đặt tên
+   thật là "Worlds <năm> Play-In" (xác nhận khi Play-in đã đấu xong 19/10, giải
+   đã lên trang từ trước đó nhưng bị bỏ sót vì không khớp mẫu cũ, lỗi IM LẶNG
+   suốt vài ngày không ai biết). Quan trọng hơn: Worlds không phải 1 trang duy
+   nhất mà TÁCH THÀNH NHIỀU trang riêng theo từng giai đoạn (giống cách LCK tách
+   "Rounds 3-4"/"Season Play-In"/"Season Playoffs") — "Worlds 2026 Play-In" rồi
+   sẽ có thêm "Worlds 2026 Swiss Stage", "Worlds 2026 Knockouts"... xuất hiện
+   DẦN theo thời gian giải diễn ra. Vì vậy: (1) mẫu đổi thành tiền tố "Worlds
+   <năm>" (khớp mọi giai đoạn, đã kiểm tra không trùng "World Star Challengers
+   Invitational" hay "LJL ... Championship" — các giải có chữ World/Championship
+   nhưng không phải Worlds thật); (2) dùng filter thay vì find để bắt NHIỀU giai
+   đoạn cùng lúc, và vì hàm này chạy lại MỖI LẦN cron, giai đoạn mới xuất hiện
+   sau sẽ tự được thêm vào ở lần chạy kế tiếp mà không cần sửa code nữa.
+   Nếu tìm thấy và CHƯA có trong TOURNAMENTS, tự thêm vào (tier 'international',
+   from đầu năm — giống MSI/EWC/First Stand) rồi báo rõ ra console để lần chạy
+   nào phát hiện cũng để lại dấu vết trong log cron, không âm thầm. Lỗi ở bước
+   dò (gol.gg lỗi, đổi API...) KHÔNG được làm hỏng phần quét các giải tĩnh còn
+   lại — bọc try/catch, lỗi chỉ log cảnh báo. */
+const WORLDS_NAME_RE = /^Worlds \d{4}\b/i;
 async function discoverWorldsTournament() {
   try {
     const res = await fetch('https://gol.gg/tournament/ajax.trlist.php', {
@@ -201,11 +211,11 @@ async function discoverWorldsTournament() {
     if (!res.ok) { console.error(`  !! Dò Worlds that bai: HTTP ${res.status} tu ajax.trlist.php`); return; }
     const text = await res.text();
     const names = [...text.matchAll(/"trname":"([^"]+)"/g)].map(m => m[1]);
-    const found = names.find(n => WORLDS_NAME_RE.test(n));
-    if (!found) return;   // chua len trang — binh thuong, khong phai loi
-    if (TOURNAMENTS.some(t => t.name === found)) return;   // da co san (them tay truoc do)
-    TOURNAMENTS = [...TOURNAMENTS, { league: 'INT', name: found, tier: 'international', from: '2026-01-01' }];
-    console.error(`\n>>> TU DONG PHAT HIEN giai Worlds that: "${found}" — da them vao TOURNAMENTS cho lan quet nay.\n`);
+    const foundAll = names.filter(n => WORLDS_NAME_RE.test(n));
+    const newOnes = foundAll.filter(n => !TOURNAMENTS.some(t => t.name === n));
+    if (!newOnes.length) return;   // chua len trang moi nao — binh thuong, khong phai loi
+    TOURNAMENTS = [...TOURNAMENTS, ...newOnes.map(name => ({ league: 'INT', name, tier: 'international', from: '2026-01-01' }))];
+    console.error(`\n>>> TU DONG PHAT HIEN ${newOnes.length} giai doan Worlds that: ${newOnes.map(n=>`"${n}"`).join(', ')} — da them vao TOURNAMENTS cho lan quet nay.\n`);
   } catch (e) {
     console.error('  !! Dò Worlds loi (khong anh huong cac giai khac):', e.message);
   }
