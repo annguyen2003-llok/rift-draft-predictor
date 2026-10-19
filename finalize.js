@@ -770,28 +770,48 @@ for (const { name, role } of manualChamps) {
    kế "2 bể dữ liệu", xem chú thích allPickedChampions phía trên) — nếu không xử
    lý, tướng đó có attrs đúng nhưng KHÔNG chọn được trên picker (rolePools/
    DATA.champions là nguồn DUY NHẤT UI dùng để liệt kê tướng, xem template.html).
-   Tái dùng ĐÚNG cơ chế "thêm thủ công" ở trên (addedManually, 0 picks/wins —
-   không bịa số liệu quốc tế giả làm số liệu khu vực) thay vì tạo path mới,
-   nhưng tự động theo dữ liệu thật thay vì cần liệt kê tay trong
-   manual_champs.json. Qua 1 lượt allPickedChampions theo (tướng, vai trò) để
-   biết chính xác vai trò nào thiếu. */
-const pickedRoles = {};
-for (const g of games) for (const sk of ['blue', 'red']) for (const role of ROLES) {
-  const p = g[sk].comp[role]; if (p) (pickedRoles[p.champion] = pickedRoles[p.champion] || new Set()).add(role);
+   2026-10-19(2) — SỬA TIẾP: bản đầu gán cứng games:0/wins:0 (tái dùng y nguyên
+   placeholder "thêm thủ công") — khiến Twitch hiện "0 trận" trên web dù ĐÃ có
+   1 pick thật trong games.json (Harky, MVK vs Karmine Corp, 18/10) đã quét từ
+   trước, gây hiểu lầm "quét thiếu" khi thực ra chỉ là HIỂN THỊ sai. Sửa: tính
+   SỐ LIỆU QUỐC TẾ THẬT (picks/wins/bans/kda) cho các tướng/vai trò này thay vì
+   bịa 0 — vẫn giữ addedManually:true để không lẫn vào rolePools sort theo
+   games/wr như tướng khu vực thật (UI có thể dùng cờ này để ghi chú "chỉ có
+   số liệu quốc tế" nếu muốn), nhưng con số hiển thị giờ PHẢN ÁNH ĐÚNG THỰC TẾ. */
+const intlAgg = {};
+for (const g of games) for (const sk of ['blue', 'red']) {
+  for (const b of g[sk].bans) (intlAgg[b] = intlAgg[b] || { picks: 0, wins: 0, bans: 0, roles: {} }).bans++;
+  for (const role of ROLES) {
+    const p = g[sk].comp[role]; if (!p) continue;
+    const e = intlAgg[p.champion] = intlAgg[p.champion] || { picks: 0, wins: 0, bans: 0, roles: {} };
+    e.picks++; if (g[sk].win) e.wins++;
+    const r = e.roles[role] = e.roles[role] || { games: 0, wins: 0, k: 0, d: 0, a: 0 };
+    r.games++; if (g[sk].win) r.wins++;
+    r.k += p.k || 0; r.d += p.d || 0; r.a += p.a || 0;
+  }
 }
-for (const [name, roles] of Object.entries(pickedRoles)) {
-  for (const role of roles) {
+for (const [name, agg] of Object.entries(intlAgg)) {
+  for (const role of Object.keys(agg.roles)) {
     if (champions[name] && champions[name].roles[role]) continue;
+    const r = agg.roles[role];
     if (!champions[name]) {
       champions[name] = {
-        name, picks: 0, wins: 0, bans: 0, wr: null, wrShrunk: 0.5, presence: 0, banRate: 0,
+        name, picks: agg.picks, wins: agg.wins, bans: agg.bans,
+        wr: agg.picks ? agg.wins / agg.picks : null,
+        wrShrunk: (agg.wins + PRIOR_K * 0.5) / (agg.picks + PRIOR_K),
+        presence: (agg.picks + agg.bans) / N, banRate: agg.bans / N,
         roles: {}, kda: 0, avgGameKills: null, avgGameDur: null,
         shortGameWR: null, shortG: 0, longGameWR: null, longG: 0,
         addedManually: true,
       };
     }
-    champions[name].roles[role] = { games: 0, wins: 0, wr: null, wrShrunk: 0.5, kda: 0 };
-    console.log(`Tự đối chiếu: ${name} @ ${role} (chỉ có ở trận quốc tế, chưa có số liệu khu vực)`);
+    champions[name].roles[role] = {
+      games: r.games, wins: r.wins,
+      wr: r.games ? r.wins / r.games : null,
+      wrShrunk: (r.wins + PRIOR_K * 0.5) / (r.games + PRIOR_K),
+      kda: r.d ? Math.round((r.k + r.a) / r.d * 100) / 100 : (r.k + r.a),
+    };
+    console.log(`Tự đối chiếu: ${name} @ ${role} (${r.games} trận quốc tế, chưa tính vào win-rate khu vực)`);
   }
 }
 

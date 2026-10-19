@@ -200,16 +200,27 @@ async function fetchTeamGameRefs(entry) {
    dò (gol.gg lỗi, đổi API...) KHÔNG được làm hỏng phần quét các giải tĩnh còn
    lại — bọc try/catch, lỗi chỉ log cảnh báo. */
 const WORLDS_NAME_RE = /^Worlds \d{4}\b/i;
+/* 2026-10-19(2) — THÊM RETRY: lần chạy đầu gặp "fetch failed" (mạng chập chờn
+   thoáng qua) khiến bước dò bị BỎ QUA HOÀN TOÀN cho cả lượt chạy đó (không
+   phải "không có gì mới" mà là "chưa kiểm tra được") — khác với các giải tĩnh
+   khác đã có retry 3 lần qua fetchUrl(), riêng hàm dò Worlds dùng fetch() trần
+   không có cơ chế thử lại. Thêm 3 lần thử, cách nhau 1.5s, giống logic fetchUrl. */
 async function discoverWorldsTournament() {
+  let text = null, lastErr = null;
+  for (let attempt = 0; attempt < 3 && !text; attempt++) {
+    try {
+      const res = await fetch('https://gol.gg/tournament/ajax.trlist.php', {
+        method: 'POST',
+        headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'season=S16',
+        signal: AbortSignal.timeout(20000),
+      });
+      if (!res.ok) { lastErr = `HTTP ${res.status}`; await sleep(1500); continue; }
+      text = await res.text();
+    } catch (e) { lastErr = e.message; await sleep(1500); }
+  }
+  if (!text) { console.error(`  !! Dò Worlds thất bại sau 3 lần thử (${lastErr}) — bỏ qua lượt này, không ảnh hưởng các giải khác`); return; }
   try {
-    const res = await fetch('https://gol.gg/tournament/ajax.trlist.php', {
-      method: 'POST',
-      headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'season=S16',
-      signal: AbortSignal.timeout(20000),
-    });
-    if (!res.ok) { console.error(`  !! Dò Worlds that bai: HTTP ${res.status} tu ajax.trlist.php`); return; }
-    const text = await res.text();
     const names = [...text.matchAll(/"trname":"([^"]+)"/g)].map(m => m[1]);
     const foundAll = names.filter(n => WORLDS_NAME_RE.test(n));
     const newOnes = foundAll.filter(n => !TOURNAMENTS.some(t => t.name === n));
