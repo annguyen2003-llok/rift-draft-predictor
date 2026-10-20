@@ -637,32 +637,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LEC",
-  "tier": "major",
-  "tournament": "LEC 2026 Summer Season",
-  "seriesId": 81801,
-  "matchup": "NAVI vs Fnatic",
-  "teamRight": "Fnatic",
-  "teamLeft": "Natus Vincere",
-  "games": 2,
-  "week": "WEEK5",
-  "patch": "16.16",
-  "date": "2026-08-24"
- },
- {
-  "league": "LEC",
-  "tier": "major",
-  "tournament": "LEC 2026 Summer Season",
-  "seriesId": 81804,
-  "matchup": "GIANTX vs G2 Esports",
-  "teamRight": "G2 Esports",
-  "teamLeft": "GIANTX",
-  "games": 3,
-  "week": "WEEK5",
-  "patch": "16.16",
-  "date": "2026-08-24"
- },
- {
   "league": "LCK",
   "tier": "major",
   "tournament": "LCK 2026 Season Play-In",
@@ -1467,83 +1441,5 @@
   "week": "FINALS",
   "patch": "16.17",
   "date": "2026-10-04"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83593,
-  "matchup": "FURIA vs MVK Esports",
-  "teamRight": "MVK Esports",
-  "teamLeft": "FURIA",
-  "games": 3,
-  "week": "ROUND1",
-  "patch": "16.20",
-  "date": "2026-10-15"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83598,
-  "matchup": "Cloud9 vs KC",
-  "teamRight": "Karmine Corp",
-  "teamLeft": "Cloud9",
-  "games": 5,
-  "week": "ROUND1",
-  "patch": "16.20",
-  "date": "2026-10-15"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83623,
-  "matchup": "FURIA vs Cloud9",
-  "teamRight": "FURIA",
-  "teamLeft": "Cloud9",
-  "games": 4,
-  "week": "ROUND1",
-  "patch": "16.20",
-  "date": "2026-10-16"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83628,
-  "matchup": "MVK Esports vs KC",
-  "teamRight": "Karmine Corp",
-  "teamLeft": "MVK Esports",
-  "games": 3,
-  "week": "ROUND2",
-  "patch": "16.20",
-  "date": "2026-10-16"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83631,
-  "matchup": "MVK Esports vs FURIA",
-  "teamRight": "MVK Esports",
-  "teamLeft": "FURIA",
-  "games": 4,
-  "week": "ROUND2",
-  "patch": "16.20",
-  "date": "2026-10-17"
- },
- {
-  "league": "INT",
-  "tier": "international",
-  "tournament": "Worlds 2026 Play-In",
-  "seriesId": 83635,
-  "matchup": "KC vs MVK Esports",
-  "teamRight": "Karmine Corp",
-  "teamLeft": "MVK Esports",
-  "games": 3,
-  "week": "ROUND3",
-  "patch": "16.20",
-  "date": "2026-10-18"
  }
 ]
