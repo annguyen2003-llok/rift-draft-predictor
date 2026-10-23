@@ -637,19 +637,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Season Play-In",
-  "seriesId": 82134,
-  "matchup": "NS vs BNK FearX",
-  "teamRight": "BNK FearX",
-  "teamLeft": "Nongshim RedForce",
-  "games": 4,
-  "week": "ROUND1",
-  "patch": "16.16",
-  "date": "2026-08-27"
- },
- {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
