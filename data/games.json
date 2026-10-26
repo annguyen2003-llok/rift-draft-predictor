@@ -133373,5 +133373,4655 @@
    "killTotalsMatch": true,
    "teams": "Gen.G|LYON"
   }
+ },
+ {
+  "ok": true,
+  "gameId": 79768,
+  "duration": "27:38",
+  "durationMin": 27.63,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Gen.G",
+   "teamFull": "Gen.G",
+   "win": true,
+   "kills": 25,
+   "towers": 9,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 61800,
+   "bans": [
+    "Jayce",
+    "Vi",
+    "Ziggs",
+    "Renekton",
+    "Vayne"
+   ],
+   "picksDraftOrder": [
+    "Syndra",
+    "Lee Sin",
+    "Ambessa",
+    "Leona",
+    "Jhin"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "1115",
+     "player": "Kiin",
+     "k": 5,
+     "d": 2,
+     "a": 9
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "1909",
+     "player": "Canyon",
+     "k": 6,
+     "d": 2,
+     "a": 13
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "1629",
+     "player": "Chovy",
+     "k": 8,
+     "d": 0,
+     "a": 8
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "685",
+     "player": "Ruler",
+     "k": 4,
+     "d": 2,
+     "a": 11
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "4259",
+     "player": "Duro",
+     "k": 2,
+     "d": 3,
+     "a": 15
+    }
+   }
+  },
+  "red": {
+   "team": "Karmine Corp",
+   "teamFull": "Karmine Corp",
+   "win": false,
+   "kills": 9,
+   "towers": 1,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 50000,
+   "bans": [
+    "Nocturne",
+    "Poppy",
+    "Orianna",
+    "Shen",
+    "Pantheon"
+   ],
+   "picksDraftOrder": [
+    "Camille",
+    "Naafiri",
+    "Cassiopeia",
+    "Gnar",
+    "Ezreal"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "2671",
+     "player": "Canna",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "3406",
+     "player": "Yike",
+     "k": 2,
+     "d": 3,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "5264",
+     "player": "Kyeahoo",
+     "k": 1,
+     "d": 5,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "4900",
+     "player": "Caliste",
+     "k": 2,
+     "d": 4,
+     "a": 4
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "4500",
+     "player": "Busio",
+     "k": 4,
+     "d": 9,
+     "a": 3
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79768,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Gen.G|Karmine Corp"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79769,
+  "duration": "35:14",
+  "durationMin": 35.23,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Sentinels",
+   "teamFull": "Sentinels",
+   "win": true,
+   "kills": 16,
+   "towers": 9,
+   "dragons": 3,
+   "barons": 2,
+   "gold": 68000,
+   "bans": [
+    "Nautilus",
+    "Poppy",
+    "Vi",
+    "Xin Zhao",
+    "Jarvan IV"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Jhin",
+    "Rumble",
+    "Orianna",
+    "Blitzcrank"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "46",
+     "player": "Impact",
+     "k": 1,
+     "d": 2,
+     "a": 10
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "4217",
+     "player": "HamBak",
+     "k": 8,
+     "d": 2,
+     "a": 6
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "3801",
+     "player": "DarkWings",
+     "k": 3,
+     "d": 2,
+     "a": 10
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "3896",
+     "player": "Rahel",
+     "k": 4,
+     "d": 0,
+     "a": 9
+    },
+    "support": {
+     "champion": "Blitzcrank",
+     "playerId": "579",
+     "player": "Huhi",
+     "k": 0,
+     "d": 2,
+     "a": 13
+    }
+   }
+  },
+  "red": {
+   "team": "Team Secret Whales",
+   "teamFull": "Team Secret Whales",
+   "win": false,
+   "kills": 8,
+   "towers": 3,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 60200,
+   "bans": [
+    "Caitlyn",
+    "Camille",
+    "Bard",
+    "Cassiopeia",
+    "Anivia"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Karma",
+    "Ryze",
+    "Wukong",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "2799",
+     "player": "Pun",
+     "k": 2,
+     "d": 5,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Wukong",
+     "playerId": "5960",
+     "player": "Hizto",
+     "k": 4,
+     "d": 6,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "5961",
+     "player": "Dire",
+     "k": 0,
+     "d": 0,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "3245",
+     "player": "Eddie",
+     "k": 2,
+     "d": 2,
+     "a": 4
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "1461",
+     "player": "Bie",
+     "k": 0,
+     "d": 3,
+     "a": 6
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79769,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Sentinels|Team Secret Whales"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79770,
+  "duration": "33:10",
+  "durationMin": 33.17,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "GAM Esports",
+   "teamFull": "GAM Esports",
+   "win": false,
+   "kills": 14,
+   "towers": 2,
+   "dragons": 1,
+   "barons": 1,
+   "gold": 63200,
+   "bans": [
+    "Nocturne",
+    "Jayce",
+    "Bard",
+    "Lucian",
+    "Syndra"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Naafiri",
+    "Vayne",
+    "Jhin",
+    "Pyke"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Vayne",
+     "playerId": "1671",
+     "player": "Kiaya",
+     "k": 2,
+     "d": 6,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "3130",
+     "player": "Draktharr",
+     "k": 1,
+     "d": 5,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "1104",
+     "player": "Gloryy",
+     "k": 4,
+     "d": 6,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "2078",
+     "player": "Artemis",
+     "k": 2,
+     "d": 2,
+     "a": 7
+    },
+    "support": {
+     "champion": "Pyke",
+     "playerId": "3550",
+     "player": "Taki",
+     "k": 5,
+     "d": 5,
+     "a": 2
+    }
+   }
+  },
+  "red": {
+   "team": "T1",
+   "teamFull": "T1",
+   "win": true,
+   "kills": 24,
+   "towers": 11,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 72100,
+   "bans": [
+    "Akali",
+    "Camille",
+    "Jarvan IV",
+    "Alistar",
+    "Nautilus"
+   ],
+   "picksDraftOrder": [
+    "Orianna",
+    "Gnar",
+    "Vi",
+    "Taliyah",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "1242",
+     "player": "Doran",
+     "k": 1,
+     "d": 2,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "3741",
+     "player": "Oner",
+     "k": 10,
+     "d": 4,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "48",
+     "player": "Faker",
+     "k": 5,
+     "d": 2,
+     "a": 7
+    },
+    "adc": {
+     "champion": "Taliyah",
+     "playerId": "4247",
+     "player": "Peyz",
+     "k": 5,
+     "d": 2,
+     "a": 10
+    },
+    "support": {
+     "champion": "Shen",
+     "playerId": "1258",
+     "player": "Keria",
+     "k": 3,
+     "d": 4,
+     "a": 11
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79770,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "GAM Esports|T1"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79771,
+  "duration": "33:19",
+  "durationMin": 33.32,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 20,
+   "towers": 7,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 64400,
+   "bans": [
+    "Orianna",
+    "Varus",
+    "Nocturne",
+    "Renekton",
+    "Shyvana"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Nautilus",
+    "Ambessa",
+    "Lee Sin",
+    "Akali"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 2,
+     "d": 1,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 4,
+     "d": 3,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 9,
+     "d": 4,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Cassiopeia",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 5,
+     "d": 2,
+     "a": 9
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 5,
+     "a": 12
+    }
+   }
+  },
+  "red": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": false,
+   "kills": 15,
+   "towers": 1,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 59500,
+   "bans": [
+    "Syndra",
+    "Camille",
+    "Jayce",
+    "Naafiri",
+    "Poppy"
+   ],
+   "picksDraftOrder": [
+    "Bard",
+    "Ezreal",
+    "Vi",
+    "Vex",
+    "Anivia"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Vex",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 0,
+     "d": 7,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 2,
+     "d": 4,
+     "a": 10
+    },
+    "mid": {
+     "champion": "Anivia",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 7,
+     "d": 2,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 3,
+     "d": 2,
+     "a": 7
+    },
+    "support": {
+     "champion": "Bard",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 3,
+     "d": 5,
+     "a": 8
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79771,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Bilibili Gaming|Movistar KOI"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79772,
+  "duration": "35:45",
+  "durationMin": 35.75,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": false,
+   "kills": 9,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 66700,
+   "bans": [
+    "Orianna",
+    "Nocturne",
+    "Poppy",
+    "Olaf",
+    "Yorick"
+   ],
+   "picksDraftOrder": [
+    "Jayce",
+    "Syndra",
+    "Xin Zhao",
+    "Jhin",
+    "Trundle"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 1,
+     "d": 8,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Xin Zhao",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 2,
+     "d": 5,
+     "a": 6
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 1,
+     "d": 5,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 4,
+     "d": 1,
+     "a": 1
+    },
+    "support": {
+     "champion": "Trundle",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 1,
+     "d": 4,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "Anyone s Legend",
+   "teamFull": "Anyone s Legend",
+   "win": true,
+   "kills": 23,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 75900,
+   "bans": [
+    "Viktor",
+    "Jarvan IV",
+    "Ziggs",
+    "Camille",
+    "Bard"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Vi",
+    "Ezreal",
+    "Leona",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "341",
+     "player": "Flandre",
+     "k": 10,
+     "d": 1,
+     "a": 9
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "1226",
+     "player": "Tarzan",
+     "k": 5,
+     "d": 2,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "3344",
+     "player": "Shanks",
+     "k": 2,
+     "d": 3,
+     "a": 11
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "1561",
+     "player": "Hope",
+     "k": 6,
+     "d": 1,
+     "a": 9
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "3323",
+     "player": "Kael",
+     "k": 0,
+     "d": 2,
+     "a": 14
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79772,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Dplus KIA|Anyone s Legend"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79773,
+  "duration": "24:28",
+  "durationMin": 24.47,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "FURIA",
+   "teamFull": "FURIA",
+   "win": false,
+   "kills": 4,
+   "towers": 0,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 39200,
+   "bans": [
+    "Anivia",
+    "Vi",
+    "Pantheon",
+    "Shen",
+    "Kled"
+   ],
+   "picksDraftOrder": [
+    "Camille",
+    "Lee Sin",
+    "Jhin",
+    "Ambessa",
+    "Akali"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "3116",
+     "player": "Guigo",
+     "k": 0,
+     "d": 3,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "4776",
+     "player": "Tatu",
+     "k": 1,
+     "d": 1,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "2709",
+     "player": "Tutsz",
+     "k": 0,
+     "d": 2,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "4976",
+     "player": "Ayu",
+     "k": 3,
+     "d": 0,
+     "a": 0
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "2329",
+     "player": "JoJo",
+     "k": 0,
+     "d": 5,
+     "a": 3
+    }
+   }
+  },
+  "red": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": true,
+   "kills": 11,
+   "towers": 10,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 50400,
+   "bans": [
+    "Poppy",
+    "Jarvan IV",
+    "Cassiopeia",
+    "Rumble",
+    "Vayne"
+   ],
+   "picksDraftOrder": [
+    "Syndra",
+    "Leona",
+    "Naafiri",
+    "Gnar",
+    "Galio"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 1,
+     "d": 0,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 4,
+     "d": 1,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Galio",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 2,
+     "d": 1,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Syndra",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 4,
+     "d": 0,
+     "a": 4
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 0,
+     "d": 2,
+     "a": 7
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79773,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "FURIA|G2 Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79774,
+  "duration": "19:20",
+  "durationMin": 19.33,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Los Grandes",
+   "teamFull": "Los Grandes",
+   "win": false,
+   "kills": 3,
+   "towers": 0,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 29200,
+   "bans": [
+    "Camille",
+    "Lee Sin",
+    "Akali",
+    "LeBlanc",
+    "Annie"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Cassiopeia",
+    "Nautilus",
+    "Ziggs",
+    "Tristana"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Tristana",
+     "playerId": "4244",
+     "player": "Zest",
+     "k": 1,
+     "d": 6,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "5274",
+     "player": "Curse",
+     "k": 0,
+     "d": 4,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "4234",
+     "player": "Feisty",
+     "k": 2,
+     "d": 3,
+     "a": 0
+    },
+    "adc": {
+     "champion": "Ziggs",
+     "playerId": "5786",
+     "player": "Duduhh",
+     "k": 0,
+     "d": 8,
+     "a": 1
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "3640",
+     "player": "Ackerman",
+     "k": 0,
+     "d": 7,
+     "a": 1
+    }
+   }
+  },
+  "red": {
+   "team": "Hanwha Life Esports",
+   "teamFull": "Hanwha Life Esports",
+   "win": true,
+   "kills": 28,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 0,
+   "gold": 45400,
+   "bans": [
+    "Jayce",
+    "Vi",
+    "Orianna",
+    "Vayne",
+    "Renekton"
+   ],
+   "picksDraftOrder": [
+    "Syndra",
+    "Naafiri",
+    "Alistar",
+    "Gnar",
+    "Seraphine"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "3658",
+     "player": "Zeus",
+     "k": 9,
+     "d": 0,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "2360",
+     "player": "Kanavi",
+     "k": 9,
+     "d": 0,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "2906",
+     "player": "Zeka",
+     "k": 3,
+     "d": 2,
+     "a": 11
+    },
+    "adc": {
+     "champion": "Seraphine",
+     "playerId": "3247",
+     "player": "Gumayusi",
+     "k": 7,
+     "d": 0,
+     "a": 13
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "3411",
+     "player": "Delight",
+     "k": 0,
+     "d": 1,
+     "a": 21
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79774,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Los Grandes|Hanwha Life Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79775,
+  "duration": "30:53",
+  "durationMin": 30.88,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-15",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "JD Gaming",
+   "teamFull": "JD Gaming",
+   "win": true,
+   "kills": 23,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 2,
+   "gold": 72000,
+   "bans": [
+    "Ezreal",
+    "Akali",
+    "Lee Sin",
+    "Olaf",
+    "Viktor"
+   ],
+   "picksDraftOrder": [
+    "Orianna",
+    "Poppy",
+    "Jayce",
+    "Pyke",
+    "Kaisa"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "4918",
+     "player": "Xiaoxu",
+     "k": 3,
+     "d": 0,
+     "a": 11
+    },
+    "jungle": {
+     "champion": "Poppy",
+     "playerId": "2907",
+     "player": "JunJia",
+     "k": 2,
+     "d": 2,
+     "a": 12
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "5904",
+     "player": "HongQ",
+     "k": 8,
+     "d": 1,
+     "a": 7
+    },
+    "adc": {
+     "champion": "Kaisa",
+     "playerId": "1931",
+     "player": "GALA",
+     "k": 7,
+     "d": 1,
+     "a": 8
+    },
+    "support": {
+     "champion": "Pyke",
+     "playerId": "5359",
+     "player": "Vampire",
+     "k": 3,
+     "d": 3,
+     "a": 9
+    }
+   }
+  },
+  "red": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": false,
+   "kills": 7,
+   "towers": 2,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 54300,
+   "bans": [
+    "Vi",
+    "Nocturne",
+    "Naafiri",
+    "Nautilus",
+    "Camille"
+   ],
+   "picksDraftOrder": [
+    "Ziggs",
+    "Jarvan IV",
+    "Bard",
+    "Anivia",
+    "Caitlyn"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Anivia",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 1,
+     "d": 4,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 0,
+     "d": 4,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Ziggs",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 2,
+     "d": 6,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Caitlyn",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 3,
+     "d": 4,
+     "a": 1
+    },
+    "support": {
+     "champion": "Bard",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 1,
+     "d": 5,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-15",
+  "week": "GROUPSTAGE",
+  "seriesId": 79775,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "JD Gaming|LYON"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79925,
+  "duration": "31:36",
+  "durationMin": 31.6,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-16",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Gen.G",
+   "teamFull": "Gen.G",
+   "win": true,
+   "kills": 13,
+   "towers": 9,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 64900,
+   "bans": [
+    "Poppy",
+    "Vi",
+    "Nocturne",
+    "Rumble",
+    "Renekton"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Orianna",
+    "Ziggs",
+    "Ambessa",
+    "Camille"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "1115",
+     "player": "Kiin",
+     "k": 2,
+     "d": 2,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "1909",
+     "player": "Canyon",
+     "k": 7,
+     "d": 0,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "1629",
+     "player": "Chovy",
+     "k": 2,
+     "d": 1,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Ziggs",
+     "playerId": "685",
+     "player": "Ruler",
+     "k": 1,
+     "d": 3,
+     "a": 6
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "4259",
+     "player": "Duro",
+     "k": 1,
+     "d": 4,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "Sentinels",
+   "teamFull": "Sentinels",
+   "win": false,
+   "kills": 9,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 54800,
+   "bans": [
+    "Syndra",
+    "Ezreal",
+    "Jayce",
+    "Pyke",
+    "Nautilus"
+   ],
+   "picksDraftOrder": [
+    "Skarner",
+    "Caitlyn",
+    "Bard",
+    "Viktor",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "46",
+     "player": "Impact",
+     "k": 2,
+     "d": 4,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Skarner",
+     "playerId": "4217",
+     "player": "HamBak",
+     "k": 0,
+     "d": 4,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Viktor",
+     "playerId": "3801",
+     "player": "DarkWings",
+     "k": 4,
+     "d": 1,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Caitlyn",
+     "playerId": "3896",
+     "player": "Rahel",
+     "k": 3,
+     "d": 3,
+     "a": 0
+    },
+    "support": {
+     "champion": "Bard",
+     "playerId": "579",
+     "player": "Huhi",
+     "k": 0,
+     "d": 1,
+     "a": 7
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-16",
+  "week": "GROUPSTAGE",
+  "seriesId": 79925,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Gen.G|Sentinels"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79926,
+  "duration": "32:25",
+  "durationMin": 32.42,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-16",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "T1",
+   "teamFull": "T1",
+   "win": false,
+   "kills": 13,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 59500,
+   "bans": [
+    "Jayce",
+    "Orianna",
+    "Gnar",
+    "Gwen",
+    "Ambessa"
+   ],
+   "picksDraftOrder": [
+    "Syndra",
+    "Jarvan IV",
+    "Shen",
+    "Sion",
+    "Sivir"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Sion",
+     "playerId": "1242",
+     "player": "Doran",
+     "k": 3,
+     "d": 5,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "3741",
+     "player": "Oner",
+     "k": 3,
+     "d": 4,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "48",
+     "player": "Faker",
+     "k": 5,
+     "d": 9,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Sivir",
+     "playerId": "4247",
+     "player": "Peyz",
+     "k": 1,
+     "d": 3,
+     "a": 8
+    },
+    "support": {
+     "champion": "Shen",
+     "playerId": "1258",
+     "player": "Keria",
+     "k": 1,
+     "d": 3,
+     "a": 8
+    }
+   }
+  },
+  "red": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 24,
+   "towers": 8,
+   "dragons": 5,
+   "barons": 1,
+   "gold": 69800,
+   "bans": [
+    "Vi",
+    "Vayne",
+    "Lee Sin",
+    "Akali",
+    "Dr. Mundo"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Poppy",
+    "Camille",
+    "KSante",
+    "Ezreal"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 3,
+     "d": 1,
+     "a": 13
+    },
+    "jungle": {
+     "champion": "Poppy",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 5,
+     "d": 3,
+     "a": 13
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 6,
+     "d": 2,
+     "a": 11
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 9,
+     "d": 1,
+     "a": 6
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 1,
+     "d": 6,
+     "a": 11
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-16",
+  "week": "GROUPSTAGE",
+  "seriesId": 79926,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "T1|Bilibili Gaming"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79927,
+  "duration": "31:56",
+  "durationMin": 31.93,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-16",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "Anyone s Legend",
+   "teamFull": "Anyone s Legend",
+   "win": true,
+   "kills": 24,
+   "towers": 7,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 64100,
+   "bans": [
+    "Nocturne",
+    "Ziggs",
+    "Syndra",
+    "Akali",
+    "Gnar"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Varus",
+    "Orianna",
+    "Shen",
+    "Leona"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "341",
+     "player": "Flandre",
+     "k": 5,
+     "d": 3,
+     "a": 12
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "1226",
+     "player": "Tarzan",
+     "k": 3,
+     "d": 4,
+     "a": 18
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "3344",
+     "player": "Shanks",
+     "k": 8,
+     "d": 2,
+     "a": 12
+    },
+    "adc": {
+     "champion": "Varus",
+     "playerId": "1561",
+     "player": "Hope",
+     "k": 7,
+     "d": 1,
+     "a": 6
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "3323",
+     "player": "Kael",
+     "k": 1,
+     "d": 4,
+     "a": 18
+    }
+   }
+  },
+  "red": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": false,
+   "kills": 14,
+   "towers": 4,
+   "dragons": 3,
+   "barons": 0,
+   "gold": 58000,
+   "bans": [
+    "Poppy",
+    "Vi",
+    "Bard",
+    "Nautilus",
+    "Braum"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Anivia",
+    "Lee Sin",
+    "Camille",
+    "Ahri"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Anivia",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 0,
+     "d": 5,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 2,
+     "d": 4,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Ahri",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 8,
+     "d": 4,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 3,
+     "d": 3,
+     "a": 5
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 1,
+     "d": 8,
+     "a": 4
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-16",
+  "week": "GROUPSTAGE",
+  "seriesId": 79927,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Anyone s Legend|G2 Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 79928,
+  "duration": "26:18",
+  "durationMin": 26.3,
+  "patch": "16.13",
+  "dateFromPage": "2026-07-16",
+  "weekFromPage": "GROUPSTAGE",
+  "tournamentFromPage": "Esports World Cup 2026",
+  "blue": {
+   "team": "JD Gaming",
+   "teamFull": "JD Gaming",
+   "win": false,
+   "kills": 13,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 50600,
+   "bans": [
+    "Orianna",
+    "Jayce",
+    "Lee Sin",
+    "Bard",
+    "Alistar"
+   ],
+   "picksDraftOrder": [
+    "Naafiri",
+    "Syndra",
+    "Ambessa",
+    "Shen",
+    "Twisted Fate"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "4918",
+     "player": "Xiaoxu",
+     "k": 3,
+     "d": 4,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "2907",
+     "player": "JunJia",
+     "k": 6,
+     "d": 5,
+     "a": 2
+    },
+    "mid": {
+     "champion": "Twisted Fate",
+     "playerId": "5904",
+     "player": "HongQ",
+     "k": 0,
+     "d": 4,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Syndra",
+     "playerId": "1931",
+     "player": "GALA",
+     "k": 3,
+     "d": 3,
+     "a": 4
+    },
+    "support": {
+     "champion": "Shen",
+     "playerId": "5359",
+     "player": "Vampire",
+     "k": 1,
+     "d": 2,
+     "a": 8
+    }
+   }
+  },
+  "red": {
+   "team": "Hanwha Life Esports",
+   "teamFull": "Hanwha Life Esports",
+   "win": true,
+   "kills": 18,
+   "towers": 8,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 57600,
+   "bans": [
+    "Poppy",
+    "Vayne",
+    "Vi",
+    "Kaisa",
+    "Annie"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Gnar",
+    "Akali",
+    "Ziggs",
+    "Camille"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "3658",
+     "player": "Zeus",
+     "k": 5,
+     "d": 5,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "2360",
+     "player": "Kanavi",
+     "k": 3,
+     "d": 1,
+     "a": 12
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "2906",
+     "player": "Zeka",
+     "k": 7,
+     "d": 0,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Ziggs",
+     "playerId": "3247",
+     "player": "Gumayusi",
+     "k": 2,
+     "d": 5,
+     "a": 10
+    },
+    "support": {
+     "champion": "Camille",
+     "playerId": "3411",
+     "player": "Delight",
+     "k": 1,
+     "d": 2,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Esports World Cup 2026",
+  "date": "2026-07-16",
+  "week": "GROUPSTAGE",
+  "seriesId": 79928,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "JD Gaming|Hanwha Life Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83638,
+  "duration": "26:01",
+  "durationMin": 26.02,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Invictus Gaming",
+   "teamFull": "Invictus Gaming",
+   "win": false,
+   "kills": 10,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 45800,
+   "bans": [
+    "Vi",
+    "Lee Sin",
+    "Cassiopeia",
+    "Renata Glasc",
+    "Lucian"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Rumble",
+    "Aurora",
+    "Jhin",
+    "Alistar"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "1075",
+     "player": "TheShy",
+     "k": 1,
+     "d": 5,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "388",
+     "player": "Wei",
+     "k": 0,
+     "d": 3,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Aurora",
+     "playerId": "109",
+     "player": "RooKie",
+     "k": 4,
+     "d": 5,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "5939",
+     "player": "JiaQi",
+     "k": 5,
+     "d": 2,
+     "a": 4
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "386",
+     "player": "meiko",
+     "k": 0,
+     "d": 7,
+     "a": 8
+    }
+   }
+  },
+  "red": {
+   "team": "Gen.G",
+   "teamFull": "Gen.G",
+   "win": true,
+   "kills": 22,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 59200,
+   "bans": [
+    "Nocturne",
+    "Syndra",
+    "Galio",
+    "Lulu",
+    "Ezreal"
+   ],
+   "picksDraftOrder": [
+    "Qiyana",
+    "Ornn",
+    "Akali",
+    "Corki",
+    "Nautilus"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ornn",
+     "playerId": "1115",
+     "player": "Kiin",
+     "k": 1,
+     "d": 3,
+     "a": 11
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "1909",
+     "player": "Canyon",
+     "k": 8,
+     "d": 1,
+     "a": 10
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "1629",
+     "player": "Chovy",
+     "k": 8,
+     "d": 1,
+     "a": 9
+    },
+    "adc": {
+     "champion": "Corki",
+     "playerId": "685",
+     "player": "Ruler",
+     "k": 5,
+     "d": 2,
+     "a": 12
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "4259",
+     "player": "Duro",
+     "k": 0,
+     "d": 3,
+     "a": 16
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83638,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Invictus Gaming|Gen.G"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83639,
+  "duration": "37:32",
+  "durationMin": 37.53,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Team Liquid",
+   "teamFull": "Team Liquid",
+   "win": false,
+   "kills": 11,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 65400,
+   "bans": [
+    "Akali",
+    "Vi",
+    "Cassiopeia",
+    "Ashe",
+    "Draven"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Galio",
+    "Syndra",
+    "Jhin",
+    "Rakan"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Galio",
+     "playerId": "2545",
+     "player": "Morgan",
+     "k": 0,
+     "d": 2,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "1364",
+     "player": "Josedeodo",
+     "k": 3,
+     "d": 4,
+     "a": 7
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "4246",
+     "player": "Quid",
+     "k": 3,
+     "d": 3,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "3537",
+     "player": "Yeon",
+     "k": 5,
+     "d": 0,
+     "a": 4
+    },
+    "support": {
+     "champion": "Rakan",
+     "playerId": "257",
+     "player": "CoreJJ",
+     "k": 0,
+     "d": 3,
+     "a": 9
+    }
+   }
+  },
+  "red": {
+   "team": "CTBC Flying Oyster",
+   "teamFull": "CTBC Flying Oyster",
+   "win": true,
+   "kills": 12,
+   "towers": 8,
+   "dragons": 5,
+   "barons": 1,
+   "gold": 74200,
+   "bans": [
+    "Orianna",
+    "Ezreal",
+    "Renata Glasc",
+    "Nautilus",
+    "Lulu"
+   ],
+   "picksDraftOrder": [
+    "Rumble",
+    "Qiyana",
+    "Viktor",
+    "Alistar",
+    "Aphelios"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "1172",
+     "player": "Rest",
+     "k": 4,
+     "d": 3,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "2588",
+     "player": "Shad0w",
+     "k": 5,
+     "d": 2,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Viktor",
+     "playerId": "4251",
+     "player": "Pout",
+     "k": 1,
+     "d": 1,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Aphelios",
+     "playerId": "3737",
+     "player": "Doggo",
+     "k": 2,
+     "d": 1,
+     "a": 7
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "7011",
+     "player": "Kino",
+     "k": 0,
+     "d": 4,
+     "a": 12
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83639,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Team Liquid|CTBC Flying Oyster"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83640,
+  "duration": "33:16",
+  "durationMin": 33.27,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Karmine Corp",
+   "teamFull": "Karmine Corp",
+   "win": true,
+   "kills": 12,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 2,
+   "gold": 64800,
+   "bans": [
+    "Vi",
+    "Qiyana",
+    "Cassiopeia",
+    "Seraphine",
+    "Nautilus"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Orianna",
+    "Jax",
+    "Renata Glasc",
+    "Kalista"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jax",
+     "playerId": "2671",
+     "player": "Canna",
+     "k": 5,
+     "d": 2,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "3406",
+     "player": "Yike",
+     "k": 3,
+     "d": 1,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "5264",
+     "player": "Kyeahoo",
+     "k": 1,
+     "d": 1,
+     "a": 9
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "4900",
+     "player": "Caliste",
+     "k": 3,
+     "d": 0,
+     "a": 6
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "4500",
+     "player": "Busio",
+     "k": 0,
+     "d": 0,
+     "a": 11
+    }
+   }
+  },
+  "red": {
+   "team": "Anyone s Legend",
+   "teamFull": "Anyone s Legend",
+   "win": false,
+   "kills": 4,
+   "towers": 3,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 56700,
+   "bans": [
+    "Jayce",
+    "Rumble",
+    "Syndra",
+    "Ezreal",
+    "Lulu"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Olaf",
+    "Akali",
+    "Miss Fortune",
+    "Neeko"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "2348",
+     "player": "Breathe",
+     "k": 1,
+     "d": 2,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "1226",
+     "player": "Tarzan",
+     "k": 0,
+     "d": 2,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "3344",
+     "player": "Shanks",
+     "k": 1,
+     "d": 2,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Miss Fortune",
+     "playerId": "1561",
+     "player": "Hope",
+     "k": 2,
+     "d": 3,
+     "a": 1
+    },
+    "support": {
+     "champion": "Neeko",
+     "playerId": "3323",
+     "player": "Kael",
+     "k": 0,
+     "d": 3,
+     "a": 3
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83640,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Karmine Corp|Anyone s Legend"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83641,
+  "duration": "32:38",
+  "durationMin": 32.63,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": true,
+   "kills": 8,
+   "towers": 8,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 60900,
+   "bans": [
+    "Locke",
+    "Nocturne",
+    "Draven",
+    "Kled",
+    "Orianna"
+   ],
+   "picksDraftOrder": [
+    "Vi",
+    "Syndra",
+    "Olaf",
+    "Ziggs",
+    "Poppy"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 1,
+     "d": 2,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 2,
+     "d": 3,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 3,
+     "d": 1,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Ziggs",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 0,
+     "d": 1,
+     "a": 7
+    },
+    "support": {
+     "champion": "Poppy",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 2,
+     "d": 1,
+     "a": 4
+    }
+   }
+  },
+  "red": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": false,
+   "kills": 8,
+   "towers": 3,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 57500,
+   "bans": [
+    "Lucian",
+    "Karma",
+    "Caitlyn",
+    "Lulu",
+    "Seraphine"
+   ],
+   "picksDraftOrder": [
+    "Kalista",
+    "Renata Glasc",
+    "Jarvan IV",
+    "Viktor",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 1,
+     "d": 1,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 3,
+     "d": 2,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Viktor",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 1,
+     "d": 2,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 3,
+     "d": 2,
+     "a": 2
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 0,
+     "d": 1,
+     "a": 7
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83641,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Dplus KIA|G2 Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83642,
+  "duration": "23:51",
+  "durationMin": 23.85,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Top Esports",
+   "teamFull": "Top Esports",
+   "win": false,
+   "kills": 7,
+   "towers": 0,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 37800,
+   "bans": [
+    "Olaf",
+    "Vi",
+    "Jayce",
+    "Nautilus",
+    "Bard"
+   ],
+   "picksDraftOrder": [
+    "Orianna",
+    "Lee Sin",
+    "Alistar",
+    "Ezreal",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "1922",
+     "player": "369",
+     "k": 1,
+     "d": 6,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "1269",
+     "player": "Tian",
+     "k": 2,
+     "d": 6,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "3906",
+     "player": "Creme",
+     "k": 2,
+     "d": 4,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "1267",
+     "player": "JackeyLove",
+     "k": 2,
+     "d": 5,
+     "a": 2
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "3352",
+     "player": "Zhuo",
+     "k": 0,
+     "d": 3,
+     "a": 4
+    }
+   }
+  },
+  "red": {
+   "team": "Hanwha Life Esports",
+   "teamFull": "Hanwha Life Esports",
+   "win": true,
+   "kills": 24,
+   "towers": 9,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 53500,
+   "bans": [
+    "Cassiopeia",
+    "Qiyana",
+    "Akali",
+    "Corki",
+    "Renekton"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Locke",
+    "Jhin",
+    "Shen",
+    "Ambessa"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "3658",
+     "player": "Zeus",
+     "k": 1,
+     "d": 0,
+     "a": 16
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "2360",
+     "player": "Kanavi",
+     "k": 2,
+     "d": 4,
+     "a": 13
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "2906",
+     "player": "Zeka",
+     "k": 17,
+     "d": 1,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "3247",
+     "player": "Gumayusi",
+     "k": 4,
+     "d": 0,
+     "a": 13
+    },
+    "support": {
+     "champion": "Shen",
+     "playerId": "3411",
+     "player": "Delight",
+     "k": 0,
+     "d": 2,
+     "a": 17
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83642,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Top Esports|Hanwha Life Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83643,
+  "duration": "24:26",
+  "durationMin": 24.43,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Los Grandes",
+   "teamFull": "Los Grandes",
+   "win": false,
+   "kills": 3,
+   "towers": 0,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 41400,
+   "bans": [
+    "Bard",
+    "Vi",
+    "Qiyana",
+    "Locke",
+    "Akali"
+   ],
+   "picksDraftOrder": [
+    "Syndra",
+    "Pantheon",
+    "KSante",
+    "Tristana",
+    "Rakan"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "4244",
+     "player": "Zest",
+     "k": 1,
+     "d": 5,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Pantheon",
+     "playerId": "5274",
+     "player": "Curse",
+     "k": 0,
+     "d": 5,
+     "a": 2
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "4234",
+     "player": "Feisty",
+     "k": 2,
+     "d": 3,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Tristana",
+     "playerId": "5786",
+     "player": "Duduhh",
+     "k": 0,
+     "d": 3,
+     "a": 2
+    },
+    "support": {
+     "champion": "Rakan",
+     "playerId": "3640",
+     "player": "Ackerman",
+     "k": 0,
+     "d": 3,
+     "a": 3
+    }
+   }
+  },
+  "red": {
+   "team": "T1",
+   "teamFull": "T1",
+   "win": true,
+   "kills": 19,
+   "towers": 10,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 55200,
+   "bans": [
+    "Nocturne",
+    "Cassiopeia",
+    "Poppy",
+    "Kalista",
+    "Nautilus"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Jhin",
+    "Jayce",
+    "Alistar",
+    "LeBlanc"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "1242",
+     "player": "Doran",
+     "k": 4,
+     "d": 0,
+     "a": 9
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "3741",
+     "player": "Oner",
+     "k": 8,
+     "d": 0,
+     "a": 6
+    },
+    "mid": {
+     "champion": "LeBlanc",
+     "playerId": "48",
+     "player": "Faker",
+     "k": 6,
+     "d": 0,
+     "a": 7
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "4247",
+     "player": "Peyz",
+     "k": 1,
+     "d": 1,
+     "a": 9
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "1258",
+     "player": "Keria",
+     "k": 0,
+     "d": 2,
+     "a": 15
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83643,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Los Grandes|T1"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83644,
+  "duration": "26:49",
+  "durationMin": 26.82,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": true,
+   "kills": 22,
+   "towers": 9,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 57700,
+   "bans": [
+    "Vi",
+    "Qiyana",
+    "Cassiopeia",
+    "Jhin",
+    "Corki"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Nocturne",
+    "Alistar",
+    "Anivia",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 2,
+     "d": 1,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 2,
+     "d": 2,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Anivia",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 2,
+     "d": 0,
+     "a": 11
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 13,
+     "d": 1,
+     "a": 5
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 3,
+     "d": 2,
+     "a": 18
+    }
+   }
+  },
+  "red": {
+   "team": "Team Secret Whales",
+   "teamFull": "Team Secret Whales",
+   "win": false,
+   "kills": 6,
+   "towers": 1,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 46300,
+   "bans": [
+    "Syndra",
+    "Renata Glasc",
+    "Olaf",
+    "Orianna",
+    "Galio"
+   ],
+   "picksDraftOrder": [
+    "Ryze",
+    "Lee Sin",
+    "Nautilus",
+    "Kaisa",
+    "Rumble"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "2799",
+     "player": "Pun",
+     "k": 0,
+     "d": 5,
+     "a": 2
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "5960",
+     "player": "Hizto",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "5961",
+     "player": "Dire",
+     "k": 4,
+     "d": 2,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Kaisa",
+     "playerId": "3245",
+     "player": "Eddie",
+     "k": 2,
+     "d": 4,
+     "a": 3
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "1461",
+     "player": "Bie",
+     "k": 0,
+     "d": 7,
+     "a": 3
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83644,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "LYON|Team Secret Whales"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83645,
+  "duration": "38:41",
+  "durationMin": 38.68,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-23",
+  "weekFromPage": "ROUND1",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": true,
+   "kills": 18,
+   "towers": 11,
+   "dragons": 4,
+   "barons": 2,
+   "gold": 76200,
+   "bans": [
+    "Vi",
+    "Rumble",
+    "Cassiopeia",
+    "Lee Sin",
+    "Skarner"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Ezreal",
+    "Karma",
+    "Sylas",
+    "Renekton"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Renekton",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 2,
+     "d": 5,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 2,
+     "d": 3,
+     "a": 14
+    },
+    "mid": {
+     "champion": "Sylas",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 9,
+     "d": 3,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 4,
+     "d": 2,
+     "a": 8
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 1,
+     "d": 1,
+     "a": 17
+    }
+   }
+  },
+  "red": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": false,
+   "kills": 14,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 68700,
+   "bans": [
+    "Galio",
+    "Nocturne",
+    "Qiyana",
+    "Twisted Fate",
+    "Olaf"
+   ],
+   "picksDraftOrder": [
+    "Seraphine",
+    "Ashe",
+    "Akali",
+    "Pantheon",
+    "Ambessa"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 2,
+     "d": 1,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Pantheon",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 3,
+     "d": 3,
+     "a": 7
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 6,
+     "d": 4,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Ashe",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 3,
+     "d": 5,
+     "a": 8
+    },
+    "support": {
+     "champion": "Seraphine",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 5,
+     "a": 11
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-23",
+  "week": "ROUND1",
+  "seriesId": 83645,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Movistar KOI|Bilibili Gaming"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83646,
+  "duration": "30:18",
+  "durationMin": 30.3,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Top Esports",
+   "teamFull": "Top Esports",
+   "win": true,
+   "kills": 18,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 62500,
+   "bans": [
+    "Olaf",
+    "Qiyana",
+    "Cassiopeia",
+    "Jhin",
+    "Ashe"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Renata Glasc",
+    "Kalista",
+    "Locke",
+    "Ambessa"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "1922",
+     "player": "369",
+     "k": 1,
+     "d": 1,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "1269",
+     "player": "Tian",
+     "k": 4,
+     "d": 0,
+     "a": 10
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "3906",
+     "player": "Creme",
+     "k": 8,
+     "d": 2,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "1267",
+     "player": "JackeyLove",
+     "k": 5,
+     "d": 2,
+     "a": 8
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "3352",
+     "player": "Zhuo",
+     "k": 0,
+     "d": 4,
+     "a": 13
+    }
+   }
+  },
+  "red": {
+   "team": "Anyone s Legend",
+   "teamFull": "Anyone s Legend",
+   "win": false,
+   "kills": 9,
+   "towers": 1,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 53000,
+   "bans": [
+    "Akali",
+    "Ezreal",
+    "Vi",
+    "Ornn",
+    "Yone"
+   ],
+   "picksDraftOrder": [
+    "Orianna",
+    "Jarvan IV",
+    "Rumble",
+    "Lucian",
+    "Milio"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "2348",
+     "player": "Breathe",
+     "k": 2,
+     "d": 5,
+     "a": 2
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "1226",
+     "player": "Tarzan",
+     "k": 1,
+     "d": 3,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "3344",
+     "player": "Shanks",
+     "k": 2,
+     "d": 4,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Lucian",
+     "playerId": "1561",
+     "player": "Hope",
+     "k": 3,
+     "d": 3,
+     "a": 4
+    },
+    "support": {
+     "champion": "Milio",
+     "playerId": "3323",
+     "player": "Kael",
+     "k": 1,
+     "d": 3,
+     "a": 6
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83646,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Top Esports|Anyone s Legend"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83647,
+  "duration": "33:08",
+  "durationMin": 33.13,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Movistar KOI",
+   "teamFull": "Movistar KOI",
+   "win": true,
+   "kills": 19,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 71700,
+   "bans": [
+    "Lucian",
+    "Rumble",
+    "Nocturne",
+    "Aphelios",
+    "Caitlyn"
+   ],
+   "picksDraftOrder": [
+    "Cassiopeia",
+    "Kalista",
+    "Renata Glasc",
+    "Trundle",
+    "Qiyana"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Trundle",
+     "playerId": "4310",
+     "player": "Myrwn",
+     "k": 2,
+     "d": 1,
+     "a": 10
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "2719",
+     "player": "Elyoya",
+     "k": 7,
+     "d": 2,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "3544",
+     "player": "jojopyun",
+     "k": 5,
+     "d": 1,
+     "a": 7
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "2717",
+     "player": "Supa",
+     "k": 5,
+     "d": 2,
+     "a": 6
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "4634",
+     "player": "Alvaro",
+     "k": 0,
+     "d": 1,
+     "a": 14
+    }
+   }
+  },
+  "red": {
+   "team": "CTBC Flying Oyster",
+   "teamFull": "CTBC Flying Oyster",
+   "win": false,
+   "kills": 7,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 1,
+   "gold": 57700,
+   "bans": [
+    "Ezreal",
+    "Vi",
+    "Anivia",
+    "Skarner",
+    "KSante"
+   ],
+   "picksDraftOrder": [
+    "Akali",
+    "Lee Sin",
+    "Olaf",
+    "Lulu",
+    "Tristana"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "1172",
+     "player": "Rest",
+     "k": 3,
+     "d": 5,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "2588",
+     "player": "Shad0w",
+     "k": 0,
+     "d": 4,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "4251",
+     "player": "Pout",
+     "k": 2,
+     "d": 4,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Tristana",
+     "playerId": "3737",
+     "player": "Doggo",
+     "k": 1,
+     "d": 4,
+     "a": 1
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "7011",
+     "player": "Kino",
+     "k": 1,
+     "d": 2,
+     "a": 3
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83647,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Movistar KOI|CTBC Flying Oyster"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83648,
+  "duration": "38:56",
+  "durationMin": 38.93,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Los Grandes",
+   "teamFull": "Los Grandes",
+   "win": false,
+   "kills": 9,
+   "towers": 5,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 69100,
+   "bans": [
+    "Olaf",
+    "Jarvan IV",
+    "Galio",
+    "Akali",
+    "LeBlanc"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Jayce",
+    "Orianna",
+    "Kalista",
+    "Renata Glasc"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "4244",
+     "player": "Zest",
+     "k": 3,
+     "d": 3,
+     "a": 2
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "5274",
+     "player": "Curse",
+     "k": 1,
+     "d": 5,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "4234",
+     "player": "Feisty",
+     "k": 2,
+     "d": 4,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "5786",
+     "player": "Duduhh",
+     "k": 3,
+     "d": 5,
+     "a": 3
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "3640",
+     "player": "Ackerman",
+     "k": 0,
+     "d": 5,
+     "a": 7
+    }
+   }
+  },
+  "red": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": true,
+   "kills": 22,
+   "towers": 7,
+   "dragons": 5,
+   "barons": 1,
+   "gold": 76600,
+   "bans": [
+    "Vi",
+    "Seraphine",
+    "Syndra",
+    "Nautilus",
+    "Sivir"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Karma",
+    "KSante",
+    "Locke",
+    "Lee Sin"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 3,
+     "d": 1,
+     "a": 6
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 10,
+     "d": 1,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 8,
+     "d": 5,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 1,
+     "d": 1,
+     "a": 9
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 0,
+     "d": 1,
+     "a": 16
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83648,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Los Grandes|G2 Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83649,
+  "duration": "37:32",
+  "durationMin": 37.53,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Karmine Corp",
+   "teamFull": "Karmine Corp",
+   "win": false,
+   "kills": 15,
+   "towers": 5,
+   "dragons": 3,
+   "barons": 0,
+   "gold": 69100,
+   "bans": [
+    "Ezreal",
+    "Nocturne",
+    "KSante",
+    "Seraphine",
+    "Caitlyn"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Rumble",
+    "Cassiopeia",
+    "Renata Glasc",
+    "Kalista"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "2671",
+     "player": "Canna",
+     "k": 4,
+     "d": 2,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "3406",
+     "player": "Yike",
+     "k": 3,
+     "d": 4,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Cassiopeia",
+     "playerId": "5264",
+     "player": "Kyeahoo",
+     "k": 1,
+     "d": 3,
+     "a": 9
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "4900",
+     "player": "Caliste",
+     "k": 6,
+     "d": 4,
+     "a": 8
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "4500",
+     "player": "Busio",
+     "k": 1,
+     "d": 2,
+     "a": 14
+    }
+   }
+  },
+  "red": {
+   "team": "LYON",
+   "teamFull": "LYON",
+   "win": true,
+   "kills": 15,
+   "towers": 8,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 71400,
+   "bans": [
+    "Jayce",
+    "Vi",
+    "Qiyana",
+    "Jhin",
+    "Olaf"
+   ],
+   "picksDraftOrder": [
+    "Wukong",
+    "Galio",
+    "Syndra",
+    "Yunara",
+    "Lulu"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Galio",
+     "playerId": "1135",
+     "player": "Dhokla",
+     "k": 2,
+     "d": 1,
+     "a": 12
+    },
+    "jungle": {
+     "champion": "Wukong",
+     "playerId": "1501",
+     "player": "Inspired",
+     "k": 2,
+     "d": 3,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "5123",
+     "player": "Saint",
+     "k": 6,
+     "d": 2,
+     "a": 6
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "3322",
+     "player": "Berserker",
+     "k": 5,
+     "d": 4,
+     "a": 8
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "2358",
+     "player": "Isles",
+     "k": 0,
+     "d": 5,
+     "a": 13
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83649,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Karmine Corp|LYON"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83650,
+  "duration": "30:20",
+  "durationMin": 30.33,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Team Secret Whales",
+   "teamFull": "Team Secret Whales",
+   "win": false,
+   "kills": 12,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 53400,
+   "bans": [
+    "Syndra",
+    "Rumble",
+    "Jayce",
+    "Lulu",
+    "Renata Glasc"
+   ],
+   "picksDraftOrder": [
+    "Qiyana",
+    "Ezreal",
+    "Locke",
+    "Alistar",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "2799",
+     "player": "Pun",
+     "k": 4,
+     "d": 3,
+     "a": 5
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "5960",
+     "player": "Hizto",
+     "k": 2,
+     "d": 3,
+     "a": 4
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "5961",
+     "player": "Dire",
+     "k": 6,
+     "d": 6,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "3245",
+     "player": "Eddie",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "1461",
+     "player": "Bie",
+     "k": 0,
+     "d": 5,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "Invictus Gaming",
+   "teamFull": "Invictus Gaming",
+   "win": true,
+   "kills": 21,
+   "towers": 9,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 62700,
+   "bans": [
+    "Olaf",
+    "Galio",
+    "Vi",
+    "Nautilus",
+    "Volibear"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Orianna",
+    "KSante",
+    "Ashe",
+    "Seraphine"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "1075",
+     "player": "TheShy",
+     "k": 7,
+     "d": 3,
+     "a": 7
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "388",
+     "player": "Wei",
+     "k": 4,
+     "d": 2,
+     "a": 14
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "109",
+     "player": "RooKie",
+     "k": 6,
+     "d": 3,
+     "a": 9
+    },
+    "adc": {
+     "champion": "Ashe",
+     "playerId": "5939",
+     "player": "JiaQi",
+     "k": 3,
+     "d": 3,
+     "a": 8
+    },
+    "support": {
+     "champion": "Seraphine",
+     "playerId": "386",
+     "player": "meiko",
+     "k": 1,
+     "d": 1,
+     "a": 15
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83650,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Team Secret Whales|Invictus Gaming"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83651,
+  "duration": "29:01",
+  "durationMin": 29.02,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Hanwha Life Esports",
+   "teamFull": "Hanwha Life Esports",
+   "win": false,
+   "kills": 7,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 48600,
+   "bans": [
+    "Vi",
+    "Cassiopeia",
+    "Kalista",
+    "Anivia",
+    "Poppy"
+   ],
+   "picksDraftOrder": [
+    "Jhin",
+    "Pantheon",
+    "Alistar",
+    "Ambessa",
+    "Taliyah"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "3658",
+     "player": "Zeus",
+     "k": 0,
+     "d": 4,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Pantheon",
+     "playerId": "2360",
+     "player": "Kanavi",
+     "k": 1,
+     "d": 6,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Taliyah",
+     "playerId": "2906",
+     "player": "Zeka",
+     "k": 5,
+     "d": 4,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "3247",
+     "player": "Gumayusi",
+     "k": 1,
+     "d": 1,
+     "a": 2
+    },
+    "support": {
+     "champion": "Alistar",
+     "playerId": "3411",
+     "player": "Delight",
+     "k": 0,
+     "d": 8,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "Gen.G",
+   "teamFull": "Gen.G",
+   "win": true,
+   "kills": 22,
+   "towers": 11,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 65000,
+   "bans": [
+    "Jayce",
+    "Nocturne",
+    "Galio",
+    "Locke",
+    "Akali"
+   ],
+   "picksDraftOrder": [
+    "Qiyana",
+    "Rumble",
+    "Ezreal",
+    "Syndra",
+    "Leona"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "1115",
+     "player": "Kiin",
+     "k": 5,
+     "d": 1,
+     "a": 11
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "1909",
+     "player": "Canyon",
+     "k": 4,
+     "d": 2,
+     "a": 11
+    },
+    "mid": {
+     "champion": "Syndra",
+     "playerId": "1629",
+     "player": "Chovy",
+     "k": 4,
+     "d": 1,
+     "a": 9
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "685",
+     "player": "Ruler",
+     "k": 7,
+     "d": 1,
+     "a": 8
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "4259",
+     "player": "Duro",
+     "k": 2,
+     "d": 2,
+     "a": 16
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83651,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Hanwha Life Esports|Gen.G"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83652,
+  "duration": "41:31",
+  "durationMin": 41.52,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": true,
+   "kills": 10,
+   "towers": 9,
+   "dragons": 2,
+   "barons": 1,
+   "gold": 84300,
+   "bans": [
+    "Nocturne",
+    "Locke",
+    "Rumble",
+    "Akali",
+    "Taliyah"
+   ],
+   "picksDraftOrder": [
+    "Kalista",
+    "Renata Glasc",
+    "Jarvan IV",
+    "Viktor",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 0,
+     "d": 2,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 2,
+     "d": 3,
+     "a": 6
+    },
+    "mid": {
+     "champion": "Viktor",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 2,
+     "d": 2,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 4,
+     "d": 0,
+     "a": 3
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 2,
+     "d": 1,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "T1",
+   "teamFull": "T1",
+   "win": false,
+   "kills": 8,
+   "towers": 6,
+   "dragons": 4,
+   "barons": 1,
+   "gold": 79300,
+   "bans": [
+    "Syndra",
+    "Cassiopeia",
+    "Qiyana",
+    "Orianna",
+    "Olaf"
+   ],
+   "picksDraftOrder": [
+    "Vi",
+    "Neeko",
+    "Caitlyn",
+    "Anivia",
+    "Jayce"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jayce",
+     "playerId": "1242",
+     "player": "Doran",
+     "k": 1,
+     "d": 3,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Vi",
+     "playerId": "3741",
+     "player": "Oner",
+     "k": 2,
+     "d": 3,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Anivia",
+     "playerId": "48",
+     "player": "Faker",
+     "k": 1,
+     "d": 2,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Caitlyn",
+     "playerId": "4247",
+     "player": "Peyz",
+     "k": 4,
+     "d": 1,
+     "a": 2
+    },
+    "support": {
+     "champion": "Neeko",
+     "playerId": "1258",
+     "player": "Keria",
+     "k": 0,
+     "d": 1,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83652,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Dplus KIA|T1"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83653,
+  "duration": "31:35",
+  "durationMin": 31.58,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-24",
+  "weekFromPage": "ROUND2",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Team Liquid",
+   "teamFull": "Team Liquid",
+   "win": false,
+   "kills": 2,
+   "towers": 2,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 52700,
+   "bans": [
+    "Cassiopeia",
+    "Vi",
+    "Nocturne",
+    "Ziggs",
+    "Gnar"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Jarvan IV",
+    "Karma",
+    "Locke",
+    "KSante"
+   ],
+   "comp": {
+    "top": {
+     "champion": "KSante",
+     "playerId": "2545",
+     "player": "Morgan",
+     "k": 0,
+     "d": 3,
+     "a": 0
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "1364",
+     "player": "Josedeodo",
+     "k": 0,
+     "d": 4,
+     "a": 2
+    },
+    "mid": {
+     "champion": "Locke",
+     "playerId": "4246",
+     "player": "Quid",
+     "k": 2,
+     "d": 3,
+     "a": 0
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "3537",
+     "player": "Yeon",
+     "k": 0,
+     "d": 5,
+     "a": 2
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "257",
+     "player": "CoreJJ",
+     "k": 0,
+     "d": 2,
+     "a": 2
+    }
+   }
+  },
+  "red": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 17,
+   "towers": 11,
+   "dragons": 3,
+   "barons": 1,
+   "gold": 67400,
+   "bans": [
+    "Renata Glasc",
+    "Qiyana",
+    "Galio",
+    "Syndra",
+    "Olaf"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Orianna",
+    "Camille",
+    "Jhin",
+    "Nautilus"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Camille",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 7,
+     "d": 1,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 2,
+     "d": 1,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 6,
+     "d": 0,
+     "a": 8
+    },
+    "adc": {
+     "champion": "Jhin",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 2,
+     "d": 0,
+     "a": 9
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 0,
+     "a": 10
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-24",
+  "week": "ROUND2",
+  "seriesId": 83653,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Team Liquid|Bilibili Gaming"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83654,
+  "duration": "28:36",
+  "durationMin": 28.6,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-25",
+  "weekFromPage": "ROUND3",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Invictus Gaming",
+   "teamFull": "Invictus Gaming",
+   "win": true,
+   "kills": 29,
+   "towers": 7,
+   "dragons": 4,
+   "barons": 0,
+   "gold": 60400,
+   "bans": [
+    "Jayce",
+    "Cassiopeia",
+    "Jhin",
+    "Galio",
+    "Locke"
+   ],
+   "picksDraftOrder": [
+    "Yunara",
+    "Lulu",
+    "Nocturne",
+    "Annie",
+    "Kled"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Kled",
+     "playerId": "1075",
+     "player": "TheShy",
+     "k": 3,
+     "d": 4,
+     "a": 15
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "388",
+     "player": "Wei",
+     "k": 4,
+     "d": 0,
+     "a": 17
+    },
+    "mid": {
+     "champion": "Annie",
+     "playerId": "109",
+     "player": "RooKie",
+     "k": 7,
+     "d": 1,
+     "a": 13
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "5939",
+     "player": "JiaQi",
+     "k": 12,
+     "d": 4,
+     "a": 6
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "386",
+     "player": "meiko",
+     "k": 3,
+     "d": 0,
+     "a": 22
+    }
+   }
+  },
+  "red": {
+   "team": "Hanwha Life Esports",
+   "teamFull": "Hanwha Life Esports",
+   "win": false,
+   "kills": 9,
+   "towers": 3,
+   "dragons": 0,
+   "barons": 1,
+   "gold": 51100,
+   "bans": [
+    "Syndra",
+    "Orianna",
+    "Vi",
+    "Rumble",
+    "Aurora"
+   ],
+   "picksDraftOrder": [
+    "Qiyana",
+    "Kalista",
+    "Renata Glasc",
+    "Olaf",
+    "Lissandra"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "3658",
+     "player": "Zeus",
+     "k": 6,
+     "d": 5,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "2360",
+     "player": "Kanavi",
+     "k": 0,
+     "d": 6,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Lissandra",
+     "playerId": "2906",
+     "player": "Zeka",
+     "k": 3,
+     "d": 5,
+     "a": 5
+    },
+    "adc": {
+     "champion": "Kalista",
+     "playerId": "3247",
+     "player": "Gumayusi",
+     "k": 0,
+     "d": 6,
+     "a": 2
+    },
+    "support": {
+     "champion": "Renata Glasc",
+     "playerId": "3411",
+     "player": "Delight",
+     "k": 0,
+     "d": 7,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-25",
+  "week": "ROUND3",
+  "seriesId": 83654,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Invictus Gaming|Hanwha Life Esports"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83655,
+  "duration": "35:44",
+  "durationMin": 35.73,
+  "patch": "16.20",
+  "dateFromPage": "2026-10-25",
+  "weekFromPage": "ROUND3",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Top Esports",
+   "teamFull": "Top Esports",
+   "win": true,
+   "kills": 18,
+   "towers": 10,
+   "dragons": 3,
+   "barons": 2,
+   "gold": 72600,
+   "bans": [
+    "Olaf",
+    "Galio",
+    "Renata Glasc",
+    "Jarvan IV",
+    "Renekton"
+   ],
+   "picksDraftOrder": [
+    "Nocturne",
+    "Orianna",
+    "Nautilus",
+    "Varus",
+    "Ambessa"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "1922",
+     "player": "369",
+     "k": 1,
+     "d": 1,
+     "a": 8
+    },
+    "jungle": {
+     "champion": "Nocturne",
+     "playerId": "1269",
+     "player": "Tian",
+     "k": 5,
+     "d": 1,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "3906",
+     "player": "Creme",
+     "k": 3,
+     "d": 0,
+     "a": 10
+    },
+    "adc": {
+     "champion": "Varus",
+     "playerId": "1267",
+     "player": "JackeyLove",
+     "k": 7,
+     "d": 2,
+     "a": 8
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "3352",
+     "player": "Zhuo",
+     "k": 2,
+     "d": 2,
+     "a": 14
+    }
+   }
+  },
+  "red": {
+   "team": "G2 Esports",
+   "teamFull": "G2 Esports",
+   "win": false,
+   "kills": 6,
+   "towers": 3,
+   "dragons": 2,
+   "barons": 0,
+   "gold": 61800,
+   "bans": [
+    "Qiyana",
+    "Lee Sin",
+    "Vi",
+    "Kaisa",
+    "Jhin"
+   ],
+   "picksDraftOrder": [
+    "Ezreal",
+    "Karma",
+    "Akali",
+    "Wukong",
+    "Shen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Shen",
+     "playerId": "1310",
+     "player": "BrokenBlade",
+     "k": 1,
+     "d": 6,
+     "a": 2
+    },
+    "jungle": {
+     "champion": "Wukong",
+     "playerId": "4946",
+     "player": "SkewMond",
+     "k": 1,
+     "d": 3,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "802",
+     "player": "Caps",
+     "k": 1,
+     "d": 1,
+     "a": 1
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "732",
+     "player": "Hans Sama",
+     "k": 3,
+     "d": 5,
+     "a": 2
+    },
+    "support": {
+     "champion": "Karma",
+     "playerId": "2887",
+     "player": "Labrov",
+     "k": 0,
+     "d": 3,
+     "a": 5
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-10-25",
+  "week": "ROUND3",
+  "seriesId": 83655,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Top Esports|G2 Esports"
+  }
  }
 ]

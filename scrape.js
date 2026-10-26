@@ -122,13 +122,23 @@ function decode(s) {
 }
 
 // ---------- 1. Match lists ----------
+/* 2026-10-26 — SỬA LỖI LỚN: regex cũ chỉ khớp link 'page-summary' (dùng cho series
+   nhiều game, vd Bo3/Bo5 đã đấu xong nhiều hơn 1 game). Các trận BO1 ĐƠN LẺ (không
+   có "series" nhiều game nên gol.gg không tạo trang summary riêng) lại trỏ thẳng
+   tới 'page-game' với title kết thúc bằng "stats" thay vì "summary" — bị regex cũ
+   BỎ QUA HOÀN TOÀN, ÂM THẦM, không log lỗi gì. Phát hiện khi người dùng chỉ ra
+   trang tournament-stats của "Worlds 2026 Main Event" báo "Number of games: 23"
+   trong khi matchlist chỉ lấy được 5 game (2 series page-summary) — kiểm tra tay
+   HTML thật thấy đúng 18 dòng BO1 dùng page-game bị bỏ sót (18 + 3 + 2 = 23, khớp
+   chính xác). Đây rất có thể cũng ảnh hưởng các giải khác có vòng BO1 (vd regular
+   season LCK/LPL/LEC) — không chỉ riêng Worlds — nên sửa ở hàm dùng chung này. */
 function parseMatchlist(html, tour) {
   const h = html.replace(/<script[\s\S]*?<\/script>/gi, '');
   const body = h.slice(h.indexOf('results</caption>'));
   const rows = [...body.matchAll(/<tr>([\s\S]*?)<\/tr>/gi)].map(m => m[1]);
   const out = [];
   for (const r of rows) {
-    const link = r.match(/game\/stats\/(\d+)\/page-summary\/'\s+title='([^']*?) summary'/);
+    const link = r.match(/game\/stats\/(\d+)\/page-(?:summary|game)\/'\s+title='([^']*?)(?: summary| stats)'/);
     if (!link) continue;
     const cells = [...r.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(m => decode(m[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' '));
     // cells: [matchup, teamA, score, teamB, week, patch, date]
