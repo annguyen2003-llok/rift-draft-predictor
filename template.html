@@ -419,7 +419,7 @@ let pending = null;
    familiarity/poolDepth. Xem chú thích đầu finalize.js. */
 function sideFeatures(comp, teamName){
   let sumWr=0,sumPres=0,engage=0,frontline=0,cc=0,scaling=0,mobility=0,ranged=0,ad=0,ap=0;
-  let paceSum=0,durSum=0,nPace=0, pickPriority=0, familiarity=0, poolDepth=0;
+  let durSum=0,nPace=0, pickPriority=0, familiarity=0, poolDepth=0;
   for(const role of ROLES){
     const name = comp[role]; if(!name) continue;
     const c = DATA.champions[name], r = c && c.roles[role];
@@ -428,7 +428,7 @@ function sideFeatures(comp, teamName){
     const a = attrOf(name, role);
     engage+=a.engage; frontline+=a.frontline; cc+=a.cc; scaling+=a.scaling; mobility+=a.mobility; ranged+=a.ranged;
     if(a.dmg==="AP") ap+=1; else if(a.dmg==="Mixed"){ad+=.5;ap+=.5;} else ad+=1;
-    if(c && c.avgGameKills != null){ paceSum+=c.avgGameKills; durSum+=c.avgGameDur; nPace++; }
+    if(c && c.avgGameDur != null){ durSum+=c.avgGameDur; nPace++; }
     // pickPriority: cấp-tướng thuần, không cần biết đội/tuyển thủ
     pickPriority += DATA.pickPriority[name] != null ? DATA.pickPriority[name] : 0;
     // familiarity/poolDepth: cần tra ĐÚNG tuyển thủ hiện tại qua đội|đường
@@ -442,7 +442,6 @@ function sideFeatures(comp, teamName){
   return {sumWr,sumPres,engage,frontline,cc,scaling,mobility,ranged,ad,ap,
     pickPriority, familiarity, poolDepth,
     mixedness: 1 - Math.abs(ad-ap)/(ad+ap||1),
-    pace: nPace ? paceSum/nPace : DATA.baselines.avgKills,
     lengthLean: nPace ? durSum/nPace : DATA.baselines.avgDuration,
     // teamWr/teamRating: chỉ còn để HIỂN THỊ tham khảo (giống matchupEdge),
     // không nạp vào raw[] của predict() nữa.
@@ -803,14 +802,21 @@ function analyze(){
   }).join("");
 
   /* pace */
+  /* 2026-10-27: kill = mức hiện tại + hiệu ứng từng tướng (xem finalize.js) */
   const km = DATA.models.kills;
-  const pace = (res.B.pace + res.R.pace)/2, lengthLean = (res.B.lengthLean + res.R.lengthLean)/2;
-  const kills = runModel(km, [pace, lengthLean]).logit;
+  const lengthLean = (res.B.lengthLean + res.R.lengthLean)/2;
+  const pickedChamps = [...ROLES.map(r => state.blue[r]), ...ROLES.map(r => state.red[r])].filter(Boolean);
+  const killParts = pickedChamps.map(c => ({c, v: km.effects[c] || 0}));
+  const kills = killParts.reduce((s, x) => s + x.v, km.base);
+  const draftShift = kills - km.level;
+  const topParts = [...killParts].filter(x => Math.abs(x.v) >= 0.3).sort((a, b) => Math.abs(b.v) - Math.abs(a.v)).slice(0, 3);
   const bl = DATA.baselines;
   const posK = Math.max(0, Math.min(100, (kills-bl.killsP10)/(bl.killsP90-bl.killsP10)*100));
   const posD = Math.max(0, Math.min(100, (lengthLean-bl.durP10)/(bl.durP90-bl.durP10)*100));
   document.getElementById("paceSub").innerHTML =
-    `Mô hình kill sai số trung bình <b>±${km.metrics.cvMAE.toFixed(1)} kill</b>, chỉ nhỉnh hơn mốc đoán trung bình (±${km.metrics.baselineMAE.toFixed(1)}) một chút — R² chỉ ${km.metrics.cvR2.toFixed(3)}. ` +
+    `Mô hình kill (đo walk-forward theo ngày, ${km.metrics.n} trận) sai số trung bình <b>±${km.metrics.cvMAE.toFixed(1)} kill</b>, ` +
+    `so với ±${km.metrics.baselineMAE.toFixed(1)} nếu chỉ đoán trung bình lịch sử` +
+    (km.metrics.worlds ? ` — riêng ${km.metrics.worlds.n} trận Worlds: ±${km.metrics.worlds.mae.toFixed(1)}` : "") + `. ` +
     `Thời lượng thì <b>không có mô hình</b>: không cấu hình nào đo ra tốt hơn việc đoán trung bình, nên bên dưới chỉ hiển thị số liệu thật, không phải dự đoán.`;
   document.getElementById("paceGrid").innerHTML = `
     <div class="pace-card">
@@ -818,9 +824,11 @@ function analyze(){
       <div class="pace-number">${kills.toFixed(0)}</div>
       <div class="pace-range">khoảng sai số ${Math.max(0,kills-km.metrics.cvMAE).toFixed(0)}–${(kills+km.metrics.cvMAE).toFixed(0)} kill</div>
       <div class="pace-gauge"><div class="pace-marker" style="left:${posK}%"></div></div>
-      <div class="pace-scale"><span>${bl.killsP10.toFixed(0)}</span><span>TB ${bl.avgKills.toFixed(1)}</span><span>${bl.killsP90.toFixed(0)}</span></div>
-      <div class="pace-desc">Suy ra từ số kill trung bình trong các trận mà 10 tướng này từng góp mặt.
-        Trong dữ liệu, trận trung bình có ${bl.avgKills.toFixed(1)} kill (độ lệch chuẩn ${bl.sdKills.toFixed(1)}).</div>
+      <div class="pace-scale"><span>${bl.killsP10.toFixed(0)}</span><span>hiện tại ${km.level.toFixed(1)}</span><span>${bl.killsP90.toFixed(0)}</span></div>
+      <div class="pace-desc">Mức kill hiện tại của meta (các trận gần đây được tính nặng hơn): <b>${km.level.toFixed(1)}</b>.
+        10 tướng này ${draftShift >= 0 ? "cộng" : "trừ"} <b>${Math.abs(draftShift).toFixed(1)}</b> kill so với mức đó` +
+        (topParts.length ? ` (${topParts.map(x => `${x.c} ${x.v >= 0 ? "+" : ""}${x.v.toFixed(1)}`).join(", ")})` : "") + `.
+        Kill giảm dần qua các patch nên mô hình bám theo mức gần đây, không lấy trung bình toàn bộ lịch sử.</div>
     </div>
     <div class="pace-card">
       <div class="pace-label">Bối cảnh thời lượng<span class="stamp excluded">số liệu thật</span></div>

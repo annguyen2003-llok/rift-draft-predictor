@@ -5,7 +5,7 @@
    Selection was made by leak-free 5-fold CV over candidate feature sets
    (see diagnose.js). What survived:
      win probability : [teamStrength?, teamRating?, frontline, ranged, mobility]  lambda=60
-     total kills     : [pace, lengthLean]                                        lambda=100
+     total kills     : mức hiện tại (decay) + hiệu ứng từng tướng (ridge)     — xem khối 2026-10-27
    What was dropped, and why:
      head-to-head matchup edge -> AUC 0.548 and log loss far worse than
        baseline; kept in the dataset for display only, never in the model.
@@ -196,7 +196,7 @@ const LAM_TEAM = 8, LAM_REGION = 8;
    lambda=60/150/300 cho withTeam: acc 57.2%/60.5%/60.8%, logloss 0.678/0.663/
    0.660 — AUC gần như không đổi (0.55) nhưng 300 cho hiệu chỉnh + độ chính xác
    tốt nhất. draft-only: AUC 0.51/0.50/0.49, acc ~61% cả 3 mức. */
-const LAMBDA_WIN = 300, LAMBDA_KILL = 100;
+const LAMBDA_WIN = 300;
 const SHORT = 28, LONG = 34;
 
 /* ============================ RATING PHÂN CẤP (cho CKTG) =====================
@@ -388,7 +388,7 @@ const attrOf = (n, role) => (role && ATTRS[n + '|' + role]) || ATTRS[n] || ATTR_
    xem compOf() bên dưới. */
 function sideFeatures(comp, teamName, st) {
   let sumWr = 0, sumPres = 0, engage = 0, frontline = 0, cc = 0, scaling = 0, mobility = 0, ranged = 0, ad = 0, ap = 0;
-  let paceSum = 0, durSum = 0, nPace = 0, familiarity = 0, poolDepth = 0, pickPriority = 0;
+  let familiarity = 0, poolDepth = 0, pickPriority = 0;
   for (const role of ROLES) {
     const pick = comp[role]; if (!pick || !pick.champion) continue;
     const name = pick.champion;
@@ -400,7 +400,6 @@ function sideFeatures(comp, teamName, st) {
     engage += at.engage; frontline += at.frontline; cc += at.cc;
     scaling += at.scaling; mobility += at.mobility; ranged += at.ranged;
     if (at.dmg === 'AP') ap += 1; else if (at.dmg === 'Mixed') { ad += 0.5; ap += 0.5; } else ad += 1;
-    if (c && c.gameKills.length) { paceSum += mean(c.gameKills); durSum += mean(c.gameDurs); nPace++; }
     familiarity += familiarityOf(st, pick.playerId, name);
     poolDepth += poolDepthOf(st, pick.playerId);
     pickPriority += pickPriorityOf(st, name);
@@ -410,8 +409,6 @@ function sideFeatures(comp, teamName, st) {
     sumWr, sumPres, engage, frontline, cc, scaling, mobility, ranged, ad, ap,
     familiarity, poolDepth, pickPriority,
     mixedness: 1 - Math.abs(ad - ap) / (ad + ap || 1),
-    pace: nPace ? paceSum / nPace : st.avgKills,
-    lengthLean: nPace ? durSum / nPace : st.avgDur,
     teamWr: tw ? (tw.wins + TEAM_K * 0.5) / (tw.games + TEAM_K) : 0.5,
     teamRating: teamName ? st.rating.get(teamName) : 0,
   };
@@ -449,7 +446,6 @@ function rowFor(g, st) {
       B.pickPriority - R.pickPriority, B.familiarity - R.familiarity, B.poolDepth - R.poolDepth,
       B.frontline * B.poolDepth - R.frontline * R.poolDepth,
       B.familiarity * B.poolDepth - R.familiarity * R.poolDepth],
-    kill: [(B.pace + R.pace) / 2, (B.lengthLean + R.lengthLean) / 2],
     intl: isInternational(g),
     y: g.blue.win ? 1 : 0,
     totalKills: g.blue.kills + g.red.kills,
@@ -498,29 +494,6 @@ function fitLogistic(Z, y, lambda, iters = 6000, lr = 0.3, freezeBias = false) {
 }
 const predLogit = (m, z) => { let s = m.b; for (let j = 0; j < z.length; j++) s += m.w[j] * z[j]; return 1 / (1 + Math.exp(-s)); };
 
-function fitLinear(Z, y, lambda, iters = 6000, lr = 0.3) {
-  const d = Z[0].length, n = Z.length, w = new Array(d).fill(0); let b = mean(y);
-  for (let it = 0; it < iters; it++) {
-    const gw = new Array(d).fill(0); let gb = 0;
-    for (let i = 0; i < n; i++) {
-      let p = b; for (let j = 0; j < d; j++) p += w[j] * Z[i][j];
-      const e = p - y[i];
-      for (let j = 0; j < d; j++) gw[j] += e * Z[i][j];
-      gb += e;
-    }
-    for (let j = 0; j < d; j++) w[j] -= lr * (gw[j] / n + (lambda / n) * w[j]);
-    b -= lr * (gb / n);
-  }
-  return { w, b };
-}
-const predLin = (m, z) => { let s = m.b; for (let j = 0; j < z.length; j++) s += m.w[j] * z[j]; return s; };
-
-function kfold(n, k, seed = 7) {
-  const idx = [...Array(n).keys()];
-  let s = seed;
-  for (let i = n - 1; i > 0; i--) { s = (s * 1103515245 + 12345) & 0x7fffffff; const j = s % (i + 1); [idx[i], idx[j]] = [idx[j], idx[i]]; }
-  return [...Array(k)].map((_, f) => ({ test: idx.filter((_, i) => i % k === f), train: idx.filter((_, i) => i % k !== f) }));
-}
 function auc(pairs) {
   const pos = pairs.filter(p => p.y === 1).map(p => p.p), neg = pairs.filter(p => p.y === 0).map(p => p.p);
   if (!pos.length || !neg.length) return null;
@@ -620,12 +593,9 @@ function walkForwardEval(rowKey, fitFn, predFn) {
 const cv = {
   draft: walkForwardEval('draft', fitLogistic, predLogit),
   withTeam: walkForwardEval('withTeam', fitLogistic, predLogit),
-  kill: [],
 };
-// kills model: pace/lengthLean cũng là trung bình cộng dồn nên về lý thuyết có
-// cùng nguy cơ, nhưng đây là hồi quy tuyến tính dự đoán SỐ (không phải thắng-
-// thua nhạy với thứ tự thời gian như familiarity) — giữ kfold ngẫu nhiên như cũ,
-// phạm vi sửa lần này chỉ nhắm vào draft/withTeam vừa đổi đặc trưng.
+// kills model: TỪ 2026-10-27 đánh giá walk-forward theo ngày (xem khối bên dưới) —
+// kfold ngẫu nhiên đã che mất độ trôi kill theo patch suốt nhiều tuần.
 /* 2026-09-21 — thử thêm TEMPO CẤP ĐỘI (trung bình tổng mạng/thời gian LỊCH SỬ
    của chính đội đó, co rút về trung bình chung với TEAM_K=6, giống cách tính
    teamWr) vào feature của kill model, sau khi người dùng hỏi "bật đội có giúp
@@ -641,13 +611,70 @@ const cv = {
    thắng/thua (draft/withTeam ở trên) cũng KHÔNG thay đổi theo yêu cầu có điều
    kiện của người dùng — familiarity/poolDepth vẫn giữ vai trò cũ trong
    withTeam. */
-for (const { train, test } of kfold(N, 5)) {
-  const st = buildStats(train);
-  const tr = train.map(i => rowFor(games[i], st));
-  const te = test.map(i => rowFor(games[i], st));
-  const sK = standardise(tr.map(r => r.kill));
-  const mK = fitLinear(sK.Z, tr.map(r => r.totalKills), LAMBDA_KILL);
-  te.forEach(r => cv.kill.push({ pred: predLin(mK, applyStd(r.kill, sK.mu, sK.sg)), act: r.totalKills }));
+/* 2026-10-27 — THAY MÔ HÌNH KILL: "mức hiện tại + hiệu ứng từng tướng".
+   Mô hình cũ [pace, lengthLean] lấy trung bình MỌI trận cũ của từng tướng, trong
+   khi tổng kill giảm đều theo patch (16.13: 33.1 -> 16.17: 26.5 -> 16.20 Worlds:
+   25.5) — nên ở Worlds nó đoán DƯ trung bình +2.7 kill/trận (33/51 trận quá cao).
+   Lỗi này không lộ ra vì kfold ngẫu nhiên ở trên trộn patch cũ/mới vào cùng tập
+   train/test làm độ lệch tự triệt tiêu. Mô hình mới:
+     level   = trung bình có trọng số giảm dần (half-life KILL_LEVEL_HL trận) của
+               tổng kill, MỌI trận kể cả quốc tế — bắt kịp mức kill của meta hiện tại.
+     effects = ridge (λ=KILL_LAMBDA) trên sự có mặt của từng tướng (tướng >=
+               KILL_MIN_GAMES trận), mục tiêu là PHẦN DƯ của mỗi trận so với level
+               TẠI THỜI ĐIỂM trận đó (trailing, chỉ dùng trận trước nó) — nên hiệu
+               ứng tướng không bị lẫn với "tướng này phổ biến ở patch nhiều kill".
+     dự đoán = base + tổng effects của 10 tướng.
+   Tham số chọn CHỈ trên giai đoạn 15/08-04/10 (trước Worlds), rồi đánh giá một
+   lần trên 51 trận Worlds: MAE 5.64 -> 4.90, trước Worlds 6.22 -> 5.74. Thêm tổng
+   kit đội hình không giúp gì (đã thử). Thời lượng KHÔNG đổi — không hướng nào
+   (kit, hiệu ứng tướng, bối cảnh series, dự đoán đè bẹp, nhịp kill) thắng nổi
+   việc đoán trung bình. Đánh giá bên dưới là walk-forward THEO NGÀY, không kfold. */
+const KILL_LEVEL_HL = 30, KILL_LAMBDA = 160, KILL_MIN_GAMES = 3, KILL_WF_FROM = '2026-08-15';
+const totalKillsOf = g => g.blue.kills + g.red.kills;
+const champsOf = g => ['blue', 'red'].flatMap(s => ROLES.map(r => g[s].comp[r] && g[s].comp[r].champion)).filter(Boolean);
+function solveLinear(A, b) {
+  const n = b.length, M = A.map((row, i) => [...row, b[i]]);
+  for (let c = 0; c < n; c++) {
+    let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+    [M[c], M[p]] = [M[p], M[c]];
+    const v = M[c][c] || 1e-12;
+    for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c] / v; if (f) for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k]; }
+  }
+  return M.map((row, i) => row[n] / (row[i] || 1e-12));
+}
+// idx phải theo thứ tự thời gian (games đã sort theo ngày ở trên).
+function fitKillModel(idx) {
+  const decay = Math.exp(-Math.log(2) / KILL_LEVEL_HL);
+  let s = 0, ws = 0;
+  const resid = idx.map(i => {
+    const v = totalKillsOf(games[i]), lv = ws ? s / ws : v;
+    s = s * decay + v; ws = ws * decay + 1;
+    return v - lv;
+  });
+  const level = s / ws;
+  const cnt = {};
+  for (const i of idx) for (const c of champsOf(games[i])) cnt[c] = (cnt[c] || 0) + 1;
+  const names = Object.keys(cnt).filter(c => cnt[c] >= KILL_MIN_GAMES), col = Object.fromEntries(names.map((c, j) => [c, j]));
+  const d = names.length, n = idx.length, ym = mean(resid);
+  const rows = idx.map(i => champsOf(games[i]).map(c => col[c]).filter(j => j != null));
+  const mu = new Array(d).fill(0);
+  rows.forEach(r => { for (const j of r) mu[j] += 1 / n; });
+  const A = [...Array(d)].map(() => new Array(d).fill(0)), b = new Array(d).fill(0);
+  rows.forEach((r, k) => { for (const j of r) { b[j] += resid[k] - ym; for (const q of r) A[j][q] += 1; } });
+  for (let j = 0; j < d; j++) { for (let q = 0; q < d; q++) A[j][q] -= n * mu[j] * mu[q]; A[j][j] += KILL_LAMBDA; }
+  const beta = d ? solveLinear(A, b) : [];
+  const effects = Object.fromEntries(names.map((c, j) => [c, beta[j]]));
+  const base = level + ym - beta.reduce((acc, x, j) => acc + x * mu[j], 0);
+  return { level, base, effects, predict: champs => champs.reduce((acc, c) => acc + (effects[c] || 0), base) };
+}
+const killDays = [...new Set(games.map(g => g.date))].filter(d => d >= KILL_WF_FROM).sort();
+const killWF = [];   // {pred, naive, act, intl}
+for (const day of killDays) {
+  const prior = [], test = [];
+  games.forEach((g, i) => { if (g.date < day) prior.push(i); else if (g.date === day) test.push(i); });
+  if (prior.length < WF_MIN_HISTORY) continue;
+  const m = fitKillModel(prior), naive = mean(prior.map(i => totalKillsOf(games[i])));
+  for (const i of test) killWF.push({ pred: m.predict(champsOf(games[i])), naive, act: totalKillsOf(games[i]), worlds: /^Worlds/.test(games[i].tournament) });
 }
 
 // ------------------------------------------------------------ production fit
@@ -659,8 +686,7 @@ const sDraft = standardise(rows.map(r => r.draft));
 const draftModel = fitLogistic(sDraft.Z, yAll, LAMBDA_WIN, 6000, 0.3, true);
 const sTeam = standardise(rows.map(r => r.withTeam));
 const teamModel = fitLogistic(sTeam.Z, yAll, LAMBDA_WIN, 6000, 0.3, true);
-const sKill = standardise(rows.map(r => r.kill));
-const killModel = fitLinear(sKill.Z, rows.map(r => r.totalKills), LAMBDA_KILL);
+const killModel = fitKillModel([...Array(N).keys()]);
 
 // ------------------------------------------------------------ metrics
 const blueWR = yAll.filter(v => v === 1).length / N;
@@ -691,11 +717,22 @@ const splitMetrics = arr => {
 };
 const draftMetrics = splitMetrics(cv.draft);
 const teamMetrics = splitMetrics(cv.withTeam);
+// baselineMAE = đoán trung bình toàn bộ lịch sử trước ngày đó (cũng walk-forward)
+const killActMean = mean(killWF.map(r => r.act));
+const killWorlds = killWF.filter(r => r.worlds);
 const killMetrics = {
-  cvMAE: mean(cv.kill.map(r => Math.abs(r.pred - r.act))),
-  baselineMAE: mean(allK.map(v => Math.abs(v - mean(allK)))),
-  cvR2: 1 - mean(cv.kill.map(r => (r.pred - r.act) ** 2)) / mean(allK.map(v => (v - mean(allK)) ** 2)),
-  residualSd: Math.sqrt(mean(cv.kill.map(r => (r.pred - r.act) ** 2))),
+  method: `walk-forward theo ngày từ ${KILL_WF_FROM}`,
+  n: killWF.length,
+  cvMAE: mean(killWF.map(r => Math.abs(r.pred - r.act))),
+  baselineMAE: mean(killWF.map(r => Math.abs(r.naive - r.act))),
+  cvBias: mean(killWF.map(r => r.pred - r.act)),
+  cvR2: 1 - mean(killWF.map(r => (r.pred - r.act) ** 2)) / mean(killWF.map(r => (r.act - killActMean) ** 2)),
+  residualSd: Math.sqrt(mean(killWF.map(r => (r.pred - r.act) ** 2))),
+  worlds: killWorlds.length ? {
+    n: killWorlds.length,
+    mae: mean(killWorlds.map(r => Math.abs(r.pred - r.act))),
+    bias: mean(killWorlds.map(r => r.pred - r.act)),
+  } : null,
 };
 const baseline = {
   blueWinRate: blueWR,
@@ -1031,7 +1068,11 @@ const out = {
   models: {
     draft: { features: ['frontline', 'ranged', 'mobility', 'pickPriority'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
     withTeam: { features: ['frontline', 'ranged', 'mobility', 'pickPriority', 'familiarity', 'poolDepth', 'frontlineXpool', 'familiarityXpool'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
-    kills: { features: ['pace', 'lengthLean'], w: killModel.w, b: killModel.b, mu: sKill.mu, sg: sKill.sg, lambda: LAMBDA_KILL, metrics: killMetrics },
+    kills: {
+      type: 'levelChamp', level: killModel.level, base: killModel.base,
+      effects: Object.fromEntries(Object.entries(killModel.effects).map(([c, v]) => [c, Math.round(v * 100) / 100])),
+      halfLife: KILL_LEVEL_HL, lambda: KILL_LAMBDA, minGames: KILL_MIN_GAMES, metrics: killMetrics,
+    },
   },
 };
 fs.writeFileSync(path.join(DATA_DIR, 'dataset.json'), JSON.stringify(out));
@@ -1042,7 +1083,9 @@ console.log(`attrs missing: ${out.attrsMissing.length ? out.attrsMissing.join(',
 console.log(`\nbaseline (always blue): acc=${(baseline.accuracy * 100).toFixed(1)}%  logloss=${baseLL.toFixed(4)}`);
 console.log(`draft-only model:  acc=${(draftMetrics.cvAccuracy * 100).toFixed(1)}%  AUC=${draftMetrics.cvAuc.toFixed(3)}  logloss=${draftMetrics.cvLogLoss.toFixed(4)}  w=[${draftModel.w.map(x => x.toFixed(3))}]`);
 console.log(`draft+team model:  acc=${(teamMetrics.cvAccuracy * 100).toFixed(1)}%  AUC=${teamMetrics.cvAuc.toFixed(3)}  logloss=${teamMetrics.cvLogLoss.toFixed(4)}  w=[${teamModel.w.map(x => x.toFixed(3))}]`);
-console.log(`kills model:       MAE=${killMetrics.cvMAE.toFixed(2)} vs baseline ${killMetrics.baselineMAE.toFixed(2)}  R2=${killMetrics.cvR2.toFixed(3)}`);
+console.log(`kills model:       MAE=${killMetrics.cvMAE.toFixed(2)} vs baseline ${killMetrics.baselineMAE.toFixed(2)}  bias=${killMetrics.cvBias.toFixed(2)}  R2=${killMetrics.cvR2.toFixed(3)}  (n=${killMetrics.n}, ${killMetrics.method})` +
+  (killMetrics.worlds ? `  | Worlds n=${killMetrics.worlds.n} MAE=${killMetrics.worlds.mae.toFixed(2)} bias=${killMetrics.worlds.bias.toFixed(2)}` : '') +
+  `  | level hien tai=${killModel.level.toFixed(1)}`);
 console.log('\ndraft calibration:', draftMetrics.calibration.map(c => `${(c.range[0] * 100).toFixed(0)}-${(c.range[1] * 100).toFixed(0)}: n=${c.n}/${c.actual == null ? '-' : (c.actual * 100).toFixed(0) + '%'}`).join('  '));
 console.log('team  calibration:', teamMetrics.calibration.map(c => `${(c.range[0] * 100).toFixed(0)}-${(c.range[1] * 100).toFixed(0)}: n=${c.n}/${c.actual == null ? '-' : (c.actual * 100).toFixed(0) + '%'}`).join('  '));
 console.log(`\ndataset.json ${(fs.statSync(path.join(DATA_DIR, 'dataset.json')).size / 1024).toFixed(0)} KB`);
