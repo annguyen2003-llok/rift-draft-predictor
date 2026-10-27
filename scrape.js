@@ -51,7 +51,13 @@ let TOURNAMENTS = [
      thay vì làm giàu thêm. Đã REVERT (xem git log 2026-10-05) — không thêm
      lại ý tưởng này trừ khi có cách chuẩn hoá cục bộ theo cửa sổ thời gian
      gần thay vì dùng toàn bộ lịch sử (thay đổi kiến trúc lớn hơn, chưa làm). */
-  { league: 'LCP', name: 'LCP 2026 Split 3', tier: 'minor' },
+  /* 2026-10-27 — BỎ LCP khỏi pool hoàn toàn theo yêu cầu người dùng: hiện chỉ
+     dùng chế độ draft-only (thống kê thắng/chọn/cấm theo tướng, không cần
+     rating khu vực theo đội), nên 1 khu vực nhỏ/yếu hơn (LCP) chỉ làm loãng
+     con số thay vì làm giàu thêm — giữ đúng tinh thần kết luận revert ở trên.
+     Đã xoá 80 trận LCP cũ khỏi data/games.json và data/series.json cùng lúc.
+     Đội LCP dự Worlds (TSW, CFO, MVK) vẫn có mặt bình thường qua các trận
+     quốc tế (tier 'international') — không bị ảnh hưởng. */
   { league: 'LCS', name: 'LCS 2026 Summer', tier: 'minor' },
   { league: 'LCS', name: 'LCS 2026 Summer Playoffs', tier: 'minor' },
 

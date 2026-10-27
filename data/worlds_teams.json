@@ -6,5 +6,6 @@
   "LCP": ["Team Secret Whales", "CTBC Flying Oyster", "MVK Esports"],
   "LCS": ["Team Liquid", "LYON", "Cloud9"],
   "CBLOL": ["Los Grandes", "FURIA"],
-  "_note2": "CBLOL (Los Grandes, FURIA) dự CKTG nhưng khu vực này KHÔNG được quét (loại bỏ 2026-09-21, vẫn giữ quyết định đó) — 2 đội này không có trận nào trong games.json nên finalize.js tạo entry RỖNG riêng cho họ (games=0, roster trống) chỉ để chọn được trong dropdown, không có số liệu thật. Chưa chốt: CBLOL Split 2 Champion (đội thứ 3 của CBLOL) — theo Wikipedia lúc tra (2026-10-05) vẫn là TBD, bổ sung khi có tên."
+  "_note2": "CBLOL (Los Grandes, FURIA) dự CKTG nhưng khu vực này KHÔNG được quét (loại bỏ 2026-09-21, vẫn giữ quyết định đó) — 2 đội này không có trận nào trong games.json nên finalize.js tạo entry RỖNG riêng cho họ (games=0, roster trống) chỉ để chọn được trong dropdown, không có số liệu thật. Chưa chốt: CBLOL Split 2 Champion (đội thứ 3 của CBLOL) — theo Wikipedia lúc tra (2026-10-05) vẫn là TBD, bổ sung khi có tên.",
+  "_note3": "2026-10-27 — LCP cũng NGỪNG quét theo yêu cầu người dùng (chỉ dùng chế độ draft-only, LCP là khu vực nhỏ/yếu hơn, chỉ làm loãng thống kê tướng — xem comment trong scrape.js). Khác CBLOL: LCP ĐÃ có 80 trận regional cũ, đã xoá khỏi games.json/series.json cùng lúc. 3 đội LCP dự Worlds (Team Secret Whales, CTBC Flying Oyster, MVK Esports) vẫn có số liệu THẬT từ các trận quốc tế (Play-in/Main Event, tier 'international' không bị ảnh hưởng) — không rơi vào tình trạng entry rỗng như CBLOL."
 }
