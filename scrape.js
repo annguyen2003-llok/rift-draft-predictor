@@ -235,10 +235,19 @@ async function discoverWorldsTournament() {
       text = await res.text();
     } catch (e) { lastErr = e.message; await sleep(1500); }
   }
-  if (!text) { console.error(`  !! Dò Worlds thất bại sau 3 lần thử (${lastErr}) — bỏ qua lượt này, không ảnh hưởng các giải khác`); return; }
+  /* 2026-10-29 — dò thất bại thì KHÔNG bỏ trắng Worlds nữa: dùng lại các giai đoạn
+     Worlds đã từng phát hiện (lưu trong series.json) để vẫn quét được trang của chúng. */
+  let fromSeries = [];
   try {
-    const names = [...text.matchAll(/"trname":"([^"]+)"/g)].map(m => m[1]);
-    const foundAll = names.filter(n => WORLDS_NAME_RE.test(n));
+    fromSeries = [...new Set(JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'series.json'), 'utf8'))
+      .map(s => s.tournament).filter(n => WORLDS_NAME_RE.test(n)))];
+  } catch (e) { /* chưa có series.json */ }
+  if (!text) {
+    console.error(`  !! Dò Worlds thất bại sau 3 lần thử (${lastErr}) — dùng ${fromSeries.length} giai đoạn đã biết từ series.json: ${fromSeries.join(', ') || '(không có)'}`);
+  }
+  try {
+    const names = text ? [...text.matchAll(/"trname":"([^"]+)"/g)].map(m => m[1]) : [];
+    const foundAll = [...new Set([...names.filter(n => WORLDS_NAME_RE.test(n)), ...fromSeries])];
     const newOnes = foundAll.filter(n => !TOURNAMENTS.some(t => t.name === n));
     if (!newOnes.length) return;   // chua len trang moi nao — binh thuong, khong phai loi
     TOURNAMENTS = [...TOURNAMENTS, ...newOnes.map(name => ({ league: 'INT', name, tier: 'international', from: '2026-01-01' }))];
