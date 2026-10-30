@@ -793,32 +793,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Season Playoffs",
-  "seriesId": 82409,
-  "matchup": "BNK FearX vs Dplus KIA",
-  "teamRight": "BNK FearX",
-  "teamLeft": "Dplus KIA",
-  "games": 5,
-  "week": "ROUND1",
-  "patch": "16.16",
-  "date": "2026-09-03"
- },
- {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Grand Finals",
-  "seriesId": 82434,
-  "matchup": "BLG vs Team WE",
-  "teamRight": "Bilibili Gaming",
-  "teamLeft": "Team WE",
-  "games": 4,
-  "week": "ROUND2",
-  "patch": "16.17",
-  "date": "2026-09-03"
- },
- {
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
@@ -1675,5 +1649,57 @@
   "week": "ROUND3",
   "patch": "16.20",
   "date": "2026-10-26"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83669,
+  "matchup": "MKOI vs T1",
+  "teamRight": "T1",
+  "teamLeft": "Movistar KOI",
+  "games": 2,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-28"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83672,
+  "matchup": "IG vs LYON",
+  "teamRight": "LYON",
+  "teamLeft": "Invictus Gaming",
+  "games": 3,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-28"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83675,
+  "matchup": "KC vs CFO",
+  "teamRight": "Karmine Corp",
+  "teamLeft": "CTBC Flying Oyster",
+  "games": 2,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-29"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83678,
+  "matchup": "Top Esports vs BLG",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "Top Esports",
+  "games": 3,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-29"
  }
 ]
