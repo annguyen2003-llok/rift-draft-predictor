@@ -796,32 +796,6 @@
   "league": "LPL",
   "tier": "major",
   "tournament": "LPL 2026 Grand Finals",
-  "seriesId": 82439,
-  "matchup": "AL vs LGD Gaming",
-  "teamRight": "LGD Gaming",
-  "teamLeft": "Anyone s Legend",
-  "games": 4,
-  "week": "ROUND2",
-  "patch": "16.17",
-  "date": "2026-09-04"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Season Playoffs",
-  "seriesId": 82620,
-  "matchup": "KT Rolster vs Dplus KIA",
-  "teamRight": "KT Rolster",
-  "teamLeft": "Dplus KIA",
-  "games": 4,
-  "week": "ROUND2",
-  "patch": "16.16",
-  "date": "2026-09-04"
- },
- {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Grand Finals",
   "seriesId": 82424,
   "matchup": "IG vs Top Esports",
   "teamRight": "Top Esports",
@@ -1701,5 +1675,31 @@
   "week": "ROUND4",
   "patch": "16.20",
   "date": "2026-10-29"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83681,
+  "matchup": "Team Liquid vs Los Grandes",
+  "teamRight": "Los Grandes",
+  "teamLeft": "Team Liquid",
+  "games": 3,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-30"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83684,
+  "matchup": "HLE vs G2 Esports",
+  "teamRight": "G2 Esports",
+  "teamLeft": "Hanwha Life Esports",
+  "games": 2,
+  "week": "ROUND4",
+  "patch": "16.20",
+  "date": "2026-10-30"
  }
 ]
