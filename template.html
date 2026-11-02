@@ -290,6 +290,12 @@
   </div>
   <div class="mode-row">
     <label class="mode-toggle">
+      <input type="checkbox" id="intlMode" checked onchange="analyze()">
+      <span id="intlLabel"></span>
+    </label>
+  </div>
+  <div class="mode-row">
+    <label class="mode-toggle">
       <input type="checkbox" id="useTeam" onchange="analyze()">
       <span id="modeLabel"></span>
     </label>
@@ -427,9 +433,11 @@ let pending = null;
    familiarity/poolDepth. Xem chú thích đầu finalize.js. */
 function sideFeatures(comp, teamName){
   let sumWr=0,sumPres=0,engage=0,frontline=0,cc=0,scaling=0,mobility=0,ranged=0,ad=0,ap=0;
-  let durSum=0,nPace=0, pickPriority=0, familiarity=0, poolDepth=0;
+  let durSum=0,nPace=0, pickPriority=0, familiarity=0, poolDepth=0, intlPres=0;
   for(const role of ROLES){
     const name = comp[role]; if(!name) continue;
+    // độ tranh chấp hiện tại (pick+ban gần đây) — chỉ dùng cho chế độ giải quốc tế
+    intlPres += DATA.models.intl.presence[name] || 0;
     const c = DATA.champions[name], r = c && c.roles[role];
     sumWr += r ? r.wrShrunk : 0.5;
     sumPres += c ? c.presence : 0;
@@ -448,7 +456,7 @@ function sideFeatures(comp, teamName){
   }
   const t = teamName && DATA.teams[teamName];
   return {sumWr,sumPres,engage,frontline,cc,scaling,mobility,ranged,ad,ap,
-    pickPriority, familiarity, poolDepth,
+    pickPriority, familiarity, poolDepth, intlPres,
     mixedness: 1 - Math.abs(ad-ap)/(ad+ap||1),
     lengthLean: nPace ? durSum/nPace : DATA.baselines.avgDuration,
     // teamWr/teamRating: chỉ còn để HIỂN THỊ tham khảo (giống matchupEdge),
@@ -471,8 +479,15 @@ function h2h(role,a,b){
   return m ? {games:m.games, wins:m.wins} : {games:0, wins:0};
 }
 function predict(){
-  const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const B = sideFeatures(state.blue, state.teamBlue), R = sideFeatures(state.red, state.teamRed);
+  /* Chế độ giải quốc tế (2026-11-02): thay hẳn mô hình thắng/thua bằng mô hình độ tranh
+     chấp học riêng từ trận quốc tế — kể cả khi đã chọn đội (độ quen tay/pool đo được tệ
+     hơn ở trận quốc tế). Xem chú thích "mô hình GIẢI QUỐC TẾ" trong finalize.js. */
+  if(document.getElementById("intlMode").checked){
+    const model = DATA.models.intl;
+    return {...runModel(model, [B.intlPres - R.intlPres]), B, R, model, useTeam:false, intlMode:true};
+  }
+  const useTeam = !!(document.getElementById("useTeam").checked && state.teamBlue && state.teamRed);
   const model = useTeam ? DATA.models.withTeam : DATA.models.draft;
   /* Thứ tự PHẢI khớp models.*.features trong finalize.js.
      2026-09-18(2): thêm 2 tương tác nhân đôi đã kiểm chứng bằng bootstrap —
@@ -665,7 +680,7 @@ function randomizeTeam(side){
 function randomizeBoth(){ randomizeTeam("blue"); randomizeTeam("red"); }
 function resetAll(){
   state.blue = {}; state.red = {}; state.teamBlue = ""; state.teamRed = "";
-  renderTeamPickers(); renderSchedule(); updateModeLabel(); renderSlots();
+  renderTeamPickers(); renderSchedule(); updateModeLabel(); renderIntlLabel(); renderSlots();
   document.getElementById("results").style.display = "none";
 }
 
@@ -680,7 +695,14 @@ const FEAT_LABEL = {
   poolDepth:"Độ sâu pool tướng",
   frontlineXpool:"Tuyến đầu × độ sâu pool",
   familiarityXpool:"Quen tay × độ sâu pool",
+  presence:"Tướng đang được tranh chấp (pick+ban gần đây)",
 };
+function renderIntlLabel(){
+  const m = DATA.models.intl.metrics, e = m.byEvent;
+  document.getElementById("intlLabel").innerHTML =
+    `Chế độ giải quốc tế (Worlds) <span class="thin">— đội giành được nhiều tướng đang được tranh chấp hơn được nghiêng về. ` +
+    `Kiểm chứng trên ${m.n} trận quốc tế: đúng ${pct1(m.cvAccuracy)} (MSI ${pct(e.MSI.acc)}, EWC ${pct(e.EWC.acc)}, Worlds ${pct(e.Worlds.acc)}). Tắt để dùng mô hình kit thường.</span>`;
+}
 
 /* Chốt an toàn: thứ tự đặc trưng ở đây phải khớp models.*.features do finalize.js
    sinh ra. Nếu lệch, mô hình vẫn chạy nhưng nhân sai trọng số vào sai đặc trưng —
@@ -689,6 +711,7 @@ const FEAT_LABEL = {
   const expect = {
     draft: ["frontline","ranged","mobility","pickPriority"],
     withTeam: ["frontline","ranged","mobility","pickPriority","familiarity","poolDepth","frontlineXpool","familiarityXpool"],
+    intl: ["presence"],
   };
   for(const [key, want] of Object.entries(expect)){
     const got = (DATA.models[key] && DATA.models[key].features) || [];
@@ -712,7 +735,14 @@ function analyze(){
   document.getElementById("verdictTitle").textContent =
     lead < 4 ? "Hai đội hình gần như ngang nhau"
              : `Đội ${pB > pR ? "Xanh" : "Đỏ"} ${lead < 12 ? "nhỉnh nhẹ" : "có lợi thế"} theo mô hình`;
-  document.getElementById("verdictSub").innerHTML = res.useTeam
+  const presTop = side => ROLES.map(r => state[side][r]).filter(Boolean)
+    .map(c => ({c, v: DATA.models.intl.presence[c] || 0})).sort((a,b) => b.v-a.v)
+    .map(x => `${x.c} ${pct(x.v)}`).join(", ");
+  document.getElementById("verdictSub").innerHTML = res.intlMode
+    ? `Chế độ giải quốc tế: so độ tranh chấp (tỉ lệ trận gần đây tướng bị pick hoặc ban) của 5 tướng mỗi bên — ` +
+      `Xanh tổng <b>${(res.B.intlPres*100).toFixed(0)}</b> (${presTop("blue")}) · Đỏ tổng <b>${(res.R.intlPres*100).toFixed(0)}</b> (${presTop("red")}). ` +
+      `Học riêng từ ${DATA.models.intl.nTrain} trận quốc tế, không dùng tên đội, không dùng lợi thế bên.`
+    : res.useTeam
     ? `Đang đánh giá qua draft đầy đủ (kit + ưu tiên pick + độ quen tay + độ sâu pool). Ở mức này mô hình xếp hạng đúng ${res.model.metrics.cvAuc.toFixed(3)} AUC.`
     : `Chưa biết tuyển thủ (chưa chọn đội), chỉ còn kit + ưu tiên pick. <b>Chế độ này hiện đo được AUC ${res.model.metrics.cvAuc.toFixed(3)}</b> — ` +
       `gần 50/50 khi 2 bên draft cân bằng (mô hình không còn được phép mượn lợi thế side xanh để tự nâng độ chính xác — xem mục thông tin). ` +
@@ -722,7 +752,14 @@ function analyze(){
   document.getElementById("fillB").style.width = (pB*100)+"%";
   document.getElementById("fillR").style.width = (pR*100)+"%";
   const bin = met.calibration.find(c => pB >= c.range[0] && pB < c.range[1]) || met.calibration[met.calibration.length-1];
-  document.getElementById("probFoot").innerHTML = bin && bin.n >= 10
+  // chế độ quốc tế: gộp mọi lượt mô hình nghiêng (>50%) — xác suất chỉ 45–57% nên chia nhỏ hơn thì quá ít trận
+  const fav = res.intlMode ? met.calibration.filter(c => c.range[0] >= 0.5) : [];
+  const favN = fav.reduce((s, c) => s + c.n, 0), favWin = favN ? fav.reduce((s, c) => s + c.n * (c.actual || 0), 0) / favN : null;
+  document.getElementById("probFoot").innerHTML = res.intlMode
+    ? (lead < 1 ? `Hai bên gần như bằng độ tranh chấp — mô hình không nghiêng về bên nào.`
+      : `Kiểm chứng: trong ${favN} trận quốc tế, đội được mô hình nghiêng về thực tế thắng <b>${pct(favWin)}</b>. ` +
+        `Con số % ở trên khiêm tốn hơn mức thật — đọc như "nghiêng về bên nào", không phải xác suất chính xác.`)
+    : bin && bin.n >= 10
     ? `Kiểm chứng hiệu chỉnh: trong ${bin.n} trận mà mô hình cũng dự đoán khoảng ${pct(bin.range[0])}–${pct(bin.range[1])}, đội xanh thực tế thắng <b>${pct(bin.actual)}</b>.`
     : `Khoảng xác suất này có quá ít trận để kiểm chứng hiệu chỉnh.`;
 
@@ -740,12 +777,12 @@ function analyze(){
           <div class="driver-fill ${toB?"b":"r"}" style="${toB?"left:50%":"right:50%"};width:${w}%"></div></div>
         <div class="driver-val">${c.contribution >= 0 ? "+" : ""}${c.contribution.toFixed(3)}</div>
       </div>`;
-    }).join("") +
+    }).join("") + (res.intlMode ? "" :
     `<div class="driver-note">Điểm khởi đầu của mô hình là lợi thế side: ${pct1(DATA.baselines.blueWinRate)} nghiêng về xanh
       (${DATA.meta.games} trận — LPL ${pct1(DATA.baselines.byLeague.LPL.blueWinRate)},
        LCK ${pct1(DATA.baselines.byLeague.LCK.blueWinRate)},
        LEC ${pct1(DATA.baselines.byLeague.LEC.blueWinRate)}).
-      Các yếu tố trên chỉ dịch chuyển quanh mốc đó.</div>`;
+      Các yếu tố trên chỉ dịch chuyển quanh mốc đó.</div>`);
 
   /* lanes — display only */
   document.getElementById("laneTable").innerHTML = ROLES.map(role => {
@@ -873,17 +910,17 @@ function analyze(){
   document.getElementById("modelPanel").innerHTML = `
     <div class="metric-grid">
       <div class="metric"><div class="metric-k">Đang dùng</div>
-        <div class="metric-v">${res.useTeam ? "Đội hình + đội" : "Chỉ đội hình"}</div>
+        <div class="metric-v">${res.intlMode ? "Giải quốc tế" : res.useTeam ? "Đội hình + đội" : "Chỉ đội hình"}</div>
         <div class="metric-s">${m.features.length} đặc trưng, λ=${m.lambda}</div></div>
       <div class="metric"><div class="metric-k">AUC</div>
         <div class="metric-v">${met.cvAuc.toFixed(3)}</div>
         <div class="metric-s">0.5 = ngẫu nhiên</div></div>
       <div class="metric"><div class="metric-k">Log loss</div>
         <div class="metric-v">${met.cvLogLoss.toFixed(4)}</div>
-        <div class="metric-s">mốc cơ sở ${base.logLoss.toFixed(4)}</div></div>
+        <div class="metric-s">${res.intlMode ? "đoán bừa 0.6931" : `mốc cơ sở ${base.logLoss.toFixed(4)}`}</div></div>
       <div class="metric"><div class="metric-k">Độ chính xác</div>
         <div class="metric-v">${pct1(met.cvAccuracy)}</div>
-        <div class="metric-s">mốc cơ sở ${pct1(base.accuracy)}</div></div>
+        <div class="metric-s">${res.intlMode ? `${met.n} trận quốc tế · đoán bừa 50%` : `mốc cơ sở ${pct1(base.accuracy)}`}</div></div>
       <div class="metric"><div class="metric-k">Cỡ dữ liệu</div>
         <div class="metric-v">${DATA.meta.games}</div>
         <div class="metric-s">trận · ${DATA.meta.dateFrom} → ${DATA.meta.dateTo}</div></div>
@@ -1610,7 +1647,7 @@ function exportUpdatedFile(){
     `qua 4 lớp kiểm chứng trước khi dùng. Phân loại kit tướng là đánh giá chuyên môn, được ghi nhận riêng ` +
     `và không trộn vào số liệu đo được. Trọng số mô hình học từ chính ${m.games} trận này — không hệ số nào gán tay. ` +
     `Cập nhật dữ liệu: chạy lại scraper rồi build lại file.`;
-  renderTeamPickers(); renderSchedule(); updateModeLabel();
+  renderTeamPickers(); renderSchedule(); updateModeLabel(); renderIntlLabel();
   randomizeBoth();
 })();
 </script>

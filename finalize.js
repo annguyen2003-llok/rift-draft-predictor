@@ -734,6 +734,65 @@ const killMetrics = {
     bias: mean(killWorlds.map(r => r.pred - r.act)),
   } : null,
 };
+// ------------------------------------------------------------ mô hình GIẢI QUỐC TẾ
+/* 2026-11-02 — CHẾ ĐỘ GIẢI QUỐC TẾ cho playoff Worlds (draft-only: không tên đội, không bên).
+   Đặc trưng duy nhất: độ tranh chấp của 5 tướng đã pick (tỉ lệ ván gần đây tướng bị pick
+   HOẶC ban, suy giảm half-life 150 ván, bể toàn cục), đội A trừ đội B. CHỈ HỌC TỪ VÁN QUỐC TẾ:
+   học từ mọi ván thì hệ số bị LẬT DẤU (ở giải khu vực tín hiệu hơi ngược) và mô hình đoán
+   ngược ở Worlds (35.6% đúng). Chọn cấu hình chỉ theo MSI+EWC, rồi chấm 1 lần trên Worlds giữ
+   kín: MSI 59.2% / EWC 60.8% / Worlds 64.4%, so với mô hình draft 57.7 / 43.1 / 54.8%;
+   chung 195 ván quốc tế +8.5 điểm % đúng, bootstrap P(tốt hơn)=98%.
+   Đã thử và KHÔNG tốt hơn khi ghép thêm kit3 / pickPriority / độ quen tay / pool.
+   Người dùng chấp nhận tín hiệu này vì chỉ cần đúng cho Worlds năm nay (meta có thể đổi
+   các năm sau — đã báo trước). Script chọn mô hình: scratchpad golgg/ws_select.js. */
+const INTL_PRES_HL = 150, INTL_LAMBDA = 100, INTL_MIN_TRAIN = 40;
+const sideChampsOf = (g, sk) => ROLES.map(r => g[sk].comp[r] && g[sk].comp[r].champion).filter(Boolean);
+const presPool = { n: 0, c: {} }, presDecay = Math.exp(-Math.log(2) / INTL_PRES_HL);
+const presOf = c => presPool.n ? (presPool.c[c] || 0) / presPool.n : 0;
+const presDiff = new Array(N).fill(0);
+const gameDays = [...new Set(games.map(g => g.date))].sort();
+for (const day of gameDays) {
+  const idx = []; games.forEach((g, i) => { if (g.date === day) idx.push(i); });
+  for (const i of idx) presDiff[i] = sideChampsOf(games[i], 'blue').reduce((s, c) => s + presOf(c), 0) - sideChampsOf(games[i], 'red').reduce((s, c) => s + presOf(c), 0);
+  for (const i of idx) {   // cập nhật SAU khi đã đọc: ván cùng ngày không thấy nhau
+    presPool.n = presPool.n * presDecay + 1; for (const c in presPool.c) presPool.c[c] *= presDecay;
+    for (const sk of ['blue', 'red']) for (const c of [...sideChampsOf(games[i], sk), ...(games[i][sk].bans || [])]) presPool.c[c] = (presPool.c[c] || 0) + 1;
+  }
+}
+// logistic 1 đặc trưng, đối xứng: mỗi ván học cả 2 chiều, không hệ số chặn
+function fitSym1(xs, ys, lambda) {
+  const sg = Math.sqrt(mean(xs.map(x => x * x))) || 1; let w = 0;
+  for (let it = 0; it < 50; it++) {
+    let gr = 0, h = 0;
+    xs.forEach((x, i) => { const z = x / sg; for (const [v, t] of [[z, ys[i]], [-z, 1 - ys[i]]]) { const p = 1 / (1 + Math.exp(-w * v)); gr += (p - t) * v; h += p * (1 - p) * v * v; } });
+    gr += 2 * lambda * w; h += 2 * lambda; const st = gr / h; w -= st; if (Math.abs(st) < 1e-10) break;
+  }
+  return { w, sg };
+}
+const intlIdx = games.map((g, i) => i).filter(i => isInternational(games[i]));
+const intlEvent = g => /^Worlds/.test(g.tournament) ? 'Worlds' : /MSI/.test(g.tournament) ? 'MSI' : /World Cup/.test(g.tournament) ? 'EWC' : 'other';
+const intlWF = [];
+for (const day of gameDays) {
+  const test = intlIdx.filter(i => games[i].date === day); if (!test.length) continue;
+  const tr = intlIdx.filter(i => games[i].date < day); if (tr.length < INTL_MIN_TRAIN) continue;
+  const m = fitSym1(tr.map(i => presDiff[i]), tr.map(i => games[i].blue.win ? 1 : 0), INTL_LAMBDA);
+  for (const i of test) intlWF.push({ p: 1 / (1 + Math.exp(-m.w * presDiff[i] / m.sg)), y: games[i].blue.win ? 1 : 0, evt: intlEvent(games[i]) });
+}
+const intlAcc = rows => mean(rows.map(r => r.p === 0.5 ? 0.5 : (r.p > 0.5) === (r.y === 1) ? 1 : 0));
+// hiệu chỉnh tính trên CẢ HAI chiều (không bên): "đội được cho X% thực tế thắng bao nhiêu"
+const intlBoth = intlWF.flatMap(r => [{ p: r.p, y: r.y }, { p: 1 - r.p, y: 1 - r.y }]);
+const intlMetrics = {
+  method: 'walk-forward theo ngày, chỉ học từ ván quốc tế trước đó', n: intlWF.length,
+  cvAccuracy: intlAcc(intlWF), cvAuc: auc(intlBoth),
+  cvLogLoss: -mean(intlWF.map(r => Math.log(r.y ? r.p : 1 - r.p))),
+  byEvent: Object.fromEntries(['MSI', 'EWC', 'Worlds'].map(e => { const r = intlWF.filter(x => x.evt === e); return [e, { n: r.length, acc: r.length ? intlAcc(r) : null }]; })),
+  calibration: [[0, 0.45], [0.45, 0.5], [0.5, 0.55], [0.55, 1.0001]].map(([lo, hi]) => { const r = intlBoth.filter(x => x.p >= lo && x.p < hi);
+    return { range: [lo, hi], n: r.length, actual: r.length ? mean(r.map(x => x.y)) : null }; }),
+};
+const intlModel = fitSym1(intlIdx.map(i => presDiff[i]), intlIdx.map(i => games[i].blue.win ? 1 : 0), INTL_LAMBDA);
+// độ tranh chấp HIỆN TẠI (sau ván cuối cùng) — trang cộng giá trị này của 5 tướng mỗi bên
+const presenceNow = Object.fromEntries(Object.keys(presPool.c).map(c => [c, Math.round(presOf(c) * 10000) / 10000]));
+
 const baseline = {
   blueWinRate: blueWR,
   accuracy: Math.max(blueWR, 1 - blueWR),
@@ -1073,6 +1132,9 @@ const out = {
   models: {
     draft: { features: ['frontline', 'ranged', 'mobility', 'pickPriority'], w: draftModel.w, b: draftModel.b, mu: sDraft.mu, sg: sDraft.sg, lambda: LAMBDA_WIN, metrics: draftMetrics },
     withTeam: { features: ['frontline', 'ranged', 'mobility', 'pickPriority', 'familiarity', 'poolDepth', 'frontlineXpool', 'familiarityXpool'], w: teamModel.w, b: teamModel.b, mu: sTeam.mu, sg: sTeam.sg, lambda: LAMBDA_WIN, metrics: teamMetrics },
+    // chế độ giải quốc tế — xem chú thích "mô hình GIẢI QUỐC TẾ" phía trên
+    intl: { type: 'presenceIntl', features: ['presence'], w: [intlModel.w], b: 0, mu: [0], sg: [intlModel.sg],
+      lambda: INTL_LAMBDA, halfLife: INTL_PRES_HL, nTrain: intlIdx.length, presence: presenceNow, metrics: intlMetrics },
     kills: {
       type: 'levelChamp', level: killModel.level, base: killModel.base,
       effects: Object.fromEntries(Object.entries(killModel.effects).map(([c, v]) => [c, Math.round(v * 100) / 100])),
@@ -1088,6 +1150,8 @@ console.log(`attrs missing: ${out.attrsMissing.length ? out.attrsMissing.join(',
 console.log(`\nbaseline (always blue): acc=${(baseline.accuracy * 100).toFixed(1)}%  logloss=${baseLL.toFixed(4)}`);
 console.log(`draft-only model:  acc=${(draftMetrics.cvAccuracy * 100).toFixed(1)}%  AUC=${draftMetrics.cvAuc.toFixed(3)}  logloss=${draftMetrics.cvLogLoss.toFixed(4)}  w=[${draftModel.w.map(x => x.toFixed(3))}]`);
 console.log(`draft+team model:  acc=${(teamMetrics.cvAccuracy * 100).toFixed(1)}%  AUC=${teamMetrics.cvAuc.toFixed(3)}  logloss=${teamMetrics.cvLogLoss.toFixed(4)}  w=[${teamModel.w.map(x => x.toFixed(3))}]`);
+console.log(`intl (presence):   acc=${(intlMetrics.cvAccuracy * 100).toFixed(1)}%  AUC=${intlMetrics.cvAuc.toFixed(3)}  logloss=${intlMetrics.cvLogLoss.toFixed(4)}  n=${intlMetrics.n}  ` +
+  Object.entries(intlMetrics.byEvent).map(([e, v]) => `${e} ${v.acc == null ? '-' : (v.acc * 100).toFixed(1) + '%'}`).join(' / ') + `  w=${intlModel.w.toFixed(3)}`);
 console.log(`kills model:       MAE=${killMetrics.cvMAE.toFixed(2)} vs baseline ${killMetrics.baselineMAE.toFixed(2)}  bias=${killMetrics.cvBias.toFixed(2)}  R2=${killMetrics.cvR2.toFixed(3)}  (n=${killMetrics.n}, ${killMetrics.method})` +
   (killMetrics.worlds ? `  | Worlds n=${killMetrics.worlds.n} MAE=${killMetrics.worlds.mae.toFixed(2)} bias=${killMetrics.worlds.bias.toFixed(2)}` : '') +
   `  | level hien tai=${killModel.level.toFixed(1)}`);
