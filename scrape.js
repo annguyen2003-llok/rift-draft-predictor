@@ -168,6 +168,22 @@ function parseMatchlist(html, tour) {
   return out;
 }
 
+/* Series CHƯA đá (cột tỉ số là "-", link dạng page-preview) ở trang matchlist — dùng cho
+   khối lịch playoff trên trang. Series đã đá có tỉ số nên không lọt vào đây, tự biến mất. */
+function parseUpcoming(html, tour) {
+  const h = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+  const body = h.slice(h.indexOf('results</caption>'));
+  const out = [];
+  for (const m of body.matchAll(/<tr>([\s\S]*?)<\/tr>/gi)) {
+    const cells = [...m[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map(c => decode(c[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim());
+    const link = m[1].match(/game\/stats\/(\d+)\/page-preview\//);
+    const date = (cells[6] || '').match(/\d{4}-\d{2}-\d{2}/);
+    if (!link || !date || /\d\s*-\s*\d/.test(cells[2] || '')) continue;
+    out.push({ tournament: tour.name, seriesId: +link[1], matchup: cells[0], teamA: cells[1], teamB: cells[3], stage: cells[4], date: date[0] });
+  }
+  return out;
+}
+
 /* Trả về danh sách {gameId, seriesId, gameInSeries} lấy từ trang riêng của 1 đội.
    Không có ngày/giải kèm theo — parse.js sẽ tự đọc từ trang trận lúc tải. */
 async function fetchTeamGameRefs(entry) {
@@ -265,6 +281,10 @@ async function main() {
   const oldSeriesPath = path.join(DATA_DIR, 'series.json');
   const oldSeries = fs.existsSync(oldSeriesPath) ? JSON.parse(fs.readFileSync(oldSeriesPath, 'utf8')) : [];
   const allSeries = [];
+  // Lịch series chưa đá (playoff...) — cùng quy tắc: giải nào tải hỏng thì giữ lịch cũ của giải đó.
+  const schedPath = path.join(DATA_DIR, 'schedule.json');
+  const oldSched = fs.existsSync(schedPath) ? JSON.parse(fs.readFileSync(schedPath, 'utf8')) : [];
+  const schedule = [];
   let anyHardFail = false;
   for (const t of TOURNAMENTS) {
     const url = 'https://gol.gg/tournament/tournament-matchlist/' + encodeURIComponent(t.name) + '/';
@@ -273,8 +293,10 @@ async function main() {
       console.error('FAILED matchlist', t.name, '— giữ nguyên series cũ của giải này (nếu có)');
       anyHardFail = true;
       allSeries.push(...oldSeries.filter(s => s.tournament === t.name && s.date >= (t.from || CUTOFF)));
+      schedule.push(...oldSched.filter(s => s.tournament === t.name));
       continue;
     }
+    schedule.push(...parseUpcoming(html, t));
     const series = parseMatchlist(html, t);
     const floor = t.from || CUTOFF;          // giải quốc tế có mốc riêng, xem chú thích TOURNAMENTS
     const recent = series.filter(s => s.date >= floor);
@@ -288,6 +310,9 @@ async function main() {
   console.error(`\n=> ${allSeries.length} series / ~${totalGames} games trong cửa sổ thời gian` +
     (anyHardFail ? ' (MỘT SỐ GIẢI DÙNG DỮ LIỆU CŨ vì fetch thất bại hoàn toàn)' : '') + '\n');
   fs.writeFileSync(oldSeriesPath, JSON.stringify(allSeries, null, 1));
+  schedule.sort((a, b) => a.date.localeCompare(b.date) || a.seriesId - b.seriesId);
+  fs.writeFileSync(schedPath, JSON.stringify(schedule, null, 1));
+  console.error(`Lịch chưa đá: ${schedule.length} series` + (schedule.length ? ` (${schedule[0].date} → ${schedule[schedule.length - 1].date})` : ''));
   if (process.env.DRY) {
     const byT = allSeries.reduce((a, s) => (a[s.tournament] = (a[s.tournament] || 0) + s.games, a), {});
     console.error('games per tournament:', JSON.stringify(byT, null, 1));

@@ -34,6 +34,12 @@
   .badges{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
   .badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);
     background:var(--panel);padding:6px 13px;border-radius:20px;font-size:11.5px;color:var(--text);}
+  .sched{max-width:1100px;margin:0 auto 14px;padding:12px 16px;border:1px solid var(--line);background:var(--panel);border-radius:10px;}
+  .sched-title{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .sched-list{display:flex;flex-wrap:wrap;gap:8px;}
+  .sched-item{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;text-align:left;}
+  .sched-item:hover{border-color:var(--gold);}
+  .sched-item small{display:block;color:var(--muted);font-size:11px;margin-top:2px;}
   .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);}
   .badge b{color:var(--gold-bright);font-weight:600;}
   .badge.act{cursor:pointer;color:var(--gold);} .badge.act:hover{border-color:var(--gold);}
@@ -255,6 +261,8 @@
   <div class="subtitle" id="subtitle"></div>
   <div class="badges" id="badges"></div>
 </div>
+
+<div class="sched" id="schedule" hidden></div>
 
 <div class="wrap">
   <div class="board">
@@ -524,6 +532,26 @@ function renderTeamPickers(){
     sel.value = state[side === "blue" ? "teamBlue" : "teamRed"];
   }
 }
+/* Lịch series chưa đá (playoff...) từ gol.gg. Bấm 1 trận để nạp sẵn 2 đội vào ô chọn đội
+   (bên xanh/đỏ chỉ là chỗ đặt, không mang ý nghĩa dự đoán). Series đã đá tự rớt khỏi danh sách. */
+function renderSchedule(){
+  const box = document.getElementById("schedule");
+  const known = new Set([...document.querySelectorAll("#team-blue option")].map(o => o.value));
+  const list = (DATA.meta.schedule || []).filter(s => s.teamA && s.teamB);
+  if(!list.length){ box.hidden = true; return; }
+  const stage = {QUARTERFINALS:"Tứ kết", SEMIFINALS:"Bán kết", FINALS:"Chung kết"};
+  box.hidden = false;
+  box.innerHTML = `<div class="sched-title">Lịch tiếp theo — ${list[0].tournament}</div><div class="sched-list">` +
+    list.map((s, i) => `<button class="sched-item" onclick="pickScheduled(${i})"${known.has(s.teamA) && known.has(s.teamB) ? "" : " disabled"}>` +
+      `<b>${s.teamA} vs ${s.teamB}</b><small>${stage[s.stage] || s.stage} · ${s.date.slice(8)}/${s.date.slice(5,7)}</small></button>`).join("") + `</div>`;
+}
+function pickScheduled(i){
+  const s = DATA.meta.schedule[i];
+  state.teamBlue = s.teamA; state.teamRed = s.teamB;
+  document.getElementById("team-blue").value = s.teamA;
+  document.getElementById("team-red").value = s.teamB;
+  onTeamChange();
+}
 function onTeamChange(){
   state.teamBlue = document.getElementById("team-blue").value;
   state.teamRed = document.getElementById("team-red").value;
@@ -637,7 +665,7 @@ function randomizeTeam(side){
 function randomizeBoth(){ randomizeTeam("blue"); randomizeTeam("red"); }
 function resetAll(){
   state.blue = {}; state.red = {}; state.teamBlue = ""; state.teamRed = "";
-  renderTeamPickers(); updateModeLabel(); renderSlots();
+  renderTeamPickers(); renderSchedule(); updateModeLabel(); renderSlots();
   document.getElementById("results").style.display = "none";
 }
 
@@ -1582,7 +1610,7 @@ function exportUpdatedFile(){
     `qua 4 lớp kiểm chứng trước khi dùng. Phân loại kit tướng là đánh giá chuyên môn, được ghi nhận riêng ` +
     `và không trộn vào số liệu đo được. Trọng số mô hình học từ chính ${m.games} trận này — không hệ số nào gán tay. ` +
     `Cập nhật dữ liệu: chạy lại scraper rồi build lại file.`;
-  renderTeamPickers(); updateModeLabel();
+  renderTeamPickers(); renderSchedule(); updateModeLabel();
   randomizeBoth();
 })();
 </script>

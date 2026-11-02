@@ -949,8 +949,13 @@ function checkSeries() {
 }
 const seriesCheck = checkSeries();
 
+/* Lịch series chưa đá (scrape.js ghi data/schedule.json) — trang hiện thành khối "lịch playoff". */
+const schedulePath = path.join(DATA_DIR, 'schedule.json');
+const schedule = fs.existsSync(schedulePath) ? JSON.parse(fs.readFileSync(schedulePath, 'utf8')) : [];
+
 const out = {
   meta: {
+    schedule,
     source: 'gol.gg', method: 'per-game static pages parsed locally',
     builtAt: new Date().toISOString().slice(0, 10),
     games: N,
