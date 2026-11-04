@@ -793,19 +793,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Grand Finals",
-  "seriesId": 82793,
-  "matchup": "IG vs LGD Gaming",
-  "teamRight": "LGD Gaming",
-  "teamLeft": "Invictus Gaming",
-  "games": 3,
-  "week": "ROUND3",
-  "patch": "16.17",
-  "date": "2026-09-08"
- },
- {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
