@@ -1,24 +1,6 @@
 [
  {
   "tournament": "Worlds 2026 Main Event",
-  "seriesId": 83694,
-  "matchup": "Top Esports vs IG",
-  "teamA": "Top Esports",
-  "teamB": "Invictus Gaming",
-  "stage": "QUARTERFINALS",
-  "date": "2026-11-03"
- },
- {
-  "tournament": "Worlds 2026 Main Event",
-  "seriesId": 83699,
-  "matchup": "Gen.G vs LYON",
-  "teamA": "Gen.G",
-  "teamB": "LYON",
-  "stage": "QUARTERFINALS",
-  "date": "2026-11-04"
- },
- {
-  "tournament": "Worlds 2026 Main Event",
   "seriesId": 83704,
   "matchup": "Dplus KIA vs BLG",
   "teamA": "Dplus KIA",

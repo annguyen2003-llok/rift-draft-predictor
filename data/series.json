@@ -1545,5 +1545,31 @@
   "week": "ROUND5",
   "patch": "16.20",
   "date": "2026-10-31"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83694,
+  "matchup": "Top Esports vs IG",
+  "teamRight": "Invictus Gaming",
+  "teamLeft": "Top Esports",
+  "games": 4,
+  "week": "QUARTERFINALS",
+  "patch": "16.20",
+  "date": "2026-11-03"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83699,
+  "matchup": "Gen.G vs LYON",
+  "teamRight": "Gen.G",
+  "teamLeft": "LYON",
+  "games": 3,
+  "week": "QUARTERFINALS",
+  "patch": "16.20",
+  "date": "2026-11-04"
  }
 ]
