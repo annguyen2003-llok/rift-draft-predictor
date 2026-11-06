@@ -1571,5 +1571,18 @@
   "week": "QUARTERFINALS",
   "patch": "16.20",
   "date": "2026-11-04"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83704,
+  "matchup": "Dplus KIA vs BLG",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "Dplus KIA",
+  "games": 3,
+  "week": "QUARTERFINALS",
+  "patch": "16.20",
+  "date": "2026-11-05"
  }
 ]

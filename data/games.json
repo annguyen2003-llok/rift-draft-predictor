@@ -131288,5 +131288,470 @@
    "killTotalsMatch": true,
    "teams": "Gen.G|LYON"
   }
+ },
+ {
+  "ok": true,
+  "gameId": 83704,
+  "duration": "33:21",
+  "durationMin": 33.35,
+  "patch": "16.20",
+  "dateFromPage": "2026-11-05",
+  "weekFromPage": "QUARTERFINALS",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 24,
+   "towers": 11,
+   "dragons": 5,
+   "barons": 2,
+   "gold": 72400,
+   "bans": [
+    "Vi",
+    "Olaf",
+    "Lee Sin",
+    "Kaisa",
+    "Syndra"
+   ],
+   "picksDraftOrder": [
+    "Nautilus",
+    "Naafiri",
+    "Ambessa",
+    "Cassiopeia",
+    "Galio"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Ambessa",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 3,
+     "d": 3,
+     "a": 5
+    },
+    "jungle": {
+     "champion": "Naafiri",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 12,
+     "d": 1,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Galio",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 4,
+     "d": 0,
+     "a": 15
+    },
+    "adc": {
+     "champion": "Cassiopeia",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 5,
+     "d": 3,
+     "a": 9
+    },
+    "support": {
+     "champion": "Nautilus",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 3,
+     "a": 16
+    }
+   }
+  },
+  "red": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": false,
+   "kills": 9,
+   "towers": 3,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 63600,
+   "bans": [
+    "Renata Glasc",
+    "Nocturne",
+    "Jarvan IV",
+    "Orianna",
+    "Ezreal"
+   ],
+   "picksDraftOrder": [
+    "Qiyana",
+    "Rell",
+    "Rumble",
+    "Corki",
+    "Akali"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Rumble",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 2,
+     "d": 4,
+     "a": 4
+    },
+    "jungle": {
+     "champion": "Qiyana",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 4,
+     "d": 6,
+     "a": 1
+    },
+    "mid": {
+     "champion": "Akali",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 2,
+     "d": 5,
+     "a": 2
+    },
+    "adc": {
+     "champion": "Corki",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 1,
+     "d": 4,
+     "a": 5
+    },
+    "support": {
+     "champion": "Rell",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 0,
+     "d": 5,
+     "a": 7
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-11-05",
+  "week": "QUARTERFINALS",
+  "seriesId": 83704,
+  "gameInSeries": 1,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Bilibili Gaming|Dplus KIA"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83705,
+  "duration": "32:11",
+  "durationMin": 32.18,
+  "patch": "16.20",
+  "dateFromPage": "2026-11-05",
+  "weekFromPage": "QUARTERFINALS",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": false,
+   "kills": 10,
+   "towers": 2,
+   "dragons": 0,
+   "barons": 0,
+   "gold": 57900,
+   "bans": [
+    "Renata Glasc",
+    "Nocturne",
+    "Jayce",
+    "Locke",
+    "Alistar"
+   ],
+   "picksDraftOrder": [
+    "Jarvan IV",
+    "Yunara",
+    "Lulu",
+    "Ryze",
+    "Kennen"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Kennen",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 2,
+     "d": 0,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Jarvan IV",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 2,
+     "d": 4,
+     "a": 8
+    },
+    "mid": {
+     "champion": "Ryze",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 3,
+     "d": 2,
+     "a": 4
+    },
+    "adc": {
+     "champion": "Yunara",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 2,
+     "d": 5,
+     "a": 7
+    },
+    "support": {
+     "champion": "Lulu",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 1,
+     "d": 2,
+     "a": 9
+    }
+   }
+  },
+  "red": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 13,
+   "towers": 8,
+   "dragons": 5,
+   "barons": 0,
+   "gold": 64100,
+   "bans": [
+    "Vi",
+    "Olaf",
+    "Lucian",
+    "Vayne",
+    "Syndra"
+   ],
+   "picksDraftOrder": [
+    "Lee Sin",
+    "Ezreal",
+    "Gnar",
+    "Orianna",
+    "Leona"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Gnar",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 2,
+     "d": 1,
+     "a": 1
+    },
+    "jungle": {
+     "champion": "Lee Sin",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 4,
+     "d": 2,
+     "a": 5
+    },
+    "mid": {
+     "champion": "Orianna",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 2,
+     "d": 0,
+     "a": 8
+    },
+    "adc": {
+     "champion": "Ezreal",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 5,
+     "d": 2,
+     "a": 7
+    },
+    "support": {
+     "champion": "Leona",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 5,
+     "a": 9
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-11-05",
+  "week": "QUARTERFINALS",
+  "seriesId": 83704,
+  "gameInSeries": 2,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Dplus KIA|Bilibili Gaming"
+  }
+ },
+ {
+  "ok": true,
+  "gameId": 83706,
+  "duration": "32:36",
+  "durationMin": 32.6,
+  "patch": "16.20",
+  "dateFromPage": "2026-11-05",
+  "weekFromPage": "QUARTERFINALS",
+  "tournamentFromPage": "Worlds 2026 Main Event",
+  "blue": {
+   "team": "Dplus KIA",
+   "teamFull": "Dplus KIA",
+   "win": false,
+   "kills": 9,
+   "towers": 3,
+   "dragons": 1,
+   "barons": 0,
+   "gold": 57600,
+   "bans": [
+    "Nocturne",
+    "Renata Glasc",
+    "Locke",
+    "Skarner",
+    "Yone"
+   ],
+   "picksDraftOrder": [
+    "Olaf",
+    "Pantheon",
+    "Viktor",
+    "Aphelios",
+    "Thresh"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Olaf",
+     "playerId": "5392",
+     "player": "Siwoo",
+     "k": 1,
+     "d": 7,
+     "a": 3
+    },
+    "jungle": {
+     "champion": "Pantheon",
+     "playerId": "3895",
+     "player": "Lucid",
+     "k": 4,
+     "d": 5,
+     "a": 3
+    },
+    "mid": {
+     "champion": "Viktor",
+     "playerId": "1250",
+     "player": "ShowMaker",
+     "k": 3,
+     "d": 3,
+     "a": 3
+    },
+    "adc": {
+     "champion": "Aphelios",
+     "playerId": "4940",
+     "player": "Smash",
+     "k": 1,
+     "d": 7,
+     "a": 4
+    },
+    "support": {
+     "champion": "Thresh",
+     "playerId": "5204",
+     "player": "Career",
+     "k": 0,
+     "d": 3,
+     "a": 6
+    }
+   }
+  },
+  "red": {
+   "team": "Bilibili Gaming",
+   "teamFull": "Bilibili Gaming",
+   "win": true,
+   "kills": 25,
+   "towers": 9,
+   "dragons": 4,
+   "barons": 2,
+   "gold": 67700,
+   "bans": [
+    "Vi",
+    "Caitlyn",
+    "Syndra",
+    "Seraphine",
+    "Rakan"
+   ],
+   "picksDraftOrder": [
+    "Lucian",
+    "Milio",
+    "Jax",
+    "Trundle",
+    "Ahri"
+   ],
+   "comp": {
+    "top": {
+     "champion": "Jax",
+     "playerId": "2606",
+     "player": "Bin",
+     "k": 12,
+     "d": 4,
+     "a": 5
+    },
+    "jungle": {
+     "champion": "Trundle",
+     "playerId": "3330",
+     "player": "XUN",
+     "k": 4,
+     "d": 1,
+     "a": 9
+    },
+    "mid": {
+     "champion": "Ahri",
+     "playerId": "1270",
+     "player": "Knight",
+     "k": 5,
+     "d": 2,
+     "a": 10
+    },
+    "adc": {
+     "champion": "Lucian",
+     "playerId": "1228",
+     "player": "Viper",
+     "k": 4,
+     "d": 1,
+     "a": 10
+    },
+    "support": {
+     "champion": "Milio",
+     "playerId": "3353",
+     "player": "ON",
+     "k": 0,
+     "d": 1,
+     "a": 18
+    }
+   }
+  },
+  "warnings": [],
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "date": "2026-11-05",
+  "week": "QUARTERFINALS",
+  "seriesId": 83704,
+  "gameInSeries": 3,
+  "integrity": {
+   "picksMatchScoreboard": true,
+   "killTotalsMatch": true,
+   "teams": "Dplus KIA|Bilibili Gaming"
+  }
  }
 ]
