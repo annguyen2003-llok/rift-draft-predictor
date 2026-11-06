@@ -149,6 +149,7 @@
   .drivers{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;}
   .driver-row{display:grid;grid-template-columns:190px 1fr 66px;gap:10px;align-items:center;margin-bottom:10px;font-size:11.5px;}
   @media (max-width:640px){.driver-row{grid-template-columns:120px 1fr 58px;}}
+  .driver-row.ref{opacity:.6;}
   .driver-track{height:9px;background:var(--panel2);border-radius:5px;position:relative;border:1px solid var(--line);}
   .driver-fill{position:absolute;top:0;bottom:0;border-radius:4px;}
   .driver-fill.b{background:var(--blue);} .driver-fill.r{background:var(--red);}
@@ -764,20 +765,38 @@ function analyze(){
     : `Khoảng xác suất này có quá ít trận để kiểm chứng hiệu chỉnh.`;
 
   /* drivers */
-  document.getElementById("driversSub").innerHTML =
-    `Chỉ ${m.features.length} yếu tố này được phép vào mô hình — chúng là những yếu tố duy nhất đo ra tín hiệu thật khi kiểm định. ` +
-    `Giá trị là log-odds: dương nghiêng về Xanh, âm nghiêng về Đỏ.`;
-  const maxAbs = Math.max(...res.contrib.map(c => Math.abs(c.contribution)), 0.001);
-  document.getElementById("drivers").innerHTML =
-    [...res.contrib].sort((a,b) => Math.abs(b.contribution)-Math.abs(a.contribution)).map(c => {
+  document.getElementById("driversSub").innerHTML = res.intlMode
+    ? `Phần tính % chỉ dùng độ tranh chấp. Các yếu tố draft-only hiện bên dưới để tham khảo. ` +
+      `Giá trị là log-odds: dương nghiêng về Xanh, âm nghiêng về Đỏ.`
+    : `Chỉ ${m.features.length} yếu tố này được phép vào mô hình — chúng là những yếu tố duy nhất đo ra tín hiệu thật khi kiểm định. ` +
+      `Giá trị là log-odds: dương nghiêng về Xanh, âm nghiêng về Đỏ.`;
+  const driverRows = (contrib, cls, side) => {
+    const maxAbs = Math.max(...contrib.map(c => Math.abs(c.contribution)), 0.001);
+    return [...contrib].sort((a,b) => Math.abs(b.contribution)-Math.abs(a.contribution)).map(c => {
       const w = Math.abs(c.contribution)/maxAbs*50, toB = c.contribution > 0;
-      return `<div class="driver-row">
-        <div>${FEAT_LABEL[c.feature] || c.feature}</div>
+      return `<div class="driver-row${cls}">
+        <div>${FEAT_LABEL[c.feature] || c.feature}${side ? `<div class="thin">${side(c.feature)}</div>` : ""}</div>
         <div class="driver-track"><div class="driver-mid"></div>
           <div class="driver-fill ${toB?"b":"r"}" style="${toB?"left:50%":"right:50%"};width:${w}%"></div></div>
         <div class="driver-val">${c.contribution >= 0 ? "+" : ""}${c.contribution.toFixed(3)}</div>
       </div>`;
-    }).join("") + (res.intlMode ? "" :
+    }).join("");
+  };
+  /* Chế độ quốc tế: vẫn hiện đủ yếu tố draft-only (kit + ưu tiên pick) và con số của chính
+     mô hình draft-only — CHỈ ĐỂ THAM KHẢO. Kiểm định 2026-11-06 trên 206 trận quốc tế:
+     ghép chúng vào phần tính % làm tỉ lệ đúng giảm 60.9% → 56-57% (golgg/ws_combo.js). */
+  let refHtml = "";
+  if(res.intlMode){
+    const B = res.B, R = res.R, dm = DATA.models.draft;
+    const ref = runModel(dm, [B.frontline-R.frontline, B.ranged-R.ranged, B.mobility-R.mobility, B.pickPriority-R.pickPriority]);
+    const val = {frontline: s => s.frontline, ranged: s => s.ranged, mobility: s => s.mobility, pickPriority: s => s.pickPriority.toFixed(1)};
+    refHtml = `<div class="driver-note"><b>Tham khảo — các yếu tố draft-only (không tính vào %)</b><br>
+        Mô hình draft-only tự đánh giá: Xanh ${pct1(ref.p)} · Đỏ ${pct1(1-ref.p)}.
+        Kiểm định trên ${DATA.models.intl.metrics.n} trận quốc tế: ghép các yếu tố này vào làm tỉ lệ đoán đúng
+        <b>giảm</b> từ khoảng 61% xuống 56–57% (ở giải quốc tế, tác dụng của kit đổi chiều theo từng giải), nên chúng không được cộng vào %.</div>` +
+      driverRows(ref.contrib, " ref", f => `Xanh ${val[f](B)} · Đỏ ${val[f](R)}`);
+  }
+  document.getElementById("drivers").innerHTML = driverRows(res.contrib, "") + refHtml + (res.intlMode ? "" :
     `<div class="driver-note">Điểm khởi đầu của mô hình là lợi thế side: ${pct1(DATA.baselines.blueWinRate)} nghiêng về xanh
       (${DATA.meta.games} trận — LPL ${pct1(DATA.baselines.byLeague.LPL.blueWinRate)},
        LCK ${pct1(DATA.baselines.byLeague.LCK.blueWinRate)},
