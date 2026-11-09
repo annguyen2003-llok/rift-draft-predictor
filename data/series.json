@@ -793,45 +793,6 @@
   "date": "2026-07-19"
  },
  {
-  "league": "LCS",
-  "tier": "minor",
-  "tournament": "LCS 2026 Summer Playoffs",
-  "seriesId": 82770,
-  "matchup": "Sentinels vs FlyQuest",
-  "teamRight": "FlyQuest",
-  "teamLeft": "Sentinels",
-  "games": 3,
-  "week": "ROUND1",
-  "patch": "16.17",
-  "date": "2026-09-13"
- },
- {
-  "league": "LCK",
-  "tier": "major",
-  "tournament": "LCK 2026 Season Playoffs",
-  "seriesId": 82962,
-  "matchup": "Gen.G vs HLE",
-  "teamRight": "Gen.G",
-  "teamLeft": "Hanwha Life Esports",
-  "games": 4,
-  "week": "FINALS",
-  "patch": "16.16",
-  "date": "2026-09-13"
- },
- {
-  "league": "LPL",
-  "tier": "major",
-  "tournament": "LPL 2026 Grand Finals",
-  "seriesId": 82967,
-  "matchup": "BLG vs AL",
-  "teamRight": "Bilibili Gaming",
-  "teamLeft": "Anyone s Legend",
-  "games": 4,
-  "week": "FINALS",
-  "patch": "16.17",
-  "date": "2026-09-13"
- },
- {
   "league": "LEC",
   "tier": "major",
   "tournament": "LEC 2026 Summer Playoffs",
@@ -1545,5 +1506,18 @@
   "week": "SEMIFINALS",
   "patch": "16.20",
   "date": "2026-11-07"
+ },
+ {
+  "league": "INT",
+  "tier": "international",
+  "tournament": "Worlds 2026 Main Event",
+  "seriesId": 83718,
+  "matchup": "BLG vs T1",
+  "teamRight": "Bilibili Gaming",
+  "teamLeft": "T1",
+  "games": 4,
+  "week": "SEMIFINALS",
+  "patch": "16.20",
+  "date": "2026-11-08"
  }
 ]
