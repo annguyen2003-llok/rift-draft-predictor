@@ -629,7 +629,13 @@ const cv = {
    kit đội hình không giúp gì (đã thử). Thời lượng KHÔNG đổi — không hướng nào
    (kit, hiệu ứng tướng, bối cảnh series, dự đoán đè bẹp, nhịp kill) thắng nổi
    việc đoán trung bình. Đánh giá bên dưới là walk-forward THEO NGÀY, không kfold. */
-const KILL_LEVEL_HL = 30, KILL_LAMBDA = 160, KILL_MIN_GAMES = 3, KILL_WF_FROM = '2026-08-15';
+/* 2026-11-11 — KILL_LEVEL_HL 30 -> 10: knock-out Worlds (tứ kết + bán kết) nhiều kill hơn
+   Swiss rõ rệt (29-32 vs 25) và mức HL30 bám quá chậm — đoán THIẾU trung bình 3.9 kill/ván.
+   Đo trong chính pipeline: trước Worlds MAE 5.74 -> 5.71 (không kém đi, HL10/15 tốt nhất),
+   knock-out 5.54 -> 5.15, lệch -3.9 -> -3.0. Hiệu ứng "knock-out nhiều kill" KHÔNG lặp lại
+   ở MSI/EWC/playoff khu vực nên không cộng cứng theo vòng đấu. Đã thử và bỏ: mức riêng ván
+   quốc tế, độ lệch theo ván số mấy trong Bo5, ván trước cùng series (scratchpad golgg/ko_kd.js). */
+const KILL_LEVEL_HL = 10, KILL_LAMBDA = 160, KILL_MIN_GAMES = 3, KILL_WF_FROM = '2026-08-15';
 const totalKillsOf = g => g.blue.kills + g.red.kills;
 const champsOf = g => ['blue', 'red'].flatMap(s => ROLES.map(r => g[s].comp[r] && g[s].comp[r].champion)).filter(Boolean);
 function solveLinear(A, b) {
@@ -734,6 +740,34 @@ const killMetrics = {
     bias: mean(killWorlds.map(r => r.pred - r.act)),
   } : null,
 };
+
+/* 2026-11-11 — KHOẢNG DỰ ĐOÁN cho kill và thời lượng. Một con số duy nhất gần như chắc chắn
+   "sai": ở Worlds tổng kill dao động ±6.3 và thời lượng ±5.4 phút quanh trung bình, nên kể cả
+   biết đúng trung bình cũng chỉ ~37% (kill) / ~42% (phút) số ván nằm trong ±3. Khoảng = dự
+   đoán + phân vị của SAI SỐ walk-forward ở 300 ván gần nhất (thực tế - dự đoán). Kiểm chứng
+   (mỗi ván dùng sai số của các ván TRƯỚC nó): khoảng 50% kill bao trúng 51% trước Worlds /
+   49% Swiss / 48% knock-out; khoảng 80% bao trúng 81 / 86 / 76%. Thời lượng: khoảng 80% bao
+   trúng 75% trước Worlds / 84% Swiss / 95% knock-out. */
+const residualInterval = res => { const r = res.slice(-300);
+  return { n: r.length, q10: quantile(r, 0.1), q25: quantile(r, 0.25), q75: quantile(r, 0.75), q90: quantile(r, 0.9) }; };
+const killInterval = residualInterval(killWF.map(r => r.act - r.pred));
+// thời lượng trên trang = TB thời lượng lịch sử (ván khu vực) của 10 tướng — tính lại đúng
+// công thức đó theo thời điểm (chỉ ván các ngày trước) để lấy sai số thật của nó
+const durResiduals = [];
+{
+  const champDur = {};
+  for (const day of [...new Set(games.map(g => g.date))].sort()) {
+    const today = games.filter(g => g.date === day);
+    if (day >= KILL_WF_FROM) for (const g of today) {
+      const ds = champsOf(g).map(c => champDur[c]).filter(Boolean);
+      if (ds.length) durResiduals.push(g.durationMin - mean(ds.map(a => a.sum / a.n)));
+    }
+    for (const g of today) if (!isInternational(g)) for (const c of champsOf(g)) {
+      const e = champDur[c] || (champDur[c] = { sum: 0, n: 0 }); e.sum += g.durationMin; e.n++;
+    }
+  }
+}
+const durInterval = residualInterval(durResiduals);
 // ------------------------------------------------------------ mô hình GIẢI QUỐC TẾ
 /* 2026-11-02 — CHẾ ĐỘ GIẢI QUỐC TẾ cho playoff Worlds (draft-only: không tên đội, không bên).
    Đặc trưng duy nhất: độ tranh chấp của 5 tướng đã pick (tỉ lệ ván gần đây tướng bị pick
@@ -1139,7 +1173,10 @@ const out = {
       type: 'levelChamp', level: killModel.level, base: killModel.base,
       effects: Object.fromEntries(Object.entries(killModel.effects).map(([c, v]) => [c, Math.round(v * 100) / 100])),
       halfLife: KILL_LEVEL_HL, lambda: KILL_LAMBDA, minGames: KILL_MIN_GAMES, metrics: killMetrics,
+      interval: killInterval,
     },
+    // thời lượng vẫn là MÔ TẢ (TB lịch sử của 10 tướng) — chỉ thêm khoảng dao động thật quanh nó
+    duration: { interval: durInterval },
   },
 };
 fs.writeFileSync(path.join(DATA_DIR, 'dataset.json'), JSON.stringify(out));

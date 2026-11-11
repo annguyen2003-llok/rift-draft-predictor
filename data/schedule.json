@@ -1,20 +1,11 @@
 [
  {
   "tournament": "Worlds 2026 Main Event",
-  "seriesId": 83704,
-  "matchup": "Dplus KIA vs BLG",
-  "teamA": "Dplus KIA",
-  "teamB": "Bilibili Gaming",
-  "stage": "QUARTERFINALS",
-  "date": "2026-11-05"
- },
- {
-  "tournament": "Worlds 2026 Main Event",
-  "seriesId": 83709,
-  "matchup": "KC vs T1",
-  "teamA": "Karmine Corp",
-  "teamB": "T1",
-  "stage": "QUARTERFINALS",
-  "date": "2026-11-06"
+  "seriesId": 83722,
+  "matchup": "BLG vs Gen.G",
+  "teamA": "Bilibili Gaming",
+  "teamB": "Gen.G",
+  "stage": "FINALS",
+  "date": "2026-11-14"
  }
 ]

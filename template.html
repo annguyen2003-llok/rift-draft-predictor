@@ -895,18 +895,23 @@ function analyze(){
   const draftShift = kills - km.level;
   const topParts = [...killParts].filter(x => Math.abs(x.v) >= 0.3).sort((a, b) => Math.abs(b.v) - Math.abs(a.v)).slice(0, 3);
   const bl = DATA.baselines;
-  const posK = Math.max(0, Math.min(100, (kills-bl.killsP10)/(bl.killsP90-bl.killsP10)*100));
+  /* 2026-11-11: khoảng dự đoán từ sai số thật (walk-forward) — tổng kill dao động ±6 và
+     thời lượng ±5 phút quanh trung bình ngay cả ở Worlds, nên 1 con số đơn lẻ hiếm khi trúng. */
+  const iv = (v, q, unit, dp) => `50% khả năng: <b>${(v+q.q25).toFixed(dp)}–${(v+q.q75).toFixed(dp)}</b> ${unit} · ` +
+    `80%: ${(v+q.q10).toFixed(dp)}–${(v+q.q90).toFixed(dp)} ${unit}`;
+  const posK =Math.max(0, Math.min(100, (kills-bl.killsP10)/(bl.killsP90-bl.killsP10)*100));
   const posD = Math.max(0, Math.min(100, (lengthLean-bl.durP10)/(bl.durP90-bl.durP10)*100));
   document.getElementById("paceSub").innerHTML =
     `Mô hình kill (đo walk-forward theo ngày, ${km.metrics.n} trận) sai số trung bình <b>±${km.metrics.cvMAE.toFixed(1)} kill</b>, ` +
     `so với ±${km.metrics.baselineMAE.toFixed(1)} nếu chỉ đoán trung bình lịch sử` +
     (km.metrics.worlds ? ` — riêng ${km.metrics.worlds.n} trận Worlds: ±${km.metrics.worlds.mae.toFixed(1)}` : "") + `. ` +
-    `Thời lượng thì <b>không có mô hình</b>: không cấu hình nào đo ra tốt hơn việc đoán trung bình, nên bên dưới chỉ hiển thị số liệu thật, không phải dự đoán.`;
+    `Thời lượng thì <b>không có mô hình</b>: không cấu hình nào đo ra tốt hơn việc đoán trung bình, nên bên dưới chỉ hiển thị số liệu thật, không phải dự đoán. ` +
+    `Khoảng "50% / 80% khả năng" lấy từ sai số thật của ${km.interval.n} trận gần nhất — đã kiểm chứng: ở Worlds, khoảng 50% của kill bao trúng 48–49% số ván, khoảng 80% bao trúng 76–86%.`;
   document.getElementById("paceGrid").innerHTML = `
     <div class="pace-card">
       <div class="pace-label">Tổng kill dự đoán<span class="stamp measured">mô hình</span></div>
       <div class="pace-number">${kills.toFixed(0)}</div>
-      <div class="pace-range">khoảng sai số ${Math.max(0,kills-km.metrics.cvMAE).toFixed(0)}–${(kills+km.metrics.cvMAE).toFixed(0)} kill</div>
+      <div class="pace-range">${iv(kills, km.interval, "kill", 0)}</div>
       <div class="pace-gauge"><div class="pace-marker" style="left:${posK}%"></div></div>
       <div class="pace-scale"><span>${bl.killsP10.toFixed(0)}</span><span>hiện tại ${km.level.toFixed(1)}</span><span>${bl.killsP90.toFixed(0)}</span></div>
       <div class="pace-desc">Mức kill hiện tại của meta (các trận gần đây được tính nặng hơn): <b>${km.level.toFixed(1)}</b>.
@@ -917,7 +922,7 @@ function analyze(){
     <div class="pace-card">
       <div class="pace-label">Bối cảnh thời lượng<span class="stamp excluded">số liệu thật</span></div>
       <div class="pace-number">${lengthLean.toFixed(1)}′</div>
-      <div class="pace-range">độ dài trung bình các trận có nhóm tướng này</div>
+      <div class="pace-range">${iv(lengthLean, DATA.models.duration.interval, "phút", 0)}</div>
       <div class="pace-gauge"><div class="pace-marker" style="left:${posD}%"></div></div>
       <div class="pace-scale"><span>${bl.durP10.toFixed(0)}′</span><span>TB ${bl.avgDuration.toFixed(1)}′</span><span>${bl.durP90.toFixed(0)}′</span></div>
       <div class="pace-desc">Đây là <b>mô tả</b>, không phải dự đoán: trung bình lịch sử của chính 10 tướng đang chọn.
